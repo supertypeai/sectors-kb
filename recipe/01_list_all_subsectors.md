@@ -31,7 +31,7 @@ import altair as alt
 url = "https://sectors-api.fly.dev/api/token/"
 
 body = {
-"email":  "YOUR_EMAIL,
+"email":  "YOUR_EMAIL",
 "password":  "YOUR_PASSWORD"
 }
 
