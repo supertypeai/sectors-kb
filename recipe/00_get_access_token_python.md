@@ -24,20 +24,20 @@ To follow this cookbook, you need the following prerequisites:
 - Install the [requests](https://requests.readthedocs.io/en/latest/) library to make HTTP Requests
 
 - Install [pandas](https://pypi.org/project/pandas/) to do some data exploratory
-- In this cookbook we will use [matplotlib](https://pypi.org/project/matplotlib/) to do the data visualization
+- In this cookbook we will use [altair](https://pypi.org/project/altair/) to do the data visualization
 
   ```
   pip install requests
   pip install pandas
-  pip install matplotlib
+  pip install altair
   ```
 
 ## Configure the sample
 
 In this example we will examine how to get the access token by logging in using your Sectors account.
 
-1. In your working directory, create this file named `quickstart.py`
-2. Include the following code in `quickstart.py`
+1. In your working directory, create this file named `get_access_token.py`
+2. Include the following code in `get_access_token.py`
 
    ```python
    import requests
@@ -64,11 +64,15 @@ In this example we will examine how to get the access token by logging in using 
 1. In your working directory, build and run the sample:
 
    ```
-   python quickstart.py
+   python get_access_token.py
    ```
 
-2. You will get an access_token which will be used in the future in this cookbook
+2. You should see the access token that looks like this
+    ```
+    eyJhbGciOiJIUzIxxxx...xxx
+    ```
+    This access token will be used in the future in this cookbook.
 
 ## Get Started
 
-On the next chapter we will examine every API that Sectors provide and do some magical :sparkles: visualization using [matplotlib](<(https://pypi.org/project/matplotlib/)>), heads up to the next section.
+On the next chapter we will examine every API that Sectors provide and do some magical :sparkles: visualization using [altair](<(https://pypi.org/project/altair/)>), heads up to the next section.
