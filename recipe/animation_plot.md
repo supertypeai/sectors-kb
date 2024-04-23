@@ -7,7 +7,7 @@ language: "R"
 ---
 
 
-Have you ever thought about creating an animated plot that evolves over time, perfect for sharing on Instagram Reels or other content platforms? Well, now you can achieve that using R and data from the [sectors](https://sectors.app). In this recipe, I'll guide you to create the animated plot of the most traded stocks on Indonesia Stock Exchange in 2024.
+Have you ever thought about creating an animated plot that evolves over time, perfect for sharing on Instagram Reels or other content platforms? Well, now you can achieve that using R and data from the [Sectors](https://sectors.app). In this recipe, I'll guide you to create the animated plot of the most traded stocks on Indonesia Stock Exchange in 2024.
 
 ## Install Libraries
 
@@ -25,7 +25,7 @@ library(gganimate)
 
 ## Data Source and Data Manipulation
 
-After installing the packages and loading the libraries, we can begin manipulating the data for our analysis. The dataset for this recipe comprises daily transaction data from all stocks on the Indonesia Stock Exchange since 2024. Specifically, we will focus on the daily transaction volume of each stock. Here's a preview of the dataset we'll be using.
+After installing the necessary packages and loading the libraries, we can start manipulating the data for our analysis. [The dataset](./dataset/most_traded_stocks.csv) for this task consists of daily transaction data from all stocks on the Indonesia Stock Exchange since 2024, and it's accessible on [Sectors](https://sectors.app). Our focus will be on the daily transaction volume of each stock. Here's a glimpse of the dataset we'll be working with.
 
 |  date        | symbol  | volume   |
 | ------------ | ------- | -------- |
