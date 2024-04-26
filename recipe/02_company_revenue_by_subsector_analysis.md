@@ -24,6 +24,10 @@ Using this API we will get the data we need and do some nice visualization on it
 Lets take a look at list of companies under the tobacco subsectors
 
 ```python
+import requests
+import altair as alt
+import pandas as pd
+
 API_KEYS = "Your API Keys"
 headers = {
     "Authorization": API_KEYS
