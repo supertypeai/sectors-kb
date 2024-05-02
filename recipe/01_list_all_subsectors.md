@@ -20,35 +20,13 @@ pip install requests pandas altair
 
 ## Accessing List of All Subsectors
 
-Let's try to obtain the access token to be used in this recipe and import all the required libraries
+Before writing your code, you must access your API Keys in the [Sectors API Page](https://www.sectors.app/api). We wil use that API Keys later as an authorization for the API.
 
 ```python
-import requests
-import pandas as pd
-import altair as alt
+API_KEYS = "Your API Keys"
 
-url = "https://sectors-api.fly.dev/api/token/"
-
-body = {
-"email":  "YOUR_EMAIL",
-"password":  "YOUR_PASSWORD"
-}
-
-response = requests.post(url, json = body)
-
-if response.status_code == 200:
-	data = response.json()
-	access_token = data["access"]
-else:
-	# Handle error
-	print(response.status_code)
-```
-
-Next steps lets try to retrieve list of all subsectors using the `access_token`
-
-```python
 headers = {
-    "Authorization": f"Bearer {access_token}"
+    "Authorization": API_KEYS
 }
 response = requests.get("https://sectors-api.fly.dev/api/data/subsectors/", headers = headers)
 
@@ -129,7 +107,7 @@ We will join the data from both API to a single list using the code below:
 data = []
 for sector in data_all_subsectors:
     headers = {
-    "Authorization": f"Bearer {access_token}"
+    "Authorization": API_KEYS
     }
     response = requests.get(f"https://sectors-api.fly.dev/api/data/companies/?sub_sector={sector}", headers = headers)
 
