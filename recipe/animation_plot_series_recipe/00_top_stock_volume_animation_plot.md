@@ -25,7 +25,7 @@ library(gganimate)
 
 ## Data Source and Data Manipulation
 
-After installing the necessary packages and loading the libraries, we can start manipulating the data for our analysis. [The dataset](./dataset/most_traded_stocks.csv) for this task consists of daily transaction data from all stocks on the Indonesia Stock Exchange since 2024, and it's accessible on [Sectors](https://sectors.app). Our focus will be on the daily transaction volume of each stock. Here's a glimpse of the dataset we'll be working with.
+After installing the necessary packages and loading the libraries, we can start manipulating the data for our analysis. [The dataset](../dataset/most_traded_stocks.csv) for this task consists of daily transaction data from all stocks on the Indonesia Stock Exchange since 2024, and it's accessible on [Sectors](https://sectors.app). Our focus will be on the daily transaction volume of each stock. Here's a glimpse of the dataset we'll be working with.
 
 |  date        | symbol  | volume   |
 | ------------ | ------- | -------- |
@@ -178,6 +178,6 @@ anim <- staticplot + transition_states(date, transition_length = 4, state_length
 
 and here is the result of the gif
 
-![Most Traded Stocks in 2024](./image/most_traded_stocks.gif)
+![Most Traded Stocks in 2024](../image/most_traded_stocks.gif)
 
 In our latest experiment, we dove into the world of animated plots using data from [Sectors](https://sectors.app) with R. Stay tuned for more exciting recipes featuring Sectors data!

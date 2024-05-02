@@ -14,13 +14,13 @@ In addition to assessing risk and potential return, market capitalization can al
 
 # Analysis
 
-Given the significance of market capitalization in stock assessment, we will examine the evolving rankings of stocks based on their market capitalization values since December 2020 on the Indonesia Stock Exchange. [The dataset](./dataset/historical_marketcap.csv) for this analysis is provided by [Sectors](https://sectors.app), who have already compiled and curated the data for our use in this analysis, simplifying the process for us. The dataset is consist of the monthly market capitalization for each companies since December 2020, and using this data we will create a animated plot to see the top 10 stocks with highest market capitalization on Indonesia Stock Exchange.
+Given the significance of market capitalization in stock assessment, we will examine the evolving rankings of stocks based on their market capitalization values since December 2020 on the Indonesia Stock Exchange. [The dataset](../dataset/historical_marketcap.csv) for this analysis is provided by [Sectors](https://sectors.app), who have already compiled and curated the data for our use in this analysis, simplifying the process for us. The dataset is consist of the monthly market capitalization for each companies since December 2020, and using this data we will create a animated plot to see the top 10 stocks with highest market capitalization on Indonesia Stock Exchange.
 
-If you have followed [the animation_plot recipe](./animation_plot.md), the code below is more or less the same like the one in that recipe. The differences are the data source and the data cleansing part, since in this recipe the data manipulation parts won't be that complicated. 
+If you have followed [the top_stock_volume_animation_plot recipe](./00_top_stock_volume_animation_plot.md), the code below is more or less the same like the one in that recipe. The differences are the data source and the data cleansing part, since in this recipe the data manipulation parts won't be that complicated. 
 
 ## Glimpse of the Data
 
-Here are the glimpse of the data, or you can directly access the data from [here](./dataset/historical_marketcap.csv) which is directly from [Sectors](https://sectors.app).
+Here are the glimpse of the data, or you can directly access the data from [here](../dataset/historical_marketcap.csv) which is directly from [Sectors](https://sectors.app).
 
 |  date        | symbol  | market_cap   |
 | ------------ | ------- | ------------ |
@@ -164,6 +164,6 @@ animate(anim, 300, fps = 8, width = 1200, height = 1000,
 
 and here is the result of the gif
 
-![Stock with Highest Market Capitalization](./image/top_market_Cap.gif)
+![Stock with Highest Market Capitalization](../image/top_market_cap.gif)
 
 Looking at the plot, it's clear that `BBCA.JK` consistently maintains the highest market capitalization on the Indonesia Stock Exchange since December 2020, while other positions fluctuate. For deeper insights into the market capitalization of companies or sectors on the Indonesia Stock Exchange, check out [Sectors](https://sectors.app). Also, stay tune to our next recipes!
