@@ -1,3 +1,11 @@
+---
+title: "Company Revenue Analysis by Subsectors"
+author: "Aidityas Adhakim"
+author_link: "https://www.github.com/aidityasadhakim"
+date: "2024-04-23"
+language: "Python"
+---
+
 # Company Revenue Analysis by Subsectors
 
 Suppose you have some spare cash—often referred to as "cold money"—that you're looking to invest, particularly in the tobacco subsector, with a focus on company's financial. Naturally, you would need to examine the historical financial data of each potential investment, right? Well, relax; there's no need to go through this process manually. With the [Sectors API](https://www.sectors.app/api), you can effortlessly access and visualize the necessary data!
