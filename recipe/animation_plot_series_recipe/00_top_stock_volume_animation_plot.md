@@ -23,19 +23,55 @@ library(tidyverse)
 library(gganimate)
 ```
 
-## Data Source and Data Manipulation
+## Data Source
 
-After installing the necessary packages and loading the libraries, we can start manipulating the data for our analysis. [The dataset](../dataset/most_traded_stocks.csv) for this task consists of daily transaction data from all stocks on the Indonesia Stock Exchange since 2024, and it's accessible on [Sectors](https://sectors.app). Our focus will be on the daily transaction volume of each stock. Here's a glimpse of the dataset we'll be working with.
+After installing the necessary packages and loading the libraries, we can start fetching the data from the [Sector's API](https://sectors.app/api). To access the API you only need to go to the [Sector's website](https://sectors.app), subscribe to the plan and call the API directly from your markdown. Here is how we fetch the most-traded stock data from R using the endpoint that has been created by Sector's team.
 
-|  date        | symbol  | volume   |
-| ------------ | ------- | -------- |
-| 2024-02-20   | ACRO.JK | 10730000 |
-| 2024-02-20   | ASLI.JK | 658400   |
-| 2024-02-20   | MANG.JK | 2931100  |
-| 2024-02-20   | NICE.JK | 94226900 |
-| 2024-02-20   | MSJA.JK | 50862300	|
+```r
+library(httr)
 
-We will start by calculating the cumulative sum for each stock from the beginning of 2024 until now. Additionally, we will select only the top 10 stocks with the highest cumulative sum to include in the plot. This can be accomplished using the functions available in the tidyverse package in R.
+# Replace the URL with a URL from the Available Endpoints section
+url <- "https://api.sectors.app/api/data/most-traded/?start=2024-01-01&end=2024-03-24&n_stocks=10" #Top 10 Daily most traded stocks from 1st January 2024 to 24th March 2024
+api_key <- "YOUR API KEY"
+
+headers <- c(Authorization = api_key)
+
+response <- GET(url, add_headers(.headers = headers))
+
+if (response$status_code == 200) {
+  data <- content(response, "parsed")
+} else {
+  # Handle error
+  print(response$status_code)
+}
+```
+
+Using the most-traded API endpoints we could fetch the top-n stocks based on the trading volume each day, we could configure the start date, the end date, and the top-n most traded companies in each day. After that we only need to process the data to make it a proper data frame that can be used in our next step.
+
+```r
+df <- do.call(rbind, lapply(names(data), function(date) {
+  data.frame(
+    date = rep(date, each = length(data[[date]])),
+    symbol = unlist(lapply(data[[date]], function(x) x[[1]])),
+    volume = unlist(lapply(data[[date]], function(x) x[[2]]))
+  )
+}))
+```
+
+Here is the glimpse result of the API endpoint that we have called and processed. We will use this data to create a animation bar chart in this recipe
+
+|  date        | symbol  | volume    |
+| ------------ | ------- | --------- |
+| 2024-02-20   | GOTO.JK | 1033123000|
+| 2024-02-20   | BUMI.JK | 998119800 |
+| 2024-02-20   | CARE.JK | 673579200 |
+| 2024-02-20   | DEWA.JK | 509467700 |
+| 2024-02-20   | DOOH.JK | 489452400 |
+
+You can also use [this dataset](../dataset/most_traded_stocks.csv) for this task, it is the same with the data that we called from the API, and it's accessible on [Sectors](https://sectors.app).
+
+## Data Manipulation
+We will start our data manipulation process by calculating the cumulative sum for each stock from the beginning of 2024 until now. Additionally, we will select only the top 10 stocks with the highest cumulative sum to include in the plot. This can be accomplished using the functions available in the tidyverse package in R.
 
 ```r
 df_filter <- df %>% 
@@ -66,7 +102,7 @@ With the provided code, the data will be transformed as shown in the table below
 | 2024-01-02   | DEWA.JK | 509467700  | 509467700          | 4    |
 | 2024-01-02   | CARE.JK | 673579200  | 673579200          | 3    |
 | 2024-01-02   | BUMI.JK | 998119800  | 998119800          | 2    |
-| 2024-01-02   | NATO.JK | 1033123000 | 1033123000         | 1    |
+| 2024-01-02   | GOTO.JK | 1033123000 | 1033123000         | 1    |
 
 To finalize the data preparation for the plot, we will format the accumulated volume to enhance readability. This formatting will make the numbers easier for people to interpret.
 
@@ -103,7 +139,7 @@ df_finished <- df_finished %>%
 | 2024-01-02   | DEWA.JK | 509467700  | 509467700          | 4    | 509.47M                 |
 | 2024-01-02   | CARE.JK | 673579200  | 673579200          | 3    | 673.58M                 |
 | 2024-01-02   | BUMI.JK | 998119800  | 998119800          | 2    | 998.12M                 |
-| 2024-01-02   | NATO.JK | 1033123000 | 1033123000         | 1    | 1033.12M                |
+| 2024-01-02   | GOTO.JK | 1033123000 | 1033123000         | 1    | 1033.12M                |
 
 
 ## Data Visualization
