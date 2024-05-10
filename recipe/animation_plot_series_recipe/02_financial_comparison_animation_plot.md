@@ -37,57 +37,62 @@ However, the P/B ratio has its limitations. For instance, it does not take into 
 
 After reading about the financial ratios valuation metrics, now we can start to play with the data and create a animated plot to shown the comparisons of the financial valuation metrics (PE and PBV) of some major banks in Indonesia.
 
-## Glimpse of the data
+## Data fetching
 
-Same like the other two recipes, the [dataset](../idx_company_report.csv) that is used here is provided by [Sectors](https://sectors.app), and here is the data that we will handle today:
+To get the data you can use [Sector's API](https://sectors.app/api) to directly fetch the data from the [Sector's website](https://sectors.app), it will be easier for you to directly ping the API and use the data than curated the data by yourself, so don't forget to subscribe to [Sector's API plan](https://sectors.app/pricing). Here is the code to fetch the historical valuation data using the API.
 
-| sub_sector   | symbol  | historical_valuation                                                                  | market_cap   |
-| ------------ | ------- | ------------------------------------------------------------------------------------- | ------------ |
-| Banks        | ARTO.JK | [{"pb":37.5020388158071,"pe":-243.792432227128,"ps":694.972856734688,"year":2020, ... | 5.560000e+13 |
-| Banks        | BBCA.JK | [{"pb":4.475852894277,"pe":30.4530861602451,"ps":11.3386964329326,"year":2020, ...    | 8.540300e+13 |
-| Banks        | BBNI.JK | [{"pb":1.03458928065172,"pe":34.7530471103703,"ps":2.09814065618114,"year":2020, ...  | 6.300000e+10 |
-| Banks        | BBRI.JK | [{"pb":2.24404134373024,"pe":27.296475059198,"ps":3.90812024342799,"year":2020, ...   | 2.810300e+13 |
-| Banks        | BMRI.JK | [{"pb":1.54302128039226,"pe":17.3942521554938,"ps":3.05224667300517,"year":2020, ...  | 4.390000e+11 |
+```r
+library(httr)
+library(jsonlite)
+library(tidyverse)
+
+# Initialize an empty data frame
+df_finance <- data.frame()
+
+# Specify list of stock
+stocks <- c("BBCA.JK", "BBRI.JK", "BMRI.JK", "MEGA.JK", "BRIS.JK", "NISP.JK", "BNGA.JK", "BBNI.JK")
+
+# Remove the ".JK" suffix from each string
+cleaned_stocks <- sub(".JK", "", stocks)
+
+for (i in cleaned_stocks) {
+  # Replace the URL with a URL from the Available Endpoints section
+  url <- paste0("https://api.sectors.app/api/data/company/report/", i, "/?sections=valuation")
+  api_key <- "3463f480648fefd8ec10d28d541a98fcaeca40f41e0f301f8a51de06236adcf1"
+  
+  headers <- c(Authorization = api_key)
+  
+  response <- GET(url, add_headers(headers))
+  
+  if (status_code(response) == 200) {
+    df <- fromJSON(content(response, "text"),flatten=TRUE)
+    df <- df$valuation$historical_valuation
+    df$symbol <- paste0(i,".JK")
+    
+    df_finance <- rbind(df_finance,df)
+  } else {
+    # Handle error
+    cat("Error:", status_code(response), "\n")
+    next
+  }
+}
+```
+
+The code above will fetch the historical valuation data from the top 8 major banks in Indonesia. If you want to analyze other industry, you can change the list of stocks you want to fetch in the `stocks` list. Finally, here is the result of the fetching code.
+
+| symbol             | year | pe       | pb        | pe_peer_avg  | pb_peer_avg |
+| ------------------ | ---- | -------- | --------- | ------------ | ----------- |
+| BBCA.JK            | 2020 | 30.45000 | 4.4800000 | 27.29648     | 1.2624248   |
+| BBCA.JK            | 2021 | 28.35000 | 4.3900000 | 15.01456     | 1.4663059   |
+| BBNI.JK            | 2022 | 9.30000  | 1.2500000 | 15.12926     | 1.0085239   |
+| BBNI.JK            | 2023 | 9.30000  | 1.3000000 | 13.15047     | 0.7844267	  |
+| BBRI.JK            | 2020 | 27.30000 | 2.2400000 | 27.29648     | 1.2624248   |
+
+Additionally, I also already provide the [dataset](../dataset/banks_valuation.csv) in case you haven't subscribe to [Sector's API plan](https://sectors.app/pricing). The data that is used here is provided by [Sectors](https://sectors.app). However, don't forget to register and subcribe to [Sector's API](https://sectors.app/api) for more effective way of doing stock market (especially Indonesia's Stock Market) analysis. 
 
 ## Data Manipulation
 
-```r
-# Take the top 10 companies in bank sub-sectors with highest market_cap
-df <- df %>% 
-  select(c("symbol","sub_sector","historical_valuation",'market_cap')) %>% 
-  filter(sub_sector == "Banks") %>% 
-  top_n(10,market_cap)
-```
-First, we will select `Banks` sub-sector as the one that we want to do the analysis because Banks is one of the most popular sectors in Indonesia stock market. We will select top companies with the highest market capitalization in Banks industry, since there are total of 47 companies and we only want to compares the bigger one.
-
-```r
-# Create function to expand JSON column
-expand_json_column <- function(json_str) {
-  # Parse JSON string
-  json_data <- fromJSON(json_str)
-  # Convert to data frame
-  data_frame <- as.data.frame(json_data)
-  return(data_frame)
-}
-
-# Apply function to expand historical valuation JSON column
-expanded_data <- lapply(df$historical_valuation, expand_json_column)
-
-# Bind the expanded data frames
-result <- do.call(rbind, expanded_data)
-
-# Add symbol (ticker) columns to the data frame by duplicating thesymbol value from original data frame by 4 each value, since the financial data is from 2020-2023
-result$symbol <- rep(df$symbol, each = 4)
-
-df <- merge(result %>% select(c("symbol","year","pe","pb")),df,by="symbol") %>% # Merge the historical valuation data into original data frame
-  select(-c(historical_valuation,sub_sector)) %>% 
-  mutate_at(vars(pb, pe), ~round(., 2)) %>% # round PBV and PE value by 2 decimal numbers
-  filter(symbol %notin% c("ARTO.JK","BNLI.JK")) # remove ARTO.JK and BNLI.JK because these 2 tickers has outliers value that can disturb the plot visualization
-```
-
-In the data glimpse, you see that there is one column `historical_valuation` (where the PE ratio and PBV ratio value is stored) that is in the JSON format, so in the code, we try to convert the JSON format column into a table and then merge it with our original data. 
-
-The `historical_valuation` column also has the `Banks` industry PE and PBV value, therefore we will take it and manually merge the data using row binding to our original data.
+In the data there are pe_peer_avg and pb_peer_avg columns which are the Sectors PE ratio and PBV ratio in each year and every symbol will have the same value if the year is the same. Therefore, we will convert those value and bind it into our data using the code below.
 
 ```r
 # Get the subsector pe and pbv value from result dataframe
@@ -146,15 +151,70 @@ custom_theme <- theme(
 )
 ```
 
-Now let's dive to the code that create the main plot or the static plot. In this recipe we will create a scatter plot with respect to PE ratio and PBV ratio as the x and y axis respectively. Also, we will differentiate each company using the color and add the text below each point to make it easier for reader to know which company each point is refer to.
+Now let's dive to the creation of stock financial valuation plot. There will two static plots and one animation plot in this recipe. First, let's dive into the creation of the static plot.
+
+### Yearly Plot
+Usually, we compared the PE and PBV ratio for same stock in different time to see whether a stock is overvalued or undervalued compare to their historical valuation. Therefore in this section, we will try to make a plot that see the difference between PE and PBV ratio for `BBCA.JK` from year 2020 to 2023 using the code below.
 
 ```r
+library(RColorBrewer)
+library(ggplot2)
+library(ggimage)
+
+bbca_plot <- ggplot(
+  df %>% filter(symbol == "BBCA.JK"), 
+  aes(x = pe, y=pb, colour = as.factor(year))) +
+  geom_point(alpha = 0.7,size=12,show.legend = FALSE) +
+  geom_text(aes(label = as.factor(year)), vjust = 2,size=6)+
+  labs(x = "Price to Earning Ratio", y = "Price to Book Value Ratio")+
+  ggtitle("Financial Ratio Comparisons Over the Years of BBCA.JK") +
+  custom_theme +
+  theme(legend.position = "none")
+
+bbca_plot
+```
+
+Using the code above, the image below is the plot result. From the plot we can see that in 2023 BBCA.JK had the highest PBV ratio but also had the lowest PBV ratio. We can use this for further analysis determine the value of BBCA.JK.
+
+![BBCA.JK PE vs PBV Comparison](../image/bbca_pe_pbv.png)
+
+### Sector's plot
+Another analysis that we can use to determine a value of a stock is by compare it to another stock in the same sector or compare it to the sector's average. The code below will make a plot that enable that analysis.
+
+```r
+banks_2023 <- ggplot(
+  df %>% filter(year == 2023), 
+  aes(x = pe, y=pb, colour = symbol)) +
+  geom_point(alpha = 0.7,size=12,show.legend = FALSE) +
+  geom_segment(data = df %>% filter(symbol == "Banks (Sectors Average)") %>% filter (year == 2023),aes(x = pe, y = 0, xend = pe, yend = pb), linetype = "dashed",size=1.5) +
+  geom_segment(data = df %>% filter(symbol == "Banks (Sectors Average)") %>% filter (year == 2023),aes(x = 0, y = pb, xend = pe, yend = pb), linetype = "dashed",size=1.5) +
+  geom_text(aes(label = symbol), vjust = 1,size=8)+
+  labs(x = "Price to Earning Ratio", y = "Price to Book Value Ratio")+
+  ggtitle("Financial Ratio Comparisons of Top 8 Major Companies in Bank Sector in 2023") +
+  custom_theme +
+  theme(legend.position = "none")
+
+banks_2023
+```
+
+and here is the result of the code above
+
+![Banks Sub-sector PE vs PBV Comparison in 2023](../image/banks_pbv_pe_2023.png)
+
+### Animation Plot
+
+Using the two plots above that create the plot for comparisons of PE and PBV ratio of one company over the years, and the plot to compare PE and PBV ratio of some companies in one sector in one year. We can combine it to create a plot that show the PE and PBV ratio comparison of some companies in a sub-sector over the years. And, we will create an animation plot to achieve that. Here is the code to create the static plot first before we configure the transition and create an animation plot.
+
+```r
+# Create the plot
 # Create the plot
 p <- ggplot(
   df, 
   aes(x = pe, y=pb, colour = symbol)) +
   geom_point(alpha = 0.7,size=12,show.legend = FALSE) +
-  geom_text(aes(label = symbol), vjust = 2,size=8)+
+  geom_segment(data = subset(df, symbol == "Banks (Sectors Average)"),aes(x = pe, y = 0, xend = pe, yend = pb), linetype = "dashed",size=1.5) +
+  geom_segment(data = subset(df, symbol == "Banks (Sectors Average)"),aes(x = 0, y = pb, xend = pe, yend = pb), linetype = "dashed",size=1.5) +
+  geom_text(aes(label = symbol), vjust = -2,size=8)+
   labs(x = "Price to Earning Ratio", y = "Price to Book Value Ratio")+
   ggtitle("Financial Ratio Comparisons of Top 8 Major Companies in Bank Sector") +
   custom_theme +
@@ -176,7 +236,7 @@ animate(anim, 200, fps = 8, width = 1200, height = 1000,
 
 and here is the final result of our plot
 
-![Financial Comparisons of Top 8 Major Banks in Indonesia](../image/banks_sub_sector.gif)
+![Financial Comparisons of Top 8 Major Banks in Indonesia](../image/bank_subsector.gif)
 
 Therefore, by examining the above plot, we can assess the evolution of valuation for each company in the banking sector over time, both in comparison to other companies within the industry and against the sector/industry as a whole. It is hoped that this article has provided you with insights and perhaps inspired you to create your own animated plot. 
 
