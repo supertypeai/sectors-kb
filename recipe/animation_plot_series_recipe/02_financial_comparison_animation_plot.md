@@ -1,5 +1,5 @@
 ---
-title: "Stocks with Highest Market Capitalization since December 2020 on Indonesia Stock Exchange"
+title: "Value Investing Strategy "
 author: "Gerald Bryan"
 author_link: "https://github.com/geraldbryan"
 date: "2024-05-02"
@@ -37,7 +37,7 @@ However, the P/B ratio has its limitations. For instance, it does not take into 
 
 After reading about the financial ratios valuation metrics, now we can start to play with the data and create a animated plot to shown the comparisons of the financial valuation metrics (PE and PBV) of some major banks in Indonesia.
 
-## Data fetching
+## Data Fetching
 
 To get the data you can use [Sector's API](https://sectors.app/api) to directly fetch the data from the [Sector's website](https://sectors.app), it will be easier for you to directly ping the API and use the data than curated the data by yourself, so don't forget to subscribe to [Sector's API plan](https://sectors.app/pricing). Here is the code to fetch the historical valuation data using the API.
 
