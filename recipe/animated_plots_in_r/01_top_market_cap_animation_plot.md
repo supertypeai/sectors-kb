@@ -149,7 +149,7 @@ staticplot <- ggplot(df_finished, aes(rank,market_cap/2, group = symbol)) +
   custom_theme
 ```
 
-after finished create the static plot, we can begin to make the animation and save it as .gif file
+Now that we've created the static plot, we can begin to make the animation and save it as .gif file
 
 ```r
 anim <- staticplot + transition_states(date_formatted, transition_length = 4, state_length = 1) +

@@ -15,9 +15,7 @@ Being a community contributor, you'll be eligible for the following benefits:
 - Direct access to the developers and the team building Sectors at Supertype, where you can ask questions, get help, and provide feedback. You will also be able to participate in the roadmap discussions and feature requests, playing a crucial role in bridging the gap between the community (and Sector users) and the developers    
 - A chance to be featured on the [Supertype Collective](https://collective.supertype.ai) platform, our [Supertype Blog](https://supertype.ai/notes) or Sectors community newsletter  
 
-If we use any of your recipe in our official documentation, you will be credited and will be given a shoutout in our community channels
-
-
+If we use any of your recipe in our official documentation, you will be credited and will be given a shoutout in our community channels.
 
 ## Contributing to the Cookbook
 All recipes are to be contributed in the form of a markdown file with images and code snippets. The file should be named in the format `xx_title.md` where `xx` is the sequence number of the recipe and `title` is the title of the recipe. You should **submit a pull request** to this repository with your recipe, and it will be reviewed by the maintainers. If you are [part of the Supertype Fellowship program](https://fellowship.supertype.ai), a successful merge will earn you the corresponding points in the program.
@@ -36,7 +34,7 @@ thumbnail: "URL to the thumbnail image if any"
 ---
 ```
 
-You are encouraged to use Python, R, JavaScript or any other programming language that you are comfortable with. The code snippets should be well-documented and should be easy to follow. You can include images (by adding them to the `/images` sub-directory, and then referencing them), charts, or any other visual elements to make your recipe more engaging. Include code chunks with proper formatting ("code fences"). 
+You are encouraged to use Python, R, JavaScript or any other programming language that you are comfortable with. The code snippets should be well-documented and should be easy to follow. You can include images (by adding them to the `/image` sub-directory, and then referencing them), charts, or any other visual elements to make your recipe more engaging. Include code chunks with proper formatting ("code fences"). 
 
 A typical recipe contains the following sections:
 - Introduction
@@ -47,7 +45,7 @@ A typical recipe contains the following sections:
 - Conclusion
 
 ### Examples 
-An example output would be: https://github.com/idoali/oil_and_gas_performance_infographics_with_R
+You will find existing examples in this repository that you can use as a reference when writing your recipe.
 
 Your work should be fully markdown compliant. A tip is to use the Markdown Preview or a markdown preview extension in VSCode so you can visualize the output. If you use Jupyter or RStudio, compile it down to markdown. Show all code chunks in your work including:
 - all `import` statements for any libraries used

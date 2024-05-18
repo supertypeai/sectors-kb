@@ -14,9 +14,10 @@ We build Sectors to be a comprehensive source of Indonesia-first financial data 
 - [Sectors API](https://sectors.app/api)
 - [Sectors Financial Backend for Enterprises](https://sectors.app/enterprise)
 - [Sectors Glossary](https://github.com/supertypeai/sectors-kb/wiki)
+- [Sectors Recipe](/recipe/README.md)
 
 ## Supertype Community
-We have a Discord server where you can ask questions, share your projects, and get help from the community. You can [join us on Discord here](https://discord.gg/TAnZMmNS4X). 
+We have a Discord server where you can ask questions, share your projects, and get help from the community. You can [join us on Discord](https://discord.gg/TAnZMmNS4X). 
 
 If you're actively building on top of Sectors API, we'd love to have you join our Collective. You can submit a profile to [Supertype Collective](https://collective.supertype.ai) and participate in a closed, invite-only community of analytics builders. 
 
