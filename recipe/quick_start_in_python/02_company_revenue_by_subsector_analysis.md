@@ -8,7 +8,7 @@ language: "Python"
 
 # Company Revenue Analysis by Subsectors
 
-Suppose you have some spare cash—often referred to as "cold money"—that you're looking to invest, particularly in the tobacco subsector, with a focus on company's financial. Naturally, you would need to examine the historical financial data of each potential investment, right? Well, relax; there's no need to go through this process manually. With the [Sectors API](https://www.sectors.app/api), you can effortlessly access and visualize the necessary data!
+Suppose you have some spare cash—often referred to as "cold money"—that you're looking to invest, particularly in the tobacco subsector, with a focus on company's financial. Naturally, you would need to examine the historical financial data of each potential investment, right? Well, relax; there's no need to go through this process manually. With the [Sectors API](https://sectors.app/api), you can effortlessly access and visualize the necessary data!
 
 ## Install Required Libraries
 - Install the [requests](https://requests.readthedocs.io/en/latest/) library to make HTTP Requests
@@ -58,7 +58,7 @@ You should see an output like this
 These are the list of all companies under one subsectors which in this recipe, we use tobacco subsectors.
 
 ### Individual Company Report Per Section
-After retrieving the list of companies under the tobacco subsector, the next step is to obtain the financial report for each company. With the help of the [Sectors](www.sectors.app), you can easily access the Company Report, which provides comprehensive information beyond just financial. The available sections of the report include
+After retrieving the list of companies under the tobacco subsector, the next step is to obtain the financial report for each company. With the help of the [Sectors](sectors.app), you can easily access the Company Report, which provides comprehensive information beyond just financial. The available sections of the report include
 
 - Overview
 - Valuation

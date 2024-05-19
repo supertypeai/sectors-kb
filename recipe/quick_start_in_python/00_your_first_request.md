@@ -13,11 +13,11 @@ The "Sectors API Cookbook" provides a comprehensive overview and practical guida
 
 ## Prerequisite
 
-To follow this cookbook, you need the following prerequisites:
+To follow this recipe, you need the following prerequisites:
 
 - Python
 - The [pip](https://pypi.org/project/pip/) management tool
-- Sectors account
+- Sign up for an account on [Sectors](https://sectors.app/)
 
 ## Install required libraries
 
@@ -36,7 +36,7 @@ To follow this cookbook, you need the following prerequisites:
 
 In this example we will examine how to make your first request to the sectors API
 
-1. Go to [Sectors API Page](https://www.sectors.app/api)
+1. Go to [Sectors API Page](https://sectors.app/api)
 2. Find the API Keys Section and click the Create API Key button to generate the key
 3. Save the API Key cause we will use that to access Sectors API
 4. In your working directory, create this file named `first_request.py`
@@ -45,7 +45,7 @@ In this example we will examine how to make your first request to the sectors AP
    ```python
    import requests
    API_KEY = "Your API KEY"
-   url = "https://sectors-api.fly.dev/api/data/subsectors"
+   url = "https://api.sectors.app/api/data/subsectors/"
 
    headers = {
     Authorization: API_KEYS

@@ -20,7 +20,7 @@ pip install requests pandas altair
 
 ## Accessing List of All Subsectors
 
-Before writing your code, you must access your API Keys in the [Sectors API Page](https://www.sectors.app/api). We wil use that API Keys later as an authorization for the API.
+Before writing your code, you must access your API Keys in the [Sectors API Page](https://sectors.app/api). We will use that API Keys later as an authorization for the API.
 
 ```python
 API_KEYS = "Your API Keys"
@@ -28,7 +28,7 @@ API_KEYS = "Your API Keys"
 headers = {
     "Authorization": API_KEYS
 }
-response = requests.get("https://sectors-api.fly.dev/api/data/subsectors/", headers = headers)
+response = requests.get("https://api.sectors.app/api/data/subsectors/", headers = headers)
 
 if response.status_code == 200:
 	data_all_subsectors = response.json()
@@ -109,7 +109,8 @@ for sector in data_all_subsectors:
     headers = {
     "Authorization": API_KEYS
     }
-    response = requests.get(f"https://sectors-api.fly.dev/api/data/companies/?sub_sector={sector}", headers = headers)
+
+    response = requests.get(f"https://api.sectors.app/api/data/companies/?sub_sector={sector}", headers = headers)
 
     if response.status_code == 200:
         list_companies_by_subsectors = response.json()
@@ -202,7 +203,7 @@ chart = chart.configure_title(fontSize=20, anchor='start', color='black').config
     labelFontSize=12,
     titleFontSize=14
 )
-
+    
 chart.display()
 ```
 ![Better Visualization](./image/top_5_companies_by_subsector.png)

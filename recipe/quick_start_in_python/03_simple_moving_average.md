@@ -7,7 +7,7 @@ language: "Python"
 ---
 
 # Simple Moving Average on IDX Stocks
-To analyze a company's stock price data, time series analysis on daily stock data is essential. [Sectors](www.sectors.app) provides this daily stock data, enabling you to conduct such an analysis. One common method used in time series analysis is the Simple Moving Average (SMA). The SMA is a calculation that takes the arithmetic mean of a given set of prices over the specific number of days in the past; for example, over the previous 15, 30, 100, or 200 days. By using [Sectors](www.sectors.app), you can effectively build your time series analysis using daily stock data.
+To analyze a company's stock price data, time series analysis on daily stock data is essential. [Sectors](sectors.app) provides this daily stock data, enabling you to conduct such an analysis. One common method used in time series analysis is the Simple Moving Average (SMA). The SMA is a calculation that takes the arithmetic mean of a given set of prices over the specific number of days in the past; for example, over the previous 15, 30, 100, or 200 days. By using [Sectors](sectors.app), you can effectively build your time series analysis using daily stock data.
 
 ## Install Required Libraries
 - Install the [requests](https://requests.readthedocs.io/en/latest/) library to make HTTP Requests

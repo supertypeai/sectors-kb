@@ -6,11 +6,9 @@ date: "2024-04-25"
 language: "R"
 ---
 
-# Market Capitalization
+# Animating the Top Stocks by Market Capitalization on IDX
 
-Market capitalization, often referred to as market cap, is a measure of a company's total value in the stock market. It is calculated by multiplying the current share price by the total number of outstanding shares. Market capitalization is a key indicator used by investors to determine the size and performance of a company. Companies with higher market capitalizations are generally perceived as more established and stable, while those with lower market capitalizations are often seen as more volatile and risky.
-
-In addition to assessing risk and potential return, market capitalization can also provide insights into market trends and investor sentiment. For example, a significant increase in the market capitalization of a particular sector may indicate growing investor interest and confidence in that sector's prospects. Conversely, a decrease in market capitalization may suggest waning investor confidence or concerns about the sector's future performance. Overall, market capitalization is a valuable tool for investors to analyze and understand the dynamics of the stock market.
+Market capitalization, often referred to as market cap, is a measure of a company's total value in the stock market. It is calculated by multiplying the current share price by the total number of outstanding shares. In a way, it is the market's consensus on the value of a company, reflecting both the company's size and its perceived growth prospects. In Indonesia, it is well observed that the top companies by market capitalization (and hence, value) are the largest banks that command a household level of trust and brand recognition. 
 
 # Analysis
 
@@ -30,7 +28,7 @@ Here are the glimpse of the data, or you can directly access the data from [here
 | 2023-08-31   | AKRA.JK | 2.810300e+13	|
 | 2023-08-31   | APEX.JK | 4.390000e+11	|
 
-## Data Manipulation
+## Data Wrangling
 
 ```r
 df$month <- month(df$date)
