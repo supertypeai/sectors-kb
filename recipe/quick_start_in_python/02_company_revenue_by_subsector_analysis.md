@@ -8,7 +8,7 @@ language: "Python"
 
 # Company Revenue Analysis by Subsectors
 
-Suppose you have some spare cash—often referred to as "cold money"—that you're looking to invest, particularly in the tobacco subsector, with a focus on company's financial. Naturally, you would need to examine the historical financial data of each potential investment, right? Well, relax; there's no need to go through this process manually. With the [Sectors API](https://sectors.app/api), you can effortlessly access and visualize the necessary data!
+Suppose you have some spare cash—often referred to as "cold money"—that you're looking to invest, particularly in the tobacco subsector, with a focus on companies financial. Naturally, you would need to examine the historical financial data of each potential investment, right? Well, relax; there's no need to go through this process manually. With the [Sectors API](https://sectors.app/api), you can effortlessly access and visualize the necessary data!
 
 ## Install Required Libraries
 
@@ -49,8 +49,8 @@ if response.status_code == 200:
     list_companies_by_subsectors = response.json()
     print(list_companies_by_subsectors)
 else:
-	# Handle error
-	print("Error Status :",response.status_code)
+    # Handle error
+    print("Error Status :",response.status_code)
 ```
 
 You should see an output like this
@@ -59,11 +59,11 @@ You should see an output like this
 ['HMSP.JK', 'ITIC.JK', 'GGRM.JK', 'WIIM.JK']
 ```
 
-These are the list of all companies under one subsectors which in this recipe, we use tobacco subsectors.
+These are the list of all companies under one subsector which in this recipe, we use tobacco subsectors.
 
 ### Individual Company Report Per Section
 
-After retrieving the list of companies under the tobacco subsector, the next step is to obtain the financial report for each company. With the help of the [Sectors](sectors.app), you can easily access the Company Report, which provides comprehensive information beyond just financial. The available sections of the report include
+After retrieving the list of companies under the tobacco subsector, the next step is to obtain the financial report for each company. With the help of the [Sectors](sectors.app), you can easily access the Company Report, which provides comprehensive information beyond just financial. The available sections of the report include:
 
 - Overview
 - Valuation
@@ -74,7 +74,7 @@ After retrieving the list of companies under the tobacco subsector, the next ste
 - Management
 - Ownership
 
-But in this section, we will only cover the financials section, specifically the revenue and earning data, lets retrieve the data and merge it into our previous data.
+But in this section, we will only cover the financials section, specifically the revenue and earning data, let’s retrieve the data and merge it into our previous data.
 
 ```python
 data = []
@@ -111,15 +111,15 @@ Now lets transform the data to pandas dataframe so we can do further analysis an
 df = pd.DataFrame(data, columns=['symbol','company_name','year','revenue','earnings'])
 ```
 
-We now have access to both revenue and earnings data through a single API provided by Sectors! Sectors simplifies the process of retrieving each company's financial report. To explore the breadth of available data, you can interact with the API directly.
+We now have access to both revenue and earnings data through a single API provided by Sectors! Sectors simplify the process of retrieving each company's financial report. To explore the breadth of available data, you can interact with the API directly.
 
 ## Data Visualization
 
-Since we already gathered the revenue and earnings data from each company, now lets try to visualize and compare the revenue and earnings data from each company
+Since we already gathered the revenue and earnings data from each company, now let’s try to visualize and compare the revenue and earnings data from each company
 
 ### Revenue Comparison
 
-Lets take a look at a single company revenue first and try to visualize it.
+Let’s take a look at a single company revenue first and try to visualize it.
 
 ```python
 df_filtered = df[(df['symbol'] == 'ITIC.JK')]
@@ -137,9 +137,9 @@ chart = alt.Chart(df_filtered).mark_line().encode(
 chart.display()
 ```
 
-![ITIC.JK Revenue](./image/ITIC_JK_Revenue.png)
+![ITIC.JK Revenue](../image/ITIC_JK_Revenue.png)
 
-Now we can see that PT Indonesian Tobacco Tbk have a consistent increase in the revenue, this is a good insight. Now lets take a look at the bigger picture, lets compare all the company in Tobacco Subsector and also make it much prettier.
+Now we can see that PT Indonesian Tobacco Tbk have a consistent increase in the revenue, this is a good insight. Now let’s take a look at the bigger picture, let’s compare all the company in Tobacco Subsector and also make it much prettier.
 
 ```python
 chart = alt.Chart(df)
@@ -169,7 +169,7 @@ text = label.mark_text(align='left', dx=4)
 line + text
 ```
 
-![Company Revenue Comparison](./image/company_revenue_comparison.png)
+![Company Revenue Comparison](../image/company_revenue_comparison.png)
 
 Upon comparing the revenue of all companies, it's evident that Gudang Garam Tbk consistently outperforms with the highest revenue. This valuable insight could significantly enhance your investment decision-making process.
 
@@ -177,9 +177,9 @@ Upon comparing the revenue of all companies, it's evident that Gudang Garam Tbk 
 
 To compare earnings between companies, you can easily modify the previous code by replacing `revenue` with `earnings`. We won't repeat the code here as it remains largely the same, and we trust in your ability to make this straightforward change.
 
-![Company Earnings Comparison](./image/company_earnings_comparison.png)
+![Company Earnings Comparison](../image/company_earnings_comparison.png)
 
-We see, that HM Sampoerna Tbk consistently have the highest earning compared to all companies
+We see that HM Sampoerna Tbk consistently have the highest earning compared to all companies.
 
 ## Conclusion
 

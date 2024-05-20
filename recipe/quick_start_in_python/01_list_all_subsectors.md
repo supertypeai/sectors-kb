@@ -20,7 +20,7 @@ pip install requests pandas altair
 
 ## Accessing List of All Subsectors
 
-Before writing your code, you must access your API Keys in the [Sectors API Page](https://sectors.app/api). We will use that API Keys later as an authorization for the API.
+Before writing your code, you must access your API Keys in the [Sectors API Page](https://sectors.app/api). We will use that API Key later as an authorization for the API.
 
 ```python
 API_KEYS = "Your API Keys"
@@ -31,10 +31,10 @@ headers = {
 response = requests.get("https://api.sectors.app/api/data/subsectors/", headers = headers)
 
 if response.status_code == 200:
-	data_all_subsectors = response.json()
+    data_all_subsectors = response.json()
 else:
-	# Handle error
-	print(response.status_code)
+    # Handle error
+    print(response.status_code)
 ```
 
 If you try to print the `data_all_subsectors` you'll see a list that look like this:
@@ -50,7 +50,7 @@ If you try to print the `data_all_subsectors` you'll see a list that look like t
 
 ### Transforming data to Pandas DataFrame
 
-Before doing data visualization, lets use pandas to perform a little bit of data processing. Begin by converting the list of subsectors to a pandas DataFrame.
+Before doing data visualization, let’s use pandas to perform a little bit of data processing. Begin by converting the list of subsectors to a pandas DataFrame.
 
 ```python
 # For your information the response data type is a list
@@ -60,7 +60,7 @@ df.head()
 
 <br>
 
-The results will look like the following
+The results will look like the following.
 
 <br>
 
@@ -74,7 +74,7 @@ The results will look like the following
 
 ### Processing the data
 
-As you can see, the subsectors naming standard is not user-friendly, lets fix that too before doing the visualization, you just need to add two lines of code to make it more readable!
+As you can see, the subsector’s naming standard is not user-friendly, lets fix that too before doing the visualization, you just need to add two lines of code to make it more readable!
 
 ```python
 df["subsectors"] = df["subsectors"].str.replace("-"," ")
@@ -82,7 +82,7 @@ df["subsectors"] = df["subsectors"].str.title()
 df.head()
 ```
 
-After the data processing, now it should look more readable
+After the data processing, now it should look more readable.
 
 |     | subsectors                    |
 | --- | ----------------------------- |
@@ -93,11 +93,12 @@ After the data processing, now it should look more readable
 | 4   | Food Staples Retailing        |
 
 ## Data Visualization
+
 Now lets try to visualize all the subsectors using altair!
 
 ### Lets look at another API
 
-The list of all subsectors API only returns a list of subsectors. This is not terribly insightful, so let's shift our focus onto another Sectors API that list all companies within each subsector. That will give us more data to work with and lay the foundation for our data visualization later on.
+The list of all subsectors API only returns a list of subsectors. This is not terribly insightful, so let's shift our focus onto another Sectors API that lists all companies within each subsector. That will give us more data to work with and lay the foundation for our data visualization later.
 
 ### Collect the data
 
@@ -122,7 +123,7 @@ for sector in data_all_subsectors:
 print(data)
 ```
 
-The code above basically retrieve all the list of companies from all subsectors. You should be able to see the output like below:
+The code above basically retrieves all the list of companies from all subsectors. You should be able to see the output like below:
 
 ```
 [['financing-service', 'BFIN.JK'],
@@ -132,13 +133,13 @@ The code above basically retrieve all the list of companies from all subsectors.
  ['insurance', 'ASRM.JK'],
 ...
  ['healthcare-equipment-providers', 'PRIM.JK']]
- ```
+```
 
 Now since we already join the data lets do some data processing and visualize the data.
 
 ### Total Companies by Subsector
 
-In this recipe, lets visualize Total Companies by Subsector using the data that we already have. First step is lets clean our data using the same way and group the data by subsector so we can get the count of companies by each subsector.
+In this recipe, let’s visualize Total Companies by Subsector using the data that we already have. The first step is to clean our data using the same way and group the data by subsector so we can get the count of companies by each subsector.
 
 ```python
 df = pd.DataFrame(data, columns=["subsectors", "company"])
@@ -153,17 +154,17 @@ The code above will make the subsectors more readable and group the data by subs
 df_grouped.head()
 ```
 
-|     | subsectors                    | total_companies|
-| --- | ----------------------------- | --- |
-| 0   | Alternative Energy            | 2   |
-| 1   | Apparel Luxury Goods	      | 23  |
-| 2   | Automobiles Components	      | 17  |
-| 3   | Banks                         | 47  |
-| 4   | Basic Materials               | 106 |
+|     | subsectors             | total_companies |
+| --- | ---------------------- | --------------- |
+| 0   | Alternative Energy     | 2               |
+| 1   | Apparel Luxury Goods   | 23              |
+| 2   | Automobiles Components | 17              |
+| 3   | Banks                  | 47              |
+| 4   | Basic Materials        | 106             |
 
-### Lets visualize it!
+### Let’s visualize it!
 
-Now lets do the most basic visualization using altair, beginning with a bar chart to see the number of companies in each subsector.
+Now let’s do the most basic visualization using altair, beginning with a bar chart to see the number of companies in each subsector.
 
 ```python
 chart = alt.Chart(df_grouped).mark_bar().encode(
@@ -174,16 +175,16 @@ chart = alt.Chart(df_grouped).mark_bar().encode(
 chart.display()
 ```
 
-![basic_visualization](./image/total_companies_by_subsector_basic.png)
+![basic_visualization](../image/total_companies_by_subsector_basic.png)
 
 Well now we have done a very basic bar chart visualization using Altair, but it looks really long and messy! :laughing: Let's reduce the number to be top 5 biggest subsector by company and do some adjustment on the visualization.
 
 ### Top 5 Biggest Subsector by Company
+
 ```python
 df_grouped = df_grouped.sort_values(by="total_companies", ascending=False)
 top_five_subsectors = df_grouped.head(5)
 ```
-
 
 ### A Better visualization!
 
@@ -203,10 +204,11 @@ chart = chart.configure_title(fontSize=20, anchor='start', color='black').config
     labelFontSize=12,
     titleFontSize=14
 )
-    
+
 chart.display()
 ```
-![Better Visualization](./image/top_5_companies_by_subsector.png)
+
+![Better Visualization](../image/top_5_companies_by_subsector.png)
 
 And now we have a much better visualization we can show our boss! :wink:
 

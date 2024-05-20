@@ -38,7 +38,7 @@ In this example we will examine how to make your first request to the sectors AP
 
 1. Go to [Sectors API Page](https://sectors.app/api)
 2. Find the API Keys Section and click the Create API Key button to generate the key
-3. Save the API Key cause we will use that to access Sectors API
+3. Save the API Key because we will use that to access Sectors API
 4. In your working directory, create this file named `first_request.py`
 5. Include the following code in `first_request.py`
 

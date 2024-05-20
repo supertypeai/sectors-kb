@@ -97,7 +97,7 @@ chart = alt.Chart(df).mark_line(size=3).encode(
 chart.display()
 ```
 
-![Daily Time Series](./image/daily_time_series.png)
+![Daily Time Series](../image/daily_time_series.png)
 
 Now we see the time series visualization on BBCA daily transaction data from January 2024 to March 2024.
 
@@ -130,6 +130,6 @@ sma_3 = chart.mark_line().encode(
 close_price + sma_3
 ```
 
-![Daily Time Series SMA 3](./image/daily_sma3_time_series.png)
+![Daily Time Series SMA 3](../image/daily_sma3_time_series.png)
 
 We've successfully incorporated a 3-day Simple Moving Average (SMA) into our chart, demonstrating the flexibility of our visualization tools. The Sectors API simplifies the process of obtaining IDX Stocks data, providing daily transaction data that can be used to create a wide variety of visualizations. With this data, you can track trends, compare performance, and analyze market movements, tailoring your visualizations to meet your specific needs and objectives.
