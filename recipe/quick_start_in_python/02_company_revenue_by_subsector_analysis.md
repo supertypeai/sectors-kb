@@ -11,6 +11,7 @@ language: "Python"
 Suppose you have some spare cash—often referred to as "cold money"—that you're looking to invest, particularly in the tobacco subsector, with a focus on company's financial. Naturally, you would need to examine the historical financial data of each potential investment, right? Well, relax; there's no need to go through this process manually. With the [Sectors API](https://sectors.app/api), you can effortlessly access and visualize the necessary data!
 
 ## Install Required Libraries
+
 - Install the [requests](https://requests.readthedocs.io/en/latest/) library to make HTTP Requests
 - Install [pandas](https://pypi.org/project/pandas/) to do some data exploratory
 - In this recipe we will use [altair](https://pypi.org/project/matplotlib/) to do the data visualization, if you are unfamiliar with altair, try to watch this playlist [Altair Tutorial](https://youtube.com/playlist?list=PLXsFtK46HZxXBddVC0FqmbGdlvbDbaqzx&si=cWtD0cFtwKg0b75v)
@@ -21,6 +22,7 @@ pip install requests pandas altair
 ```
 
 ## Data Exploration
+
 In this recipe we will use a few API from Sectors, here are the following API:
 
 - List of Companies by Subsector API to retrieve all the companies in a subsector
@@ -29,6 +31,7 @@ In this recipe we will use a few API from Sectors, here are the following API:
 Using this API we will get the data we need and do some nice visualization on it. You should take a look at [List All Subsectors Recipe](./01_list_all_subsectors.md) also if you need a simple example of data exploration on Sectors Api.
 
 ### List all company by subsectors
+
 Lets take a look at list of companies under the tobacco subsectors
 
 ```python
@@ -40,7 +43,7 @@ API_KEYS = "Your API Keys"
 headers = {
     "Authorization": API_KEYS
 }
-response = requests.get("https://sectors-api.fly.dev/api/data/companies/?sub_sector=tobacco", headers = headers)
+response = requests.get("https://api.sectors.app/api/data/companies/?sub_sector=tobacco", headers = headers)
 
 if response.status_code == 200:
     list_companies_by_subsectors = response.json()
@@ -51,6 +54,7 @@ else:
 ```
 
 You should see an output like this
+
 ```
 ['HMSP.JK', 'ITIC.JK', 'GGRM.JK', 'WIIM.JK']
 ```
@@ -58,6 +62,7 @@ You should see an output like this
 These are the list of all companies under one subsectors which in this recipe, we use tobacco subsectors.
 
 ### Individual Company Report Per Section
+
 After retrieving the list of companies under the tobacco subsector, the next step is to obtain the financial report for each company. With the help of the [Sectors](sectors.app), you can easily access the Company Report, which provides comprehensive information beyond just financial. The available sections of the report include
 
 - Overview
@@ -77,7 +82,7 @@ for company in list_companies_by_subsectors:
     headers = {
         "Authorization": API_KEYS
     }
-    response = requests.get(f"https://sectors-api.fly.dev/api/data/company/report/{company}/?sections=financials", headers = headers)
+    response = requests.get(f"https://api.sectors.app/api/data/company/report/{company}/?sections=financials", headers = headers)
 
     if response.status_code == 200:
         financial_report = response.json()
@@ -89,6 +94,7 @@ for company in list_companies_by_subsectors:
 ```
 
 If you run the code and try to print the `data` the output should look like this
+
 ```
 [['HMSP.JK', 'HM Sampoerna Tbk', 2019, 106055176000000, 13721513000000],
  ['HMSP.JK', 'HM Sampoerna Tbk', 2020, 92425210000000, 8581378000000],
@@ -130,6 +136,7 @@ chart = alt.Chart(df_filtered).mark_line().encode(
 
 chart.display()
 ```
+
 ![ITIC.JK Revenue](./image/ITIC_JK_Revenue.png)
 
 Now we can see that PT Indonesian Tobacco Tbk have a consistent increase in the revenue, this is a good insight. Now lets take a look at the bigger picture, lets compare all the company in Tobacco Subsector and also make it much prettier.
@@ -161,6 +168,7 @@ text = label.mark_text(align='left', dx=4)
 # Draw the chart with all the layers combined
 line + text
 ```
+
 ![Company Revenue Comparison](./image/company_revenue_comparison.png)
 
 Upon comparing the revenue of all companies, it's evident that Gudang Garam Tbk consistently outperforms with the highest revenue. This valuable insight could significantly enhance your investment decision-making process.
@@ -174,4 +182,5 @@ To compare earnings between companies, you can easily modify the previous code b
 We see, that HM Sampoerna Tbk consistently have the highest earning compared to all companies
 
 ## Conclusion
+
 The Sectors app simplifies the process of retrieving company data. We've demonstrated its use by visualizing and comparing company revenue and earnings. However, the Sectors API offers much more. This is merely an example of its potential; there's a wealth of data at your disposal. Feel free to explore and utilize it according to your needs.
