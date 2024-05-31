@@ -417,3 +417,5 @@ We're going to follow [this documentation](https://docs.streamlit.io/deploy/stre
 
 Congratulations on completing this recipe! You've taken the first step in creating a powerful financial analytics tool. Now, the possibilities are endless. You can always expand and improve your app by adding more visualizations and analyses. Dive deeper into the data available from the [Sectors API](https://sectors.app/api) to uncover new insights and make your app even more comprehensive and insightful. Happy coding!
 
+Note: The full version of the code can be accessed [here](https://github.com/AurelliaChristie/sectorscan).
+
