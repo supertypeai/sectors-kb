@@ -51,7 +51,7 @@ The first thing we wanna do here is to get familiar with how to create your firs
 
 5. That's it! You've created your first Streamlit app. The previous command line you run should redirect you to the browser showing your app as follows:
 
-    ![streamlit_start](/image/streamlit_start.png)
+    ![streamlit_start](/recipe/python_app/sectorscan/image/streamlit_start.png)
 
     If you want to stop the app, just hit `CTRL + C` in your command line. 
 
@@ -114,11 +114,11 @@ st.write(sectors)
 
 Notice that your app won't be changed when you modify your code:
 
-![modified](/image/modified.png)
+![modified](/recipe/python_app/sectorscan/image/modified.png)
 
 To automatically reload your app whenever the source code change, click the `Always rerun` button on the top right of the page. But if you only want to reload the app when you ask the app to do so, click the `Rerun` button instead. If the function works, your app should look like this after you click the button (I've removed the welcome text to make the app tidier):
 
-![print_sectors](/image/print_sectors.png)
+![print_sectors](/recipe/python_app/sectorscan/image/print_sectors.png)
 
 Ok since the function works already, remove the `st.write()` and let's continue to bring more content to our app!
 
@@ -136,7 +136,7 @@ options = st.multiselect(
 
 We use `options` variable to contain the selected sectors to be used across our code later. And to ensure the visualizations remain clear and easy to read, we limit the maximum selections to 5 sectors. When your app reloads, it should show the multiselect filter as follows:
 
-![filter](/image/filter.png)
+![filter](/recipe/python_app/sectorscan/image/filter.png)
 
 Notice that the options are in `..-..` format, so we'll utilize `format_func` parameter of the `st.multiselect()` to display the options in a prettier way:
 
@@ -155,7 +155,7 @@ options = st.multiselect(
 
 Ok, now we have a better filter to be displayed:
 
-![better_filter](/image/better_filter.png)
+![better_filter](/recipe/python_app/sectorscan/image/better_filter.png)
 
 If you read the documentation of [`st.multiselect()`](https://docs.streamlit.io/develop/api-reference/widgets/st.multiselect), there's no option to disable the `clear options` button, thus, we have to make sure that we handle the case when user clears the options (no sector is selected). We'll use [`st.warning()`](https://docs.streamlit.io/develop/api-reference/status/st.warning) to warn the user about this:
 ```python
@@ -167,7 +167,7 @@ else:
 
 Now if you clear the options you'll see this warning:
 
-![warning](/image/warning.png)
+![warning](/recipe/python_app/sectorscan/image/warning.png)
 
 ## Market cap section
 
@@ -217,7 +217,7 @@ with col2:
 
 The result will be as follow:
 
-![mc_first_row](/image/mc_first_row.png)
+![mc_first_row](/recipe/python_app/sectorscan/image/mc_first_row.png)
 
 Feel free to modify the width of the columns and the charts.
 
@@ -233,7 +233,7 @@ st.altair_chart(mc_change_chart)
 
 The result will be as follow:
 
-![mc_second_row](/image/mc_second_row.png)
+![mc_second_row](/recipe/python_app/sectorscan/image/mc_second_row.png)
 
 ## Valuation section
 
@@ -287,7 +287,7 @@ st.altair_chart(valuation_chart)
 
 Your valuation section should look like this:
 
-![valuation](/image/valuation.png)
+![valuation](/recipe/python_app/sectorscan/image/valuation.png)
 
 If you change the selection, the chart should be updated based on it.
 
@@ -349,7 +349,7 @@ with tab4:
 
 Your top companies section should look like this:
 
-![top_companies](/image/top_companies.png)
+![top_companies](/recipe/python_app/sectorscan/image/top_companies.png)
 
 When you click on another tab's title, it should display the chart based on the title.
 
@@ -370,11 +370,11 @@ We're going to follow [this documentation](https://docs.streamlit.io/deploy/stre
 
 1. Login and go to [Github](https://github.com/), then click the `New` button:
    
-   ![new_repo](/image/new_repo.png) 
+   ![new_repo](/recipe/python_app/sectorscan/image/new_repo.png) 
 
 2. Fill in the repository details, more or less as follows:
 
-    ![github](/image/github.png)
+    ![github](/recipe/python_app/sectorscan/image/github.png)
 
 3. Click the `Create repository` button.
 4. Now, prepare your files:
@@ -387,27 +387,27 @@ We're going to follow [this documentation](https://docs.streamlit.io/deploy/stre
         ```
 5. Upload both of the files to the repository by clicking the `Add file` - `Upload files` button on the repository page:
 
-    ![upload_files](/image/upload_files.png)
+    ![upload_files](/recipe/python_app/sectorscan/image/upload_files.png)
 
     Then, click on the `Commit changes` button. Your repository is ready to be deployed! Your repository page now should look like this:
 
-    ![final_repo](/image/final_repo.png)
+    ![final_repo](/recipe/python_app/sectorscan/image/final_repo.png)
 
 6. Login to [Streamlit](https://authkit.streamlit.io/) to deploy the app. 
 7. Click the `Create app` button on the top right:
 
-    ![create_streamlit](/image/create_streamlit.png)
+    ![create_streamlit](/recipe/python_app/sectorscan/image/create_streamlit.png)
 
 8. Click on the `Yup, I have an app` option.
 9. Fill in the app detail as follows:
     
-    ![streamlit_detail](/image/streamlit_detail.png)
+    ![streamlit_detail](/recipe/python_app/sectorscan/image/streamlit_detail.png)
 
     You should choose different app URL since I've used `sectorscan.streamlit.app`.
 
 10. Click the `Advance settings...` link below the `App URL` and paste the content of `secrets.toml` in there:
     
-    ![secrets](/image/secrets.png)
+    ![secrets](/recipe/python_app/sectorscan/image/secrets.png)
 
     Then, click the `Save` button.
 

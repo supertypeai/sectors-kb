@@ -1,5 +1,5 @@
 ---
-title: "SectorScan - Part 1: Dive into The Data"
+title: "SectorScan - Part 1: Dive into the data"
 author: "Aurellia Christie"
 author_link: "https://github.com/AurelliaChristie"
 date: "2024-05-30"
@@ -331,7 +331,7 @@ Notice that I use `:Q` and `:N` behind the column names, these are used to speci
 
 You should have a pie chart looks like the followings:
 
-![total_market_cap](/image/total_market_cap.png)
+![total_market_cap](/recipe/python_app/sectorscan/image/total_market_cap.png)
 
 If you're following this recipe by running the code in your notebook, you can see the tooltip we set when you hover over the chart.
 
@@ -376,7 +376,7 @@ mc_hist_chart = alt.Chart(df_mc_hist).mark_line(
 
 and that will give a result of the following chart:
 
-![hist_market_cap](/image/hist_market_cap.png)
+![hist_market_cap](/recipe/python_app/sectorscan/image/hist_market_cap.png)
 
 ### Historical market cap change visualization
 
@@ -418,7 +418,7 @@ mc_change_chart = alt.Chart(df_mc_change).mark_line(
 
 The result should be similar to this:
 
-![change_market_cap](/image/change_market_cap.png)
+![change_market_cap](/recipe/python_app/sectorscan/image/change_market_cap.png)
 
 ## Valuation
 
@@ -543,7 +543,7 @@ valuation_chart = alt.Chart(df_valuation).mark_line(
 
 That will result in this beautiful chart:
 
-![price_to_book](/image/pb.png)
+![price_to_book](/recipe/python_app/sectorscan/image/pb.png)
 
 For the other metrics, just change all the `Price/Book Ratio` in the code above with the metric: `Price/Earning Ratio`, `Price/Sales Ratio`, or `Price/Cash Flow Ratio`, and you should get a similar visualization as above but with the chosen metric value. 
 
@@ -725,7 +725,7 @@ mc_chart = alt.Chart(df_top_mc).mark_bar().encode(
 
 Here is the result:
 
-![top_market_cap](/image/top_mc.png)
+![top_market_cap](/recipe/python_app/sectorscan/image/top_mc.png)
 
 ### Top companies based on revenue growth visualization
 
@@ -766,7 +766,7 @@ growth_chart = alt.Chart(df_top_growth).mark_bar().encode(
 
 and the result is:
 
-![top_growth](/image/top_growth.png)
+![top_growth](/recipe/python_app/sectorscan/image/top_growth.png)
 
 ### Top companies based on profit visualization
 
@@ -807,7 +807,7 @@ profit_chart = alt.Chart(df_top_profit).mark_bar().encode(
 
 The result will be:
 
-![top_profit](/image/top_profit.png)
+![top_profit](/recipe/python_app/sectorscan/image/top_profit.png)
 
 ### Top companies based on revenue visualization
 
@@ -848,7 +848,7 @@ revenue_chart = alt.Chart(df_top_revenue).mark_bar().encode(
 
 And the result is as follows:
 
-![top_revenue](/image/top_revenue.png)
+![top_revenue](/recipe/python_app/sectorscan/image/top_revenue.png)
 
 # Next Step
 
