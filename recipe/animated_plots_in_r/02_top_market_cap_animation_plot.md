@@ -47,7 +47,7 @@ for (i in stocks_list) {
     end_date <- format(end_date, "%Y-%m-%d")
     
     # Construct the URL
-    url <- paste0("https://api.sectors.app/api/data/daily/", i, "/?start=", start_date, "&end=", end_date)
+    url <- paste0("https://api.sectors.app/v1/daily/", i, "/?start=", start_date, "&end=", end_date)
     
     # Make the API request
     response <- GET(url, add_headers(Authorization = api_key))

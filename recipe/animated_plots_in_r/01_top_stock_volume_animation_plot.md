@@ -31,7 +31,7 @@ After installing the necessary packages and loading the libraries, we can start 
 library(httr)
 
 # Replace the URL with a URL from the Available Endpoints section
-url <- "https://api.sectors.app/api/data/most-traded/?start=2024-01-01&end=2024-03-24&n_stocks=10" #Top 10 Daily most traded stocks from 1st January 2024 to 24th March 2024
+url <- "https://api.sectors.app/v1/most-traded/?start=2024-01-01&end=2024-03-24&n_stocks=10" #Top 10 Daily most traded stocks from 1st January 2024 to 24th March 2024
 api_key <- "YOUR API KEY"
 
 headers <- c(Authorization = api_key)

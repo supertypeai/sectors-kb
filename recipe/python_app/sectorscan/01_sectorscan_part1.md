@@ -62,13 +62,13 @@ def fetch_data(url):
 Before we can compare data from different sectors, we need to get a list of all available sectors. This can be achieved by using the following endpoint from the Sectors API:
 
 ```
-GET https://api.sectors.app/api/data/subsectors/
+GET https://api.sectors.app/v1/subsectors/
 ```
 
 So, we just need to call the URL using our function and save the data into a new variable called `sectors`. 
 
 ```python
-url = "https://api.sectors.app/api/data/subsectors/"
+url = "https://api.sectors.app/v1/subsectors/"
 sectors = fetch_data(url)
 ```
 
@@ -93,13 +93,13 @@ As I mentioned before, there are three things that we want to compare in SectorS
 We can utilize the following endpoint to get the market cap data from each sector:
 
 ```
-GET https://api.sectors.app/api/data/sector/report/{sector}/?sections=market_cap
+GET https://api.sectors.app/v1/sector/report/{sector}/?sections=market_cap
 ```
 
 And once we call it using our function,
 
 ```python
-url = f"https://api.sectors.app/api/data/sector/report/{sectors[0]}/?sections=market_cap"
+url = f"https://api.sectors.app/v1/sector/report/{sectors[0]}/?sections=market_cap"
 market_cap = fetch_data(url)
 ```
 
@@ -222,7 +222,7 @@ df_mc_hist = pd.DataFrame()
 df_mc_change = pd.DataFrame()
 
 for i in range(3):
-  url = f"https://api.sectors.app/api/data/sector/report/{sectors[i]}/?sections=market_cap"
+  url = f"https://api.sectors.app/v1/sector/report/{sectors[i]}/?sections=market_cap"
   market_cap = fetch_data(url)
 
   mc_curr = pd.DataFrame({
@@ -250,12 +250,12 @@ for i in range(3):
 In this first visualization, we want to compare the total market cap of each sector. But to make the  visualization more robust, we will compare the percentage market cap of each sector from the total IDX market cap. Thus, we will need to first combine our `df_mc_curr` with the IDX market cap data that we can obtain using the following endpoint:
 
 ```
-GET https://api.sectors.app/api/data/sector/report/{sector}/?sections=idx
+GET https://api.sectors.app/v1/sector/report/{sector}/?sections=idx
 ```
 
 Call it using our function,
 ```python
-url = f"https://api.sectors.app/api/data/sector/report/{sectors[0]}/?sections=idx"
+url = f"https://api.sectors.app/v1/sector/report/{sectors[0]}/?sections=idx"
 idx = fetch_data(url)
 ```
 
@@ -432,12 +432,12 @@ Now let's move on to the Valuation. There are four valuation metrics that we'll 
 
 The valuation data can be obtained using the following endpoint:
 ```
-GET https://api.sectors.app/api/data/sector/report/{sector}/?sections=valuation
+GET https://api.sectors.app/v1/sector/report/{sector}/?sections=valuation
 ```
 
 Calling it using our function,
 ```python
-url = f"https://api.sectors.app/api/data/sector/report/financing-service/?sections=valuation"
+url = f"https://api.sectors.app/v1/sector/report/financing-service/?sections=valuation"
 valuation = fetch_data(url)
 ```
 
@@ -502,7 +502,7 @@ Last step, do a looping to combine the above data of the first three sectors in 
 df_valuation = pd.DataFrame()
 
 for i in range(3):
-  url = f"https://api.sectors.app/api/data/sector/report/{sectors[i]}/?sections=valuation"
+  url = f"https://api.sectors.app/v1/sector/report/{sectors[i]}/?sections=valuation"
   valuation = fetch_data(url)
   df = pd.DataFrame(valuation["valuation"]["historical_valuation"])
   df["Sector"] = valuation["sub_sector"]
@@ -560,12 +560,12 @@ The last aspect we'll compare between the sectors is the Top Companies. For this
 
 Data for the top companies can be retrieved using the following endpoint:
 ```
-GET https://api.sectors.app/api/data/sector/report/{sector}/?sections=companies
+GET https://api.sectors.app/v1/sector/report/{sector}/?sections=companies
 ```
 
 Call it using our function,
 ```python
-url = f"https://api.sectors.app/api/data/sector/report/{sectors[0]}/?sections=companies"
+url = f"https://api.sectors.app/v1/sector/report/{sectors[0]}/?sections=companies"
 company = fetch_data(url)
 ```
 
@@ -664,7 +664,7 @@ df_top_profit = pd.DataFrame()
 df_top_revenue = pd.DataFrame()
 
 for i in range(3):
-  url = f"https://api.sectors.app/api/data/sector/report/{sectors[i]}/?sections=companies"
+  url = f"https://api.sectors.app/v1/sector/report/{sectors[i]}/?sections=companies"
   company = fetch_data(url)
 
   keys = ["top_mcap", "top_growth", "top_profit", "top_revenue"]

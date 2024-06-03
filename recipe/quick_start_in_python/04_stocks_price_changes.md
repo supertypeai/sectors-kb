@@ -88,7 +88,7 @@ for i in ["TLKM.JK","ISAT.JK","EXCL.JK","KBLV.JK"]:
             end_date = date[j+1]
             end_date = end_date.strftime('%Y-%m-%d')
 
-        url = f"https://api.sectors.app/api/data/daily/{i}/?start={start_date}&end={end_date}"
+        url = f"https://api.sectors.app/v1/daily/{i}/?start={start_date}&end={end_date}"
         
 
         headers = {

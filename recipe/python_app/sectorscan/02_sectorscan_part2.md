@@ -106,7 +106,7 @@ def fetch_data(url):
 
 You can test the function by retrieving the sectors data and display it as a text first using [`st.write()`](https://docs.streamlit.io/develop/api-reference/write-magic/st.write):
 ```python
-url = "https://api.sectors.app/api/data/subsectors/"
+url = "https://api.sectors.app/v1/subsectors/"
 sectors = fetch_data(url)
 sectors.sort() # sort the list based on the sector's name to make it tidier
 st.write(sectors)
@@ -184,7 +184,7 @@ df_mc_hist = pd.DataFrame()
 df_mc_change = pd.DataFrame()
 
 for i in options:
-    url = f"https://api.sectors.app/api/data/sector/report/{i}/?sections=market_cap"
+    url = f"https://api.sectors.app/v1/sector/report/{i}/?sections=market_cap"
     market_cap = fetch_data(url)
     ... # the rest of the code
 ```
@@ -242,7 +242,7 @@ First let's move the code to retrieve valuation data from the last chunk of code
 df_valuation = pd.DataFrame()
 
 for i in options:
-    url = f"https://api.sectors.app/api/data/sector/report/{i}/?sections=valuation"
+    url = f"https://api.sectors.app/v1/sector/report/{i}/?sections=valuation"
     valuation = fetch_data(url)
     ... # the rest of the code
 ```
@@ -308,7 +308,7 @@ df_top_profit = pd.DataFrame()
 df_top_revenue = pd.DataFrame()
 
 for i in options:
-    url = f"https://api.sectors.app/api/data/sector/report/{i}/?sections=companies"
+    url = f"https://api.sectors.app/v1/sector/report/{i}/?sections=companies"
     company = fetch_data(url)
     ... # the rest of the code
 ```

@@ -49,7 +49,7 @@ library(ggplot2)
 You can then make a GET request to the Sectors API to retrieve the stock price data for BREN and BBCA. Sectors API documentation provides the following endpoint to get the stock price data for a specific stock (using `BBCA` as an example):
 
 ```
-GET https://api.sectors.app/api/data/daily/BBCA/?start=2024-04-01&end=2024-05-15
+GET https://api.sectors.app/v1/daily/BBCA/?start=2024-04-01&end=2024-05-15
 ```
 
 You can replace `BBCA` with `BREN` to get the stock price data for Barito Renewables. The `start` and `end` parameters specify the date range for the data you want to retrieve. Your header should include the `Authorization` key with your API key as the value.
@@ -60,7 +60,7 @@ headers <- add_headers(Authotization=API_KEY)
 symbol <- "BBCA" # or "BREN"
 
 # use paste0 to form the endpoint URL
-url <- paste0("https://api.sectors.app/api/data/daily/",symbol,"/?start=2024-04-01&end=2024-05-15")
+url <- paste0("https://api.sectors.app/v1/daily/",symbol,"/?start=2024-04-01&end=2024-05-15")
 response <- GET(url, headers)
 ```
 
@@ -73,7 +73,7 @@ To iterate through the stocks you want to retrieve, you can use a loop or a func
 df_daily <- data.frame()
 
 for (i in c("BBCA","BREN", "TPIA")){
-  url <- paste0("https://api.sectors.app/api/data/daily/",i,"/?start=2024-04-01&end=2024-05-18")
+  url <- paste0("https://api.sectors.app/v1/daily/",i,"/?start=2024-04-01&end=2024-05-18")
   response <- GET(url, headers)
   
   if (status_code(response) == 200) {

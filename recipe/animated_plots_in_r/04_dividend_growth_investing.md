@@ -45,7 +45,7 @@ cleaned_stocks <- sub(".JK", "", stocks)
 
 for (i in cleaned_stocks) {
   # Replace the URL with a URL from the Available Endpoints section
-  url <- paste0("https://api.sectors.app/api/data/company/report/", i, "/?sections=dividend")
+  url <- paste0("https://api.sectors.app/v1/company/report/", i, "/?sections=dividend")
   
   headers <- c(Authorization = api_key)
   

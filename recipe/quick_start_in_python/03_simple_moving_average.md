@@ -31,7 +31,7 @@ API_KEYS = "Your API Keys"
 headers = {
     "Authorization": API_KEYS
 }
-response = requests.get("https://api.sectors.app/api/data/daily/BBCA/?start=2024-01-01&end=2024-03-31", headers = headers)
+response = requests.get("https://api.sectors.app/v1/daily/BBCA/?start=2024-01-01&end=2024-03-31", headers = headers)
 
 if response.status_code == 200:
     daily_data = response.json()

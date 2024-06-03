@@ -45,7 +45,7 @@ In this example we will examine how to make your first request to the sectors AP
    ```python
    import requests
    API_KEY = "Your API KEY"
-   url = "https://api.sectors.app/api/data/subsectors/"
+   url = "https://api.sectors.app/v1/subsectors/"
 
    headers = {
     Authorization: API_KEYS

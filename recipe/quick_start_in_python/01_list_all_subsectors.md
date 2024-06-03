@@ -28,7 +28,7 @@ API_KEYS = "Your API Keys"
 headers = {
     "Authorization": API_KEYS
 }
-response = requests.get("https://api.sectors.app/api/data/subsectors/", headers = headers)
+response = requests.get("https://api.sectors.app/v1/subsectors/", headers = headers)
 
 if response.status_code == 200:
     data_all_subsectors = response.json()
@@ -111,7 +111,7 @@ for sector in data_all_subsectors:
     "Authorization": API_KEYS
     }
 
-    response = requests.get(f"https://api.sectors.app/api/data/companies/?sub_sector={sector}", headers = headers)
+    response = requests.get(f"https://api.sectors.app/v1/companies/?sub_sector={sector}", headers = headers)
 
     if response.status_code == 200:
         list_companies_by_subsectors = response.json()
