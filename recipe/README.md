@@ -1,5 +1,6 @@
 # Recipe
-All recipes are written in markdown format and are stored in this `recipe` directory.
+
+🚨 **Important Update**: We have moved all our recipes to the official [Sectors API Docs](https://github.com/supertypeai/sectors_api_docs). You can now find the most up-to-date and enhanced versions of these recipes [there](https://github.com/supertypeai/sectors_api_docs/recipes). Previously, our recipes were available in this `recipe` directory in Markdown (`.md`) format. In our new documentation, they have been upgraded to MDX (`.mdx`) format to provide a more interactive and rich content experience. 
 
 Each recipe is a standalone document that contains a brief introduction, a list of prerequisites, a step-by-step guide to follow, and some additional notes or tips that the author finds useful.
 
