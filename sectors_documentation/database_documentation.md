@@ -1138,6 +1138,7 @@ This view summarize all the important data for each company which taken from the
 | `historical_financials_quarterly` | jsonb | Historical quarterly financial statements. | All data directly taken from [`idx_combine_financials_quarterly`](#idx_combine_financials_quarterly).|
 | `upcoming_dividends` | jsonb | Scheduled upcoming dividend events (amount, ex-dividend date, payment date). | Data directly taken from [`idx_upcoming_dividend`](#idx_upcoming_dividend).|
 | `tags` | text[] | Tags/labels associated with the company. | Detail calculation/explanation is explained in [`tags`](#tags) | 
+| `indices` | text[] | The index in IDX where the company belongs to | Data directly taken from [`idx_company_profile`](#idx_company_profile)|
 
 
 ### peers_data
