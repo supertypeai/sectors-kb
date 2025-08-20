@@ -865,7 +865,6 @@ This view summarize all the important data for each sub-sector which taken from 
 | `health_index_description`  | text             | Description of the health index methodology for the group.                 |
 | `median_yield_ttm`          | double precision | Median trailing twelve-month dividend yield across companies in the sub-sector. |
 
-
 ### idx_stock_split_cumulative
 ----------------------
 This view calculate the cumulative stock split ratio from the [idx_stock_split](#idx_stock_split) table.
@@ -920,7 +919,7 @@ This MV is used to provide the time sensitive interesting facts from the top 50 
 | `company_name` | text | The name of the company. |
 | `interesting_facts` | jsonb | There timely interesting facts are based on this topics: `upcoming_dividend`, `valuation` (P/E and P/B value), `volume` (transaction volume), and `price` (current price compare to 90d-all-time, 52w-all-time, ytd-all-time, and all-time high/low price).|
 
-### idx_interesting_facts_timely
+### idx_interesting_facts_untimely
 ----------------------
 This MV is used to provide the time insensitive interesting facts from the top 50 companies based on the market capitalization value in IDX. This MV get scheduled refresh everyday at 07:00 (GMT +7).
 
@@ -1061,7 +1060,7 @@ This MV is used to provide metrics aggregation of each active company's which su
 | `company_value_forecasts`  | jsonb | JSON of forecasted EPS & revenue values by year.| Data taken from [`idx_company_growth_forecast`](#idx_company_growth_forecast), with the JSON structure: `jsonb_agg({ "estimate_year": ..., "eps_estimate": ..., "revenue_estimate": ... })`.|
 
 
-### idx_sectors_report_calc
+### idx_sector_reports_calc
 ----------------------
 This MV is used to provide metrics aggregation of each sub-sectors's which supply the data for [`idx_sector_reports`](#idx_sector_reports). This MV get scheduled refresh everyday at 05:05 and 11:05 (GMT+7).
 
@@ -1151,7 +1150,6 @@ This view summarize all the important data for each company which taken from the
 | `upcoming_dividends` | jsonb | Scheduled upcoming dividend events (amount, ex-dividend date, payment date). | Data directly taken from [`idx_upcoming_dividend`](#idx_upcoming_dividend).|
 | `tags` | text[] | Tags/labels associated with the company. | Detail calculation/explanation is explained in [`tags`](#tags) | 
 | `indices` | text[] | The index in IDX where the company belongs to | Data directly taken from [`idx_company_profile`](#idx_company_profile)|
-
 
 ### peers_data
 ----------------------
