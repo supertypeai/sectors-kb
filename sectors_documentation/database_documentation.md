@@ -116,6 +116,18 @@ This table details all of the dividend payment made by the companies listed in i
 | `dividend_original` | float4 | | The dividend amount each stock receives, not adjusted for stock splits or other corporate actions that may affect share price.|
 | `updated_on` | timestamptz | | The time when the data is updated or pushed into the database |
 
+### idx_suspension
+----------------------
+This table details all suspension announcements of companies listed on IDX.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|----------|
+| `symbol` | text | Primary Key, Foreign Key (`idx_company_profile.symbol`) | The company symbol of the suspended stock |
+| `suspension_date` | date | Primary Key | The date when the suspension was announced, extracted from the announcement PDF |
+| `reason` | text | | The reason for the suspension, extracted from the announcement PDF |
+| `pdf_url` | text | | The direct URL to the official suspension announcement PDF |
+| `updated_on` | timestamptz | | The time when the data is updated or pushed into the database |
+
 ### idx_esg_score
 ----------------------
 This table details all of the Environmental, Social, and Governance (ESG) risk of each company in IDX
