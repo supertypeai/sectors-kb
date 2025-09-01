@@ -557,6 +557,22 @@ This table details the price of some indices in IDX, KLSE, and SGX
 | `one_year_sales_growth`              | double precision |    | Sales growth over the past year.                                 |
 | `is_active`                            | boolean          |    | Indicates whether the security is currently active (true/false). |
 
+### sgx_manual_input
+----------------------
+This table details of annual financial metrics from the manual curated financial report.
+| Column Name            | Data Type               | Constraint | Description                                                                |
+| ----------------------- | ------------------------ | ---------- | -------------------------------------------------------------------------- |
+| `symbol`                  | text                     | Primary Key   | Ticker symbol of the stock.                                                |
+| `updated_on`             | timestamp with time zone |   | Timestamp when the record was last updated. |
+| `financial_year`         | smallint                 | Primary Key   | The fiscal year the data refers to.                                        |
+| `sankey_component`       | jsonb                    |    | JSON object containing data for visual Sankey diagrams.                    |
+| `income_stmt_metrics`   | jsonb                    |    | JSON object containing key income statement metrics.                       |
+| `source_url`             | text                     |    | URL linking to the data source or reference document.                      |
+| `balance_sheet_metrics` | jsonb                    |    | JSON object containing key balance sheet metrics.                          |
+| `cash_flow_metrics`     | jsonb                    |    | JSON object containing key cash flow metrics.                              |
+| `employee_breakdown`     | jsonb                    |    | JSON object showing employee distribution (e.g., by department or region). |
+| `industry_breakdown`     | jsonb                    |    | JSON object showing breakdown by industry segments.                        |
+
 ### sgx_short_sell
 ----------------------
 This table details the short transaction in SGX
@@ -1132,7 +1148,7 @@ This view summarize all the important data for each company which taken from the
 | `company_value_forecasts` | jsonb | Forecasted and latest EPS and revenue absolute values by year. | Data directly taken from [`idx_company_report_calc`](#idx_company_report_calc) and [`idx_combine_financials_annual`](#idx_combine_financials_annual).|
 | `wsj_format` | smallint | Display formatting option for WSJ-style reports. | Data directly taken from [`idx_company_profile`](#idx_company_profile).|
 | `top_transactions` | jsonb | Recent top institution transactions.| Data directly taken from [`idx_institution_transactions`](#idx_institution_transactions).|
-| `monthly_net_transactions` | jsonb | Monthly aggregated buy/sell institution transaction data.| Data directly taken from [`idx_institution_transactions`](#idx_institution_transactions).|
+| `institutional_transaction_flow` | jsonb | Monthly aggregated buy/sell institution transaction data.| Data directly taken from [`idx_institution_transactions`](#idx_institution_transactions).|
 | `yoy_quarter_earnings_growth` | double precision | Year-over-year quarterly earnings growth percentage. | Data directly taken from [`idx_calc_metrics_quarterly`](#idx_calc_metrics_quarterly).|
 | `yoy_quarter_revenue_growth` | double precision | Year-over-year quarterly revenue growth percentage.| Data directly taken from [`idx_calc_metrics_quarterly`](#idx_calc_metrics_quarterly).|
 | `intrinsic_value`| bigint | Estimated intrinsic value of the company (valuation model). | Detail calculation/explanation is explained in [`tags`](#tags) | 
@@ -1160,7 +1176,7 @@ This MV compiles peer information for each company to enable comparisons. Peers 
 | `symbol`      | text      | Stock ticker symbol of the company. |
 | `peers_data`  | jsonb     | Peers data compilation that consist of key financial metrics, valuation figures, and market cap information of each company in the peers|
 
-### sgx_companies (Pending)
+### sgx_company_report (Pending)
 
 ## Other Detail Column Explanation
 
