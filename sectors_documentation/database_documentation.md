@@ -1236,7 +1236,7 @@ This is the detail description for all the `tags` value that is available in the
 - `public-float-under-25`: Companies with public owning <= 25%.
 - `invested-by-danantara`: Companies that have Danantara as one of the shareholders.
 - `majority-shareholders-in-control-50`: Companies that have either one of the directors/commissioners with >= 50% of shares percentage individually (for example the president director have 60%).
-- `single-institution-holding-70`: Largest shareholder owns >= 70%.
+- `single-entity-holding-70`: Largest shareholder owns >= 70%.
 - `upcoming-dividend`  : companies that the dividend ex-date is greater than current date.
 - `top-90d-transaction-volume`: 30 companies with the highest 90d transaction volume.
 - `top-90d-transaction-value`: 30 companies with the highest 90d transaction value (volume * price).
@@ -1251,6 +1251,7 @@ This is the detail description for all the `tags` value that is available in the
 - `insider-1-month-buy`: Companies that have insider buy transaction in the last 1 month.
 - `insider-1-month-sell`: Companies that have insider sell transaction in the last 1 month.
 - `dividend-yield-ttm-above-5-percent`: Companies with dividend yield TTM value more than 5%.
+- `dividend-increase-5y`: Companies that give dividend for 5 consecutive years (until current year - 1), and their dividend amount always increased
 
 ### Intrinsic Value
 This is the detail step how to calculate Intrinsic Value that is available in the [`idx_company_report.intrinsic_value`](#idx_company_report)
