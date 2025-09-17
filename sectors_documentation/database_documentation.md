@@ -1290,3 +1290,16 @@ $$
 text{Intrinsic Value per Share} = frac{text{Present Value of FCF} - text{Net Debt}}{text{Shares Outstanding}}
 $$
 
+### sgx_manual_input industry_breakdown column breakdown 
+This section will breakdown the value of [`sgx_manual_input.industry_breakdown`](#sgx_manual_input)
+
+**Bank Companies**
+* Non Loan Asset: Specifying the amount of non loan assets grouped by class and category
+* Loan by Economic Sectors: Breakdown of loan receivables based on each sectors
+* Customer Breakdown: Breakdown of net interest income based on each customer type
+
+**REIT Companies**
+* top_10_gri%_customers: Top 10 customers based on the Gross Rental Income
+* gross_rental_income_by_sectors: Breakdown of percentage gross rental income by industry
+* property_portfolio_top_20: Top 20 property owned by the REIT. Consist of ownership percentage, gross revenue, market valuation, and occupancy rate
+* property_counts_by_country: Breakdwon of property portfolio per country per property category. Data will be shown in this structure `[property count, gross revenue, market valuation]`
