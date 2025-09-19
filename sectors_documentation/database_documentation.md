@@ -1176,7 +1176,58 @@ This MV compiles peer information for each company to enable comparisons. Peers 
 | `symbol`      | text      | Stock ticker symbol of the company. |
 | `peers_data`  | jsonb     | Peers data compilation that consist of key financial metrics, valuation figures, and market cap information of each company in the peers|
 
-### sgx_company_report (Pending)
+### sgx_company_report
+----------------------
+This materialized view consolidates and summarizes key financial, market, and profile data for each active company listed on the Singapore Exchange (SGX). It prioritizes manually curated data from `sgx_manual_input` over automated data from `sgx_companies` to ensure the highest accuracy. The view calculates various performance metrics, aggregates historical financials, and provides a comprehensive report for each company. It is scheduled to refresh twice daily to reflect the latest market data.
+
+| column_name | data_type | Description |
+| :--- | :--- | :--- |
+| `name` | text | Full name of the company. |
+| `currency` | text | The currency in which the company's financials and market data are reported (e.g., SGD, USD). |
+| `market_cap` | bigint | The total market value of the company's outstanding shares, calculated as the latest share price multiplied by the number of shares outstanding. |
+| `volume` | double precision | The number of shares traded on the last finished trading day, which may not be the most recent day. |
+| `pe` | double precision | Price-to-Earnings (P/E) ratio for the trailing twelve months (TTM), calculated by dividing the latest share price by the TTM earnings per share. |
+| `eps` | double precision | Earnings Per Share for the trailing twelve months (TTM). |
+| `beta` | double precision | A measure of the stock's volatility in relation to the overall market. |
+| `change_1d` | numeric | The percentage change in the stock's closing price from the previous trading day. |
+| `change_7d` | numeric | The percentage change in the stock's closing price over the last 7 days. |
+| `change_1m` | numeric | The percentage change in the stock's closing price over the last 1 month. |
+| `change_ytd` | double precision | The percentage change in the stock's price from the beginning of the current year to the latest trading day. |
+| `change_1y` | double precision | The percentage change in the stock's price over the last 1 year. |
+| `change_3y` | double precision | The percentage change in the stock's price over the last 3 years. |
+| `ps` | double precision | Price-to-Sales (P/S) ratio for the trailing twelve months (TTM), calculated by dividing market cap by TTM revenue. |
+| `pcf` | double precision | Price-to-Cash-Flow (P/CF) ratio for the trailing twelve months (TTM). |
+| `pb` | double precision | Price-to-Book (P/B) ratio, comparing the company's market cap to its book value. |
+| `five_year_eps_growth` | double precision | **(DEPRECATED SOON)** The compound annual growth rate of earnings per share over the last five years. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
+| `five_year_sales_growth` | double precision | **(DEPRECATED SOON)** The compound annual growth rate of sales (revenue) over the last five years. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
+| `five_year_capital_spending_growth`| double precision | **(DEPRECATED SOON)** The compound annual growth rate of capital spending over the last five years. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
+| `asset_turnover` | double precision | **(DEPRECATED SOON)** An efficiency ratio that measures how effectively a company uses its assets to generate revenue. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
+| `inventory_turnover_ttm` | double precision | **(DEPRECATED SOON)** An efficiency ratio showing how many times a company has sold and replaced inventory during the trailing twelve months. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
+| `receivable_turnover` | double precision | **(DEPRECATED SOON)** An efficiency ratio measuring how effectively a company collects its accounts receivable. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
+| `gross_margin` | double precision | The percentage of revenue that exceeds the cost of goods sold. |
+| `operating_margin` | double precision | The percentage of revenue remaining after covering operating expenses for the trailing twelve months (TTM). |
+| `net_profit_margin` | double precision | The percentage of revenue that translates into net profit. |
+| `quick_ratio` | double precision | A liquidity ratio that measures the ability to meet short-term obligations with its most liquid assets, based on the most recent quarter (MRQ). |
+| `current_ratio` | double precision | A liquidity ratio that measures a company's ability to pay short-term obligations, based on the most recent quarter (MRQ). |
+| `debt_to_equity` | double precision | A leverage ratio that measures the proportion of debt financing relative to shareholders’ equity, based on the most recent quarter (MRQ). |
+| `dividend_yield_5y_avg` | double precision | The average dividend yield over the past five years. |
+| `dividend_growth_rate` | double precision | The annualized percentage rate of growth of a company's dividend over a period. |
+| `payout_ratio` | double precision | The proportion of earnings paid out as dividends to shareholders. |
+| `sector` | text | The broad industry sector the company operates in. |
+| `sub_sector` | text | A more specific industry sub-sector classification. |
+| `symbol` | text | The unique stock ticker symbol for the company on the SGX. |
+| `close` | jsonb | A JSON object containing historical daily closing prices, with dates as keys and prices as values. |
+| `employee_num` | double precision | The total number of employees. This value prioritizes manually updated data from `sgx_manual_input` before falling back to automated sources. |
+| `earnings` | bigint | Net income for the trailing twelve months (TTM). |
+| `revenue` | bigint | Total revenue for the trailing twelve months (TTM). |
+| `forward_dividend` | double precision | The estimated annual dividend per share for the next 12 months. |
+| `forward_dividend_yield` | double precision | The estimated dividend yield for the next 12 months, based on the forward dividend and the current share price. |
+| `dividend_ttm` | double precision | The total dividends per share paid over the trailing twelve months. |
+| `historical_dividends` | jsonb | A JSON array containing historical dividend data, including year, total dividend, total yield, and a breakdown by payment date. |
+| `all_time_price` | jsonb | A JSON object containing various historical price milestones, such as 52-week high/low, 90-day high/low, and all-time high/low, along with their respective dates. |
+| `one_year_eps_growth` | double precision | The projected percentage growth in earnings per share for the next year. |
+| `one_year_sales_growth` | double precision | The projected percentage growth in sales (revenue) for the next year. |
+| `historical_financials` | jsonb | A JSON array of historical annual financial data for the last 5 years. It combines and prioritizes manually verified data from `sgx_manual_input` with automated data. Each object in the array represents a fiscal year and includes earnings, revenue, and, where available, detailed metrics from the income statement, balance sheet, and cash flow statement, along with Sankey diagram data and source URLs. |
 
 ## Other Detail Column Explanation
 
