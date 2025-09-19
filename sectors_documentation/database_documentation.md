@@ -514,22 +514,22 @@ This table details the price of some indices in IDX, KLSE, and SGX
 | `market_cap`                           | double precision |    | Total market capitalization.                                     |
 | `volume`                                | double precision |    | Trading volume.                                                  |
 | `pe`                                    | double precision |    | Price-to-Earnings ratio.                                         |
-| `revenue`                               | double precision |    | Total revenue.                                                   |
+| `revenue`                               | double precision |     | **(DEPRECATED SOON)** Total revenue. |
 | `eps`                                   | double precision |    | Earnings per share.                                              |
 | `beta`                                  | double precision |    | Beta value (volatility measure).                                 |
-| `monthly_signal`                       | text             |    | Monthly technical signal (e.g., Buy/Sell/Hold).                  |
+| `monthly_signal`                         | text            |     | **(DEPRECATED SOON)** Monthly technical signal (e.g., Buy/Sell/Hold). |
 | `change_ytd`                           | double precision |    | Year-to-date price change (percentage).                          |
 | `change_1y`                            | double precision |    | 1-year price change (percentage).                                |
 | `change_3y`                            | double precision |    | 3-year price change (percentage).                                |
 | `ps_ttm`                               | double precision |    | Price-to-Sales ratio (Trailing Twelve Months).                   |
 | `pcf`                                   | double precision |    | Price-to-Cash-Flow ratio.                                        |
 | `pb`                                    | double precision |    | Price-to-Book ratio.                                             |
-| `five_year_eps_growth`               | double precision |    | EPS growth over the last 5 years.                                |
-| `five_year_sales_growth`             | double precision |    | Sales growth over the last 5 years.                              |
-| `five_year_capital_spending_growth` | double precision |    | Growth in capital spending over the last 5 years.                |
-| `asset_turnover`                       | double precision |    | Asset turnover ratio.                                            |
-| `inventory_turnover_ttm`              | double precision |    | Inventory turnover (TTM).                                        |
-| `receivable_turnover`                  | double precision |    | Receivables turnover ratio.                                      |
+| `five_year_eps_growth` | double precision | | **(DEPRECATED SOON)** EPS growth over the last 5 years. |
+| `five_year_sales_growth` | double precision | | **(DEPRECATED SOON)** Sales growth over the last 5 years. |
+| `five_year_capital_spending_growth`| double precision | | **(DEPRECATED SOON)** Growth in capital spending over the last 5 years. |
+| `asset_turnover` | double precision | | **(DEPRECATED SOON)** Asset turnover ratio. |
+| `inventory_turnover_ttm` | double precision | | **(DEPRECATED SOON)** Inventory turnover (TTM). |
+| `receivable_turnover` | double precision | | **(DEPRECATED SOON)** Receivables turnover ratio. |
 | `gross_margin`                         | double precision |    | Gross profit margin.                                             |
 | `operating_margin`                     | double precision |    | Operating profit margin.                                         |
 | `net_profit_margin`                   | double precision |    | Net profit margin.                                               |
@@ -546,11 +546,11 @@ This table details the price of some indices in IDX, KLSE, and SGX
 | `employee_num`                         | double precision |    | Number of employees.                                             |
 | `historical_earnings`                  | jsonb            |    | Historical earnings data in JSON format.                         |
 | `historical_revenue`                   | jsonb            |    | Historical revenue data in JSON format.                          |
-| `earnings`                              | double precision |    | Current earnings value.                                          |
+| `earnings` | double precision | | **(DEPRECATED SOON)** Current earnings value. |
 | `forward_dividend`                     | double precision |    | Forward-looking annual dividend value.                           |
 | `forward_dividend_yield`              | double precision |    | Forward-looking dividend yield.                                  |
 | `dividend_ttm`                         | double precision |    | Dividend value for the trailing twelve months.                   |
-| `short_name`                           | text             |    | Shortened name of the company or instrument.                     |
+| `short_name` | text | | **(DEPRECATED SOON)** Shortened name of the company or instrument. |
 | `historical_dividends`                 | jsonb            |    | Historical dividend records in JSON format.                      |
 | `all_time_price`                      | jsonb            |    | All-time price data in JSON format.                              |
 | `one_year_eps_growth`                | double precision |    | EPS growth over the past year.                                   |
