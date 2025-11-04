@@ -1183,7 +1183,6 @@ This materialized view consolidates and summarizes key financial, market, and pr
 | column_name | data_type | Description |
 | :--- | :--- | :--- |
 | `name` | text | Full name of the company. |
-| `currency` | text | The currency in which the company's financials and market data are reported (e.g., SGD, USD). |
 | `market_cap` | bigint | The total market value of the company's outstanding shares, calculated as the latest share price multiplied by the number of shares outstanding. |
 | `volume` | double precision | The number of shares traded on the last finished trading day, which may not be the most recent day. |
 | `pe` | double precision | Price-to-Earnings (P/E) ratio for the trailing twelve months (TTM), calculated by dividing the latest share price by the TTM earnings per share. |
@@ -1198,12 +1197,6 @@ This materialized view consolidates and summarizes key financial, market, and pr
 | `ps` | double precision | Price-to-Sales (P/S) ratio for the trailing twelve months (TTM), calculated by dividing market cap by TTM revenue. |
 | `pcf` | double precision | Price-to-Cash-Flow (P/CF) ratio for the trailing twelve months (TTM). |
 | `pb` | double precision | Price-to-Book (P/B) ratio, comparing the company's market cap to its book value. |
-| `five_year_eps_growth` | double precision | **(DEPRECATED SOON)** The compound annual growth rate of earnings per share over the last five years. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
-| `five_year_sales_growth` | double precision | **(DEPRECATED SOON)** The compound annual growth rate of sales (revenue) over the last five years. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
-| `five_year_capital_spending_growth`| double precision | **(DEPRECATED SOON)** The compound annual growth rate of capital spending over the last five years. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
-| `asset_turnover` | double precision | **(DEPRECATED SOON)** An efficiency ratio that measures how effectively a company uses its assets to generate revenue. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
-| `inventory_turnover_ttm` | double precision | **(DEPRECATED SOON)** An efficiency ratio showing how many times a company has sold and replaced inventory during the trailing twelve months. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
-| `receivable_turnover` | double precision | **(DEPRECATED SOON)** An efficiency ratio measuring how effectively a company collects its accounts receivable. *Note: This data is from a third-party source (investing.com) and is scheduled for deprecation.* |
 | `gross_margin` | double precision | The percentage of revenue that exceeds the cost of goods sold. |
 | `operating_margin` | double precision | The percentage of revenue remaining after covering operating expenses for the trailing twelve months (TTM). |
 | `net_profit_margin` | double precision | The percentage of revenue that translates into net profit. |
