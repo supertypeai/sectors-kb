@@ -480,8 +480,8 @@ This table present the detail of warrants corporate action of listed companies i
 | Column Name     | Data Type               | Constraint          | Description  |
 | ---------------------- | ------------------------ | ------------------- | ------------------------------------------------------------------ |
 | `symbol`           | text                     | Primary Key, Foreign Key (`idx_company_profile.symbol`) | Stock ticker symbol or company code.  |
-| `old_ratio`             | real                     |                 | Conversion or exercise ratio before adjustment.                                       |
-| `new_ratio`             | real                     |                 | Conversion or exercise ratio after adjustment.                                        |
+| `ratio_shares`             | real                     |                 | Number of shares required to receive the corresponding warrants.                                       |
+| `ratio_warrant`             | real                     |                 | Number of warrants received for the given number of shares.                                        |
 | `price`                  | real                     |                 | Exercise or subscription price per unit for the security.                             |
 | `ex_per_start`         | date                     |                 | Start date of the exercise period when holders can convert or exercise their rights.  |
 | `ex_per_end`           | date                     |                 | End date of the exercise period when conversion or exercise closes.                   |
