@@ -115,7 +115,7 @@ sectors_guard_fe/
 ├── src/
 │   ├── pages/
 │   │   ├── Dashboard.js           # Main dashboard
-│   │   ├── ValidationResults.js   # Results viewer
+│   │   ├── ValidationResults.js   # Results viewer (regular tables only)
 │   │   ├── TableConfiguration.js  # Config editor
 │   │   ├── Visualization.js       # Data viz
 │   │   ├── Workflows.js           # GitHub Actions status
@@ -225,12 +225,40 @@ curl -X POST "https://sectors-guard-validator.fly.dev/api/validation/run/idx_dai
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/stats` | GET | Get dashboard statistics (total tables, validated today, anomalies) |
-| `/results` | GET | Get recent validation results (with fallback to local storage) |
+| `/results` | GET | Get recent validation results for regular tables (excludes RPC) |
 | `/results/by-table/{table_name}` | GET | Get validation results for specific table |
+| `/rpc-results` | GET | Get validation results for RPC functions only |
+| `/rpc-results/by-function/{function_name}` | GET | Get validation results for specific RPC function |
 | `/charts/validation-trends` | GET | Get 7-day validation trend data |
 | `/charts/table-status` | GET | Get table health status distribution |
 | `/table-data/{table_name}` | GET | Get raw table data with filters |
 | `/github-actions` | GET | Get GitHub Actions workflow status |
+
+#### RPC Results Endpoints
+
+The `/results` and `/rpc-results` endpoints are separated to allow:
+- **`/results`**: Returns only regular table validation results (uses `NOT LIKE 'rpc%'` filter at database level)
+- **`/rpc-results`**: Returns only RPC function validation results (uses `LIKE 'rpc%'` filter at database level)
+
+**Query Parameters:**
+
+| Endpoint | Parameter | Type | Description |
+|----------|-----------|------|-------------|
+| `/rpc-results` | `function_name` | string | Optional. Filter by specific RPC function |
+| `/rpc-results` | `limit` | int | Number of results (default: 10, max: 100) |
+| `/rpc-results/by-function/{function_name}` | `limit` | int | Number of results (default: 5, max: 100) |
+
+**Example Requests:**
+```bash
+# Get all RPC validation results
+curl "https://sectors-guard-validator.fly.dev/api/dashboard/rpc-results"
+
+# Get results for specific RPC function
+curl "https://sectors-guard-validator.fly.dev/api/dashboard/rpc-results?function_name=get_top_gainers&limit=5"
+
+# Get recent results by function name
+curl "https://sectors-guard-validator.fly.dev/api/dashboard/rpc-results/by-function/get_top_gainers?limit=5"
+```
 
 ---
 
@@ -368,16 +396,25 @@ workflow_dispatch:
 
 ## RPC Functions Validation
 
-The system validates 16 Supabase RPC functions for data freshness and availability:
+The system validates 16 Supabase RPC functions for data freshness and availability.
+
+### RPC Validation Architecture
+
+RPC validation results are stored separately from regular table validations:
+- **Table name format**: `rpc_functions` (for bulk validation) or `rpc_{function_name}` (for individual validation)
+- **Dedicated endpoints**: `/rpc-results` for fetching RPC-only results
+- **Database filtering**: Uses `LIKE 'rpc%'` pattern matching at database level for efficient querying
+
+### RPC Functions List
 
 | Function | Validation Rule | Severity |
 |----------|-----------------|----------|
 | `get_idx_mcap_data_1m` | Last date ≥ yesterday (vs latest idx_daily_data) | error |
 | `get_indices_price_changes` | Latest date = latest idx_daily_data date | error |
-| `get_top_mcap_gainers(1)` | Latest close date ≥ yesterday | error |
-| `get_top_mcap_losers(5)` | Latest close date ≥ yesterday | error |
-| `get_top_gainers(2,true)` | Latest close date ≥ yesterday | error |
-| `get_top_losers(2,true)` | Latest close date ≥ yesterday | error |
+| `get_top_mcap_gainers(1)` | `last_close_price` matches latest `idx_daily_data` close price | error |
+| `get_top_mcap_losers(5)` | `last_close_price` matches latest `idx_daily_data` close price | error |
+| `get_top_gainers(2,true)` | `latest_close_date` in JSONB response ≥ yesterday | error |
+| `get_top_losers(2,true)` | `latest_close_date` in JSONB response ≥ yesterday | error |
 | `get_peers_and_idx_valuation_summary('banks')` | Returns data (not empty) | error |
 | `get_idx_peers_growth_and_forecasts('financial','banks')` | Returns data (not empty) | error |
 | `get_news_per_dimensions_by_ticker_subsector('BBCA.JK','banks')` | Returns data (not empty) | warning |
@@ -388,6 +425,29 @@ The system validates 16 Supabase RPC functions for data freshness and availabili
 | `get_upcoming_dividends_and_splits` | All dates ≥ yesterday | error |
 | `get_idx_most_traded(1,5)` | Date = latest idx_daily_data date | error |
 | `get_idx_volume(1)` | Date = latest idx_daily_data date | error |
+
+### RPC Response Structure
+
+Some RPC functions return JSONB data with period keys:
+
+```json
+// get_top_gainers / get_top_losers response structure
+{
+  "1d": [{"symbol": "BBCA.JK", "latest_close_date": "2025-11-27", ...}],
+  "7d": [...],
+  "14d": [...],
+  "30d": [...]
+}
+```
+
+The validator extracts items from all period keys and checks the `latest_close_date` field.
+
+### RPC Validation for Market Cap Functions
+
+`get_top_mcap_gainers` and `get_top_mcap_losers` use a different validation approach:
+- These functions don't have date columns
+- Instead, the validator compares `last_close_price` with the latest close price from `idx_daily_data`
+- An anomaly is flagged if prices don't match for any symbol
 
 **API Endpoints:**
 - `POST /api/validation/run/rpc-functions` - Validate all 16 functions
@@ -451,9 +511,33 @@ REM Run all validations
 curl -X POST "http://localhost:8000/api/validation/run-all" ^
   -H "Authorization: Bearer YOUR_TOKEN"
 
-REM Run RPC validation
+REM Run RPC validation (all functions)
 curl -X POST "http://localhost:8000/api/validation/run/rpc-functions" ^
   -H "Authorization: Bearer YOUR_TOKEN"
+
+REM Run single RPC validation
+curl -X POST "http://localhost:8000/api/validation/run/rpc-functions/get_top_gainers" ^
+  -H "Authorization: Bearer YOUR_TOKEN"
+
+REM Get RPC validation results
+curl "http://localhost:8000/api/dashboard/rpc-results?limit=10"
+```
+
+### Frontend API Service
+
+The frontend uses `api.js` service with dedicated methods for RPC validation:
+
+```javascript
+// Regular table results (excludes RPC)
+validationAPI.getResults(tableName, limit)
+
+// RPC-only results (new endpoints)
+validationAPI.getRPCResults(functionName, limit)
+validationAPI.getRPCResultsByFunction(functionName, limit)
+
+// Run RPC validations
+validationAPI.runSingleRPCValidation(functionName)
+validationAPI.runAllRPCValidation()
 ```
 
 ### Debug Scripts
@@ -594,8 +678,19 @@ curl -X POST "https://sectors-guard-validator.fly.dev/api/validation/run/idx_dai
 # Get dashboard stats
 curl https://sectors-guard-validator.fly.dev/api/dashboard/stats
 
-# Get validation results
+# Get validation results (regular tables only, excludes RPC)
 curl "https://sectors-guard-validator.fly.dev/api/dashboard/results?table_name=idx_daily_data&limit=5"
+
+# Get RPC validation results
+curl "https://sectors-guard-validator.fly.dev/api/dashboard/rpc-results?limit=10"
+
+# Run all RPC validations
+curl -X POST "https://sectors-guard-validator.fly.dev/api/validation/run/rpc-functions" \
+  -H "Authorization: Bearer $TOKEN"
+
+# Run single RPC validation
+curl -X POST "https://sectors-guard-validator.fly.dev/api/validation/run/rpc-functions/get_top_gainers" \
+  -H "Authorization: Bearer $TOKEN"
 ```
 
 ### Anomaly Severity Levels
