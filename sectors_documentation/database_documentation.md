@@ -110,7 +110,9 @@ This table details all of the dividend payment made by the companies listed in i
 | Column Name | Data Type | Constraints | Description |
 |-------------|-----------|-------------|----------|
 | `symbol` | text | Primary Key, Foreign Key (`idx_company_profile.symbol`) | All active symbol in IDX based on `idx_company_profile` |
-| `date` | date | Primary Key | The ex-date (execution date) of the dividend |
+| `date` | date | | The ex-date (executio date) of the dividend |
+| `cum_date` | date | | The cum-date of the dividend |
+| `recording_date` | date | Primary Key | The date of the dividend data recorded in IDX|
 | `yield` | float4 | | The annual yield percentage of a dividend. It calculated by diving the dividend amount with the last close price of the year (So, all the yield value in the current year will be different) |
 | `dividend` | float4 | | The number of dividend that each stock get (auto-adjusted) if there's stock split |
 | `dividend_original` | float4 | | The dividend amount each stock receives, not adjusted for stock splits or other corporate actions that may affect share price.|
@@ -427,15 +429,15 @@ This table present the detail of right issue corporate action of listed companie
 | `subscription_date`     | date                     |                 | Date by which eligible shareholders must subscribe to receive new shares or benefits.|
 | `updated_on`            | timestamp with time zone | | Timestamp of the last update to this record.|
 
-### idx_rups
+### idx_agm
 ----------------------
 This table present the detail of Rapat Umum Pemegang Saham (RUPS) or General Meeting of Shareholders of listed companies in IDX
 | Column Name     | Data Type               | Constraint          | Description  |
 | ---------------- | ------------------------ | ------------------- | -------------------------------------------------------- |
 | `symbol`           | text                     | Primary Key, Foreign Key (`idx_company_profile.symbol`) | Stock ticker symbol or company code.  |
 | `recording_date`  | date                     | Primary Key | The date when RUPS announcement is published |
-| `rups_date`       | date                     |             | Scheduled date of the General Meeting of Shareholders (RUPS).|
-| `rups_place_ket` | text                     |                 | Information if the RUPS get cancelled |
+| `agm_date`       | date                     |             | Scheduled date of the General Meeting of Shareholders (RUPS).|
+| `agm_place_ket` | text                     |                 | Information if the RUPS get cancelled |
 | `updated_on`      | timestamp with time zone |  | Timestamp of the last update to this record. |
 
 ### idx_stock_split
@@ -1166,6 +1168,7 @@ This view summarize all the important data for each company which taken from the
 | `upcoming_dividends` | jsonb | Scheduled upcoming dividend events (amount, ex-dividend date, payment date). | Data directly taken from [`idx_upcoming_dividend`](#idx_upcoming_dividend).|
 | `tags` | text[] | Tags/labels associated with the company. | Detail calculation/explanation is explained in [`tags`](#tags) | 
 | `indices` | text[] | The index in IDX where the company belongs to | Data directly taken from [`idx_company_profile`](#idx_company_profile)|
+| `affiliates` | text | The company group or conglomerates that the company is affiliated to |
 
 ### peers_data
 ----------------------
