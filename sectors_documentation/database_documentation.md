@@ -1168,7 +1168,8 @@ This view summarize all the important data for each company which taken from the
 | `upcoming_dividends` | jsonb | Scheduled upcoming dividend events (amount, ex-dividend date, payment date). | Data directly taken from [`idx_upcoming_dividend`](#idx_upcoming_dividend).|
 | `tags` | text[] | Tags/labels associated with the company. | Detail calculation/explanation is explained in [`tags`](#tags) | 
 | `indices` | text[] | The index in IDX where the company belongs to | Data directly taken from [`idx_company_profile`](#idx_company_profile)|
-| `affiliates` | text | The company group or conglomerates that the company is affiliated to |
+| `affiliates` | text[] | The company group or conglomerates that the company is affiliated to | Data directly taken from [`idx_company_profile`](#idx_company_profile) |
+| `historical_eps` | jsonb | The historical earnings per share and its annual growth | |
 
 ### peers_data
 ----------------------
