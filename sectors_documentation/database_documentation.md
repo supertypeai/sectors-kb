@@ -541,8 +541,8 @@ This table details the price of some indices in IDX, KLSE, and SGX
 | `dividend_yield_5y_avg`              | double precision |    | Average dividend yield over the past 5 years.                    |
 | `dividend_growth_rate`                | double precision |    | Dividend growth rate.                                            |
 | `payout_ratio`                         | double precision |    | Dividend payout ratio.                                           |
-| `sector`                                | text             |    | Industry sector of the company.                                  |
-| `sub_sector`                           | text             |    | Industry sub-sector of the company.                              |
+| `sector`                                | text             |    | Industry sector of the company (top 70 companies by mcap standardized to IDXIC), the other from sgx website |
+| `sub_sector`                           | text             |    | Industry sub-sector of the company (top 70 companies by mcap standardized to IDXIC), the other from sgx website |
 | `symbol`                                | text             |  Primary Key  | Unique identifier for the security.                              |
 | `close`                                 | jsonb            |    | Historical closing prices in JSON format.                        |
 | `employee_num`                         | double precision |    | Number of employees.                                             |
