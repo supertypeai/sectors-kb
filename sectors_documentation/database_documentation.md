@@ -187,6 +187,31 @@ This table details the filings (insider trading) that made by each company in ID
 | `UID`                            | text                        |     | Unique identifier string for reference.                   |
 | `symbol`                         | text                        |     | Stock symbol associated with the record.           |
 
+### sgx_filings
+----------------------
+This table stores insider trading filings and related disclosure records submitted by companies listed on the Singapore Exchange (SGX), limited to the top 70 companies by market capitalization.
+
+| Column Name                     | Data Type                   | Constraints  | Description |
+|----------------------------------|----------------------------|-------------|-------------|
+| `id`                             | bigint                     | PRIMARY KEY | Unique identifier for each record. |
+| `created_at`                     | timestamp with time zone   |             | Timestamp when the record was created (auto-generated). |
+| `title`                          | text                       |             | Title or headline related to the transaction or event. |
+| `body`                           | text                       |             | Detailed description or content of the record. |
+| `source`                         | text                       |             | Filing or Transaction Documents URL. |
+| `timestamp`                      | timestamp without time zone|             | Date and time when the transaction/event occurred. |
+| `transaction_type`               | text                       |             | Type of transaction (e.g., buy, sell, transfer). |
+| `holding_before`                 | bigint                     |             | Number of shares held before the transaction. |
+| `holding_after`                  | bigint                     |             | Number of shares held after the transaction. |
+| `amount_transaction`             | bigint                     |             | Total number of shares involved in the transaction. |
+| `holder_type`                    | text                       |             | Type of holder (e.g., insider, institution). |
+| `holder_name`                    | text                       |             | Name of the person or entity holding the shares. |
+| `transaction_value`              | numeric                    |             | Total value of the transaction in monetary terms. |
+| `price_per_share`                | numeric                    |             | Share price at the time of the transaction. |
+| `share_percentage_before`        | double precision           |             | Ownership percentage before the transaction. |
+| `share_percentage_after`         | double precision           |             | Ownership percentage after the transaction. |
+| `share_percentage_transaction`   | double precision           |             | Ownership percentage change due to the transaction. |
+| `symbol`                         | text                       |             | Stock symbol associated with the record. |
+ 
 ### idx_financial_sheets_annual
 ----------------------
 This table details of annual financial metrics from the official financial report into 3 grouping, income statement, balance sheet, and cash flow.
