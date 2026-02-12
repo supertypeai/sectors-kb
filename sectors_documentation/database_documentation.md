@@ -489,13 +489,15 @@ This table details the sub-sector data
 ### idx_upcoming_dividend
 ----------------------
 This table details dividend announcement that haven't past the ex-date
-| Column Name     | Data Type               | Constraint | Description                                                              |
-| ---------------- | ------------------------ | ---------- | ------------------------------------------------------------------------ |
-| `symbol`           | text                     |    | Ticker symbol of the stock.                                               |
-| `ex_date`         | date                     |    | The ex-dividend date when the stock starts trading without the dividend. |
-| `payment_date`    | date                     |    | The date when the dividend is paid to shareholders.                      |
-| `dividend_amount` | real                     |    | The amount of dividend paid per share.                                   |
-| `updated_on`      | timestamp with time zone |    | Timestamp when the record was last updated                     |
+| Column Name       | Data Type               | Constraint     | Description |
+|-------------------|------------------------|---------------|-------------|
+| `symbol`          | text                   | Primary Key   | Ticker symbol of the stock. |
+| `cum_date`        | date                   |               | The last trading date when the stock is traded with dividend rights. |
+| `ex_date`         | date                   |               | The ex-dividend date when the stock starts trading without the dividend. |
+| `recording_date`  | date                   |               | The date when shareholders are officially recorded to determine dividend eligibility. |
+| `payment_date`    | date                   | Primary Key   | The date when the dividend is paid to shareholders. |
+| `dividend_amount` | real                   |               | The amount of dividend paid per share. |
+| `updated_on`      | timestamp with time zone |             | Timestamp when the record was last updated. |
 
 ### idx_warrant
 ----------------------
