@@ -1,4 +1,4 @@
-# Database Documentation
+********# Database Documentation
 This document serves as the authoritative guide to the database architecture underpinning the [sectors.app](https://sectors.app) application. It provides a comprehensive and detailed schema, offering an in-depth look at how data is structured and managed within our **Supabase**-hosted database. Our goal is to ensure clarity and provide all the necessary information for understanding the tables, relationships, and data types that power [sectors.app](https://sectors.app)'s functionalities.
 
 ## Underlying Data
@@ -137,25 +137,35 @@ This table details all suspension announcements of companies listed on IDX.
 This table details all of the Environmental, Social, and Governance (ESG) risk of each company in IDX
 
 | Column Name | Data Type | Constraints | Description |
-|-------------|-----------|-------------|----------|
-| `symbol` | text | Primary Key, Foreign Key (`idx_company_profile.symbol`) | All active symbol in IDX based on `idx_company_profile` |
-| `last_esg_update_date` | timestamptz | | The ESG score update from any reason other than the annual assessment cycle (e.g. sub-industry assessment, news event, etc.) |
-| `esg_score` | float4 | | The score of the esg risk (0 is considered negligible risk) |
-| `controversy_risk` | int2 | | The controversy risk level in the past 3 years |
-| `updated_on` | timestamptz | | The time when the data is updated or pushed into the database |
-| `industry_rank` | int8 | | The ranking of each company in its respective industry (1st = lowest risk) |
-| `total_companies_on_industry` | int8 | | The total number of companies in the world in this company's industry |
-| `global_rank` | int8 | | The ranking of each company in the universe (1st = lowest risk) |
-| `total_companies_on_ms` | int8 | | The total number of companies in the world (based on the esg data source) |
-| `last_esg_full_update_date` |  |  | The ESG score update from the annual assessment cycle |
-| `industry_group` | text |  | The industry where the company belongs to |
-| `management` | text |  | How well a company is managing its relevant ESG issues (Strong, Average, Weak) |
-| `exposure` | text |  | The extent to which a company is exposed to different material ESG issues (Low, Medium, High) |
-| `sdgi` | text[] |  |  |
-| `event` | text[] |  | The event that contributing to the esg risk rating |
+|-------------|-----------|-------------|-------------|
+| `symbol` | text | Primary Key, Foreign Key (`idx_company_profile.symbol`) | Ticker symbol; references `idx_company_profile(symbol)` with ON UPDATE CASCADE, ON DELETE CASCADE |
+| `last_esg_update_date` | timestamp with time zone | | ESG score update outside the annual assessment cycle (e.g., sub-industry assessment, news event) |
+| `esg_score` | real | NOT NULL | ESG risk score (0 = negligible risk) |
+| `controversy_risk` | smallint | | Controversy risk level in the past 3 years |
+| `updated_on` | timestamp with time zone | | Time when the data is updated or pushed into the database |
+| `industry_group` | text | | Industry grouping or sector classification |
+| `management` | text | | Assessment of how well the company manages ESG issues (e.g., Strong, Average, Weak) |
+| `environment_risk` | numeric | | Environmental risk component |
+| `social_risk` | numeric | | Social risk component |
+| `governance_risk` | numeric | | Governance risk component |
+| `sp_global_score` | bigint | | S&P Global score or identifier (if available) |
 
 ### idx_fear_and_greed
 ----------------------
+
+### idx_e020
+----------------------
+This table stores E020 environmental, social, and governance component data for each company by financial year.
+
+| Column Name     | Data Type                | Constraints                                                    | Description |
+|-----------------|--------------------------|----------------------------------------------------------------|-------------|
+| `symbol`        | text                     | Primary Key (part), Foreign Key (`idx_company_profile.symbol`) | Ticker symbol; references `idx_company_profile(symbol)` (ON UPDATE CASCADE, ON DELETE CASCADE) |
+| `updated_at`    | timestamp with time zone | NOT NULL, default now()                                        | Record update timestamp |
+| `financial_year`| smallint                 | Primary Key (part)                                              | Fiscal year the record refers to |
+| `environmental` | jsonb                    | NOT NULL                                                       | Environmental component details (JSON) |
+| `social`        | jsonb                    | NOT NULL                                                       | Social component details (JSON) |
+| `governance`    | jsonb                    | NOT NULL                                                       | Governance component details (JSON) |
+| `is_complete`   | boolean                  | NOT NULL                                                       | Flag indicating whether the E020 record is complete |
 
 ### idx_filings
 ----------------------
@@ -1403,3 +1413,240 @@ This section will breakdown the value of [`sgx_manual_input.industry_breakdown`]
 * gross_rental_income_by_sectors: Breakdown of percentage gross rental income by industry
 * property_portfolio_top_20: Top 20 property owned by the REIT. Consist of ownership percentage, gross revenue, market valuation, and occupancy rate
 * property_counts_by_country: Breakdwon of property portfolio per country per property category. Data will be shown in this structure `[property count, gross revenue, market valuation]`
+
+## Mining External Data (Turso SQLite)
+----------------------
+The following tables are hosted on a separate Turso SQLite database and contain secondary or external data specifically for the mining sector. Data is sourced from institutional portals like ESDM Minerba, MoDI, BPS, and LBMA, as well as manually curated from company reports.
+
+### commodity_price
+----------------------
+Monthly price history per commodity.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `name` | TEXT | Primary Key (1) | Commodity name (e.g. "Coal") |
+| `date` | TEXT | Primary Key (2) | Date of the price (YYYY-MM-DD) |
+| `price` | REAL | | Price value |
+
+### company
+----------------------
+Basic metadata on mining companies with URL-friendly slug support.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Company identifier |
+| `name` | TEXT | | Official company name |
+| `slug` | TEXT | Unique | URL-friendly slug |
+| `idx_ticker` | TEXT | | IDX stock ticker (if listed) |
+| `operation_province` | TEXT | | Province of main operations |
+| `operation_district` | TEXT | | Regency/City of operations |
+| `representative_address` | TEXT | | Registered corporate address |
+| `company_type` | TEXT | | e.g. "Holding", "Trader" |
+| `key_operation` | TEXT | | Primary business line (e.g. "Coal Trading") |
+| `activities` | TEXT (JSON Array) | | List of activity strings |
+| `website` | TEXT | | Corporate website URL |
+| `phone_number` | INTEGER | | Contact phone |
+| `email` | TEXT | | Contact email |
+| `mining_license` | TEXT (JSON Array) | | List of linked license IDs |
+| `mining_contract` | TEXT (JSON Array) | | List of contractor IDs |
+| `commodity` | TEXT (JSON Array) | | List of commodities produced (e.g. `["Coal"]`) |
+
+### company_ownership
+----------------------
+Stores ownership percentages between companies.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `parent_company_id` | INTEGER | Primary Key (1) | ID of the holding/parent company |
+| `company_id` | INTEGER | Primary Key (2) | ID of the subsidiary company |
+| `percentage_ownership` | REAL | | Ownership stake (%) |
+
+### company_performance
+----------------------
+Yearly production/sales stats per company in JSON with slug support.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Record identifier |
+| `company_id` | INTEGER | | Company reference |
+| `slug` | TEXT | | URL-friendly company slug |
+| `year` | INTEGER | | Reporting year |
+| `commodity_type` | TEXT | | Commodity produced (e.g. "Coal") |
+| `commodity_sub_type` | TEXT | | Sub-category (e.g. "Sub-Bituminous") |
+| `commodity_stats` | TEXT (JSON) | | Dynamic JSON object containing operational metrics, resources/reserves, and product specs |
+
+### export_destination
+----------------------
+Yearly export values by country and commodity type.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Unique row identifier |
+| `country` | TEXT | | Destination country name |
+| `year` | INTEGER | | Calendar year of the data |
+| `commodity_type` | TEXT | | Commodity category (e.g. “Coal”, "Copper") |
+| `export_USD` | REAL | | Export value in million USD |
+| `export_volume_BPS` | REAL | | Export volume per BPS measure |
+| `export_volume_ESDM` | REAL | | Export volume per ESDM reporting |
+
+### global_commodity_data
+----------------------
+Global stats by country, including JSON for reserves, trade and production.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Unique record ID |
+| `country` | TEXT | | Country name |
+| `resources_reserves` | TEXT (JSON) | | JSON: mapping years → list of `{type: value}` objects |
+| `resources_reserves_share` | TEXT (JSON) | | JSON: global share percentage of reserves |
+| `export_import` | TEXT (JSON) | | JSON: mapping years → `[{"Export":...},{"Import":...}]` |
+| `production_volume` | TEXT (JSON) | | JSON: mapping years → numeric volumes |
+| `production_share` | TEXT (JSON) | | JSON: global share percentage of production |
+| `commodity_type` | TEXT | | Commodity category (e.g. “Coal”, “Copper”, “Nickel”) |
+
+### mining_contract
+----------------------
+Maps mine owners to contractors with contract end dates.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `mine_owner_id` | INTEGER | Primary Key (1) | Company ID of the mine owner |
+| `contractor_id` | INTEGER | Primary Key (2) | Company ID of the contractor |
+| `contract_period_end` | TEXT | | Contract expiration date (YYYY-MM-DD) |
+
+### mining_license
+----------------------
+Company mining permits.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | License identifier |
+| `license_type` | TEXT | | e.g. “IUP” |
+| `license_number` | TEXT | | Official permit number |
+| `wiup_code` | TEXT | | The unique code for the Mining Business License Area (WIUP) |
+| `province` | TEXT | | Permit location province |
+| `city` | TEXT | | Permit location city/regency |
+| `license_effective_date` | TEXT | | Start date (YYYY-MM-DD) |
+| `license_expiry_date` | TEXT | | End date (YYYY-MM-DD) |
+| `activity` | TEXT | | Activity phase (e.g. “Operasi Produksi”) |
+| `licensed_area` | REAL | | Area in hectares |
+| `location` | TEXT | | Detailed location description |
+| `commodity_type` | TEXT | | Commodity covered |
+| `company_name` | TEXT | | Name of licensee company |
+| `company_id` | INTEGER | | Back-reference to `company.id` |
+
+### mining_site
+----------------------
+Details of individual mining sites, including JSON-encoded reserves and location.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Unique site identifier |
+| `name` | TEXT | | Site name |
+| `project_name` | TEXT | | Named project (if any) |
+| `year` | INTEGER | | Reporting year |
+| `mineral_type` | TEXT | | Type of mineral (e.g. “Coal”) |
+| `company_id` | INTEGER | | Owning company |
+| `production_volume` | DECIMAL | | Volume produced that year |
+| `overburden_removal_volume` | DECIMAL | | Volume of overburden removed |
+| `strip_ratio` | DECIMAL | | Overburden/ore ratio |
+| `resources_reserves` | TEXT (JSON) | | JSON string containing detailed mineral resources and reserves |
+| `location` | TEXT (JSON) | | JSON string containing geographical information (province, city, lat, long) |
+
+### resources_and_reserves
+----------------------
+Provincial-level resource/reserve statistics.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Unique identifier |
+| `province` | TEXT | | Province name |
+| `year` | INTEGER | | Reporting year |
+| `commodity_type` | TEXT | | Commodity type (e.g., "Coal", "Nickel") |
+| `resources_reserves` | TEXT (JSON) | | JSON string containing detailed provincial statistics |
+
+### sales_destination
+----------------------
+Records the sales breakdown by destination country for each company, including revenue and volume.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Unique row identifier |
+| `company_id` | INTEGER | | Foreign key referencing the company |
+| `country` | TEXT | | The destination country for the sales |
+| `idx_ticker` | TEXT | | The IDX stock ticker of the company |
+| `year` | INTEGER | | The reporting year |
+| `revenue` | REAL | | Revenue generated from sales |
+| `percentage_of_total_revenue` | REAL | | Proportion of total revenue (%) |
+| `volume` | REAL | | Volume of commodity sold |
+| `percentage_of_sales_volume` | REAL | | Proportion of total sales volume (%) |
+
+### total_commodities_production
+----------------------
+Annual national-level production volumes.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Unique record ID |
+| `commodity_type` | TEXT | | Commodity name |
+| `production_volume` | DECIMAL | | Volume produced |
+| `unit` | TEXT | | Unit of measure |
+| `year` | INTEGER | | Reporting year |
+
+### insider_news
+----------------------
+Aggregates news articles related to the mining industry.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Unique identifier |
+| `title` | TEXT | | Article headline |
+| `body` | TEXT | | Main content or summary |
+| `source` | TEXT | | URL of the original article (Unique) |
+| `timestamp` | TEXT | | Publication date and time |
+| `commodity_type` | TEXT | | Commodity type mentioned |
+| `created_at` | TEXT | | Insertion timestamp |
+
+### mining_license_auctions
+----------------------
+Contains detailed information about mining license auctions, including participants, stages, and winners.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `id` | INTEGER | Primary Key | Unique identifier |
+| `commodity` | TEXT | | Type of commodity auctioned |
+| `city` | TEXT | | City/regency of mining area |
+| `province` | TEXT | | Province of mining area |
+| `company_name` | TEXT | | Name of winning company |
+| `date_winner` | TEXT | | Date winner was declared |
+| `permit_area` | REAL | | Total area in hectares |
+| `number` | TEXT | | Auction decree number |
+| `permit_type` | TEXT | | Type of license (e.g., "WIUPK") |
+| `kdi` | TEXT | | KDI identifier |
+| `code_wiup` | TEXT | | Unique code for WIUP |
+| `auction_status` | TEXT | | Current status of the auction |
+| `created_at` | TEXT | | Creation timestamp |
+| `last_modified` | TEXT | | Last modification timestamp |
+| `participant_count` | INTEGER | | Total number of participants |
+| `phases` | TEXT (JSON) | | JSON array detailing auction stages |
+| `participants` | TEXT (JSON) | | JSON array listing participants |
+| `winner` | TEXT | | Boolean flag indicating if listed company won |
+| `company_id` | INTEGER | | Foreign key to `company.id` |
+
+### company_financials
+----------------------
+Financial data (assets, revenue, profit) by company and year.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| `company_id` | INTEGER | | Foreign key referencing the company |
+| `idx_ticker` | TEXT | Primary Key (1) | IDX stock ticker |
+| `name` | TEXT | | Company name |
+| `slug` | TEXT | | URL-friendly company slug |
+| `year` | INTEGER | Primary Key (2) | Reporting year |
+| `assets` | REAL | | Total assets |
+| `revenue` | REAL | | Total revenue |
+| `revenue_breakdown` | TEXT (JSON) | | JSON object detailing revenue sources |
+| `cost_of_revenue` | REAL | | Total cost of revenue |
+| `cost_of_revenue_breakdown` | TEXT (JSON) | | JSON object detailing cost components |
+| `net_profit` | REAL | | Net profit |
