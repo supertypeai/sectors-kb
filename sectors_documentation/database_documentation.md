@@ -453,13 +453,15 @@ This table present the detail of right issue corporate action of listed companie
 ### idx_agm
 ----------------------
 This table present the detail of Rapat Umum Pemegang Saham (RUPS) or General Meeting of Shareholders of listed companies in IDX
-| Column Name     | Data Type               | Constraint          | Description  |
-| ---------------- | ------------------------ | ------------------- | -------------------------------------------------------- |
-| `symbol`           | text                     | Primary Key, Foreign Key (`idx_company_profile.symbol`) | Stock ticker symbol or company code.  |
-| `recording_date`  | date                     | Primary Key | The date when RUPS announcement is published |
-| `agm_date`       | date                     |             | Scheduled date of the General Meeting of Shareholders (RUPS).|
-| `agm_place_ket` | text                     |                 | Information if the RUPS get cancelled |
-| `updated_on`      | timestamp with time zone |  | Timestamp of the last update to this record. |
+| Column Name        | Data Type               | Constraint          | Description |
+|--------------------|------------------------|--------------------|-------------|
+| `symbol`           | text                   | Primary Key, Foreign Key (`idx_company_profile.symbol`) | Stock ticker symbol or company code. |
+| `recording_date`   | date                   | Primary Key        | The date when RUPS announcement is published |
+| `agm_date`         | date                   |                    | Scheduled date of the General Meeting of Shareholders (RUPS). |
+| `agm_time`         | time                   |                    | Scheduled time of the General Meeting of Shareholders (RUPS). |
+| `agm_place`        | text                   |                    | Location or venue information of the RUPS as announced. |
+| `agm_place_desc`   | text                   |                    | Classification of the RUPS location with limited values: "dibatalkan", "onsite", or "online". |
+| `updated_on`       | timestamp with time zone |                  | Timestamp of the last update to this record. |
 
 ### idx_stock_split
 ----------------------
