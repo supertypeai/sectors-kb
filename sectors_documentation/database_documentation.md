@@ -464,13 +464,15 @@ This table present the detail of Rapat Umum Pemegang Saham (RUPS) or General Mee
 ### idx_stock_split
 ----------------------
 This table details the stock split corporate action of each symbol.
-| Column Name | Data Type               | Constraint | Description                                                                |
-| ------------ | ------------------------ | ---------- | -------------------------------------------------------------------------- |
-| `symbol`       | text                     | Primary Key   | Ticker symbol of the stock undergoing a split.                             |
-| `date`         | date                     | Primary Key   | Effective date of the stock split date.                            |
-| `split_ratio` | real                     |   | Ratio at which the stock is being split (e.g., 2.0 for a 2-for-1 split).   |
-| `updated_on`  | timestamp with time zone |    | Timestamp of the last update |
-| `applied_on`  | timestamp with time zone |    | Applied changes of data dependent on the stock split                    |
+| Column Name      | Data Type               | Constraint   | Description |
+|------------------|------------------------|-------------|-------------|
+| `symbol`         | text                   | Primary Key | Ticker symbol of the stock undergoing a split. |
+| `date`           | date                   | Primary Key | Effective date of the stock split date. |
+| `cum_date`       | date                   |             | The last trading date on which shares are still entitled to receive the stock split. |
+| `recording_date` | date                   |             | The date when the stock split data is officially recorded. |
+| `split_ratio`    | real                   |             | Ratio at which the stock is being split (e.g., 2.0 for a 2-for-1 split). |
+| `updated_on`     | timestamp with time zone |           | Timestamp of the last update |
+| `applied_on`     | timestamp with time zone |           | Applied changes of data dependent on the stock split |
 
 ### idx_subsector_metadata
 ----------------------
