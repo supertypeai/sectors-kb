@@ -395,22 +395,41 @@ This table details of annual financial metrics from the manual curated financial
 
 ### idx_news
 ----------------------
-This table details of the important news from some third party financial platform.
-| Column Name | Data Type                  | Constraint | Description                                                           |
-| ------------ | --------------------------- | ---------- | --------------------------------------------------------------------- |
-| `id`           | bigint                      | Primary Key   | Unique identifier for the record.                                     |
-| `created_at`  | timestamp with time zone    |    | Timestamp when the record was created. |
-| `title`        | text                        |    | Title of the news. |
-| `body`         | text                        |    | Body/content of the news. |
-| `source`       | text                        |    | Source or origin of the news item. |
-| `timestamp`    | timestamp without time zone |    | Timestamp indicating when the news published. |
-| `sector`       | text                        |    | The sector associated with the news (e.g., Technology, Finance). |
-| `sub_sector`  | ARRAY                       |    | List of sub-sectors related to the news. |
-| `tags`         | ARRAY                       |    | List of tags for categorization or filtering. |
-| `tickers`      | ARRAY                       |    | List of associated stock tickers (symbol). |
-| `dimension`    | jsonb                       |    | Optional JSON structure for dimensional metadata. |
-| `votes`        | jsonb                       |    | Optional JSON object for vote-related data (e.g., upvotes/downvotes). |
-| `score`        | bigint                      |    | The score of the news reliability. |
+This table stores important financial news related to the Indonesia Stock Exchange (IDX).
+| Column Name  | Data Type                   | Constraint  | Description |
+|--------------|----------------------------|------------|-------------|
+| `id`         | bigint                     | Primary Key | Unique identifier for the record. |
+| `created_at` | timestamp with time zone   |            | Timestamp when the record was created. |
+| `title`      | text                       |            | Title of the news. |
+| `body`       | text                       |            | Body or content of the news. |
+| `source`     | text                       |            | Source or origin of the news item. |
+| `timestamp`  | timestamp without time zone|            | Timestamp indicating when the news was published. |
+| `sector`     | text                       |            | Sector associated with the news (e.g., Technology, Finance). |
+| `sub_sector` | ARRAY                      |            | List of related sub-sectors. |
+| `tags`       | ARRAY                      |            | List of tags for categorization or filtering. |
+| `tickers`    | ARRAY                      |            | List of associated stock tickers (symbols). |
+| `dimension`  | jsonb                      |            | Optional JSON structure for dimensional metadata. |
+| `votes`      | jsonb                      |            | Optional JSON object for vote-related data (e.g., upvotes, downvotes). |
+| `score`      | bigint                     |            | Reliability score of the news item. |
+
+### sgx_news
+----------------------
+This table stores important financial news related to the Singapore Exchange (SGX).
+| Column Name  | Data Type                   | Constraint  | Description |
+|--------------|----------------------------|------------|-------------|
+| `id`         | bigint                     | Primary Key | Unique identifier for the record. |
+| `created_at` | timestamp with time zone   |            | Timestamp when the record was created. |
+| `title`      | text                       |            | Title of the news. |
+| `body`       | text                       |            | Body or content of the news. |
+| `source`     | text                       |            | Source or origin of the news item. |
+| `timestamp`  | timestamp without time zone|            | Timestamp indicating when the news was published. |
+| `sector`     | text                       |            | Sector associated with the news (e.g., Technology, Finance). |
+| `sub_sector` | ARRAY                      |            | List of related sub-sectors. |
+| `tags`       | ARRAY                      |            | List of tags for categorization or filtering. |
+| `tickers`    | ARRAY                      |            | List of associated stock tickers (symbols). |
+| `dimension`  | jsonb                      |            | Optional JSON structure for dimensional metadata. |
+| `votes`      | jsonb                      |            | Optional JSON object for vote-related data (e.g., upvotes, downvotes). |
+| `score`      | bigint                     |            | Reliability score of the news item. |
 
 ### idx_right_issue
 ----------------------
