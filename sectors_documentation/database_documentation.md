@@ -14,6 +14,19 @@ This table presents the pricing data for each company listed on active indexes, 
 | `date` | date | | date of the all time price recorded |
 | `price` | int4 | | In Indonesian Rupiah |
 
+
+### idx_buybacks
+This table presents the buyback plan and transaction that has been disclosed by each company.
+
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|----------|
+| `symbol` | text | Primary Key | All active symbol in IDX based on `idx_active_company_profile` |
+| `mandate` | jsonb | Primary Key | The buyback period plan based on the decision by the company (consist of the start and end) |
+| `transaction_details` | jsonb | | The detail of buyback transaction. Consist of detail of buyback transaction (date, average price, shares amount, nd percentage of shares) |
+| `company_fund` | jsonb | | The amount of fund prepared and used by the company to execute the buyback plan. (consist of allocated and utilized fund) |
+| `accumulated_shares_purchased` | int8 | | Total of number shares purchased until the last buyback transaction |
+| `updated_on`     | timestamp with time zone |  | Timestamp of the last update to this record.|
+
 ### idx_ca_bonus
 ----------------------
 This table presents the historical data of bonus corporate action that has been done by the listed companies
@@ -1232,6 +1245,37 @@ This view summarize all the important data for each company which taken from the
 | `indices` | text[] | The index in IDX where the company belongs to | Data directly taken from [`idx_company_profile`](#idx_company_profile)|
 | `affiliates` | text[] | The company group or conglomerates that the company is affiliated to | Data directly taken from [`idx_company_profile`](#idx_company_profile) |
 | `historical_eps` | jsonb | The historical earnings per share and its annual growth | |
+
+### idx_workflow_data
+----------------------
+This MV is used to provide workflow data for each active company in IDX and queried from the underlying data in IDX. This MV get scheduled every weekday at 18:30 (GMT+7).
+| Column Name | Data Type | Description |
+| ----------- | --------- | ----------- | 
+| `symbol`      | text      | Stock ticker symbol of the company. |
+| `company_name`  | text     | Registered name of the company. |
+| `industry`  | text     | Industry classification of the company based on IDX-IC. |
+| `sub_industry`  | text     | More granular industry classification under the main industry based on IDX-IC. |
+| `sector`  | text     | Broad sector classification (e.g., Financials, Technology) based on IDX-IC.|
+| `sub_sector`  | text     | More detailed classification under sector based on IDX-IC.|
+| `upcoming_dividends` | jsonb | Show the upcoming dividend data only for the company with upcoming dividend ex-date after current date. |
+| `idx_filings_sell` | jsonb | The updated filings data disclosure of insider tranding (sell only), the data only consist of filings that disclosed maximum yesterday. |
+| `idx_filings_buy` | jsonb | The updated filings data disclosure of insider tranding (buy only), the data only consist of filings that disclosed maximum yesterday. |
+| `one_month_leaders` | jsonb | Only available for the company placed in the top ten highest price change from the last 1 month. |
+| `one_month_laggards` | jsonb | Only available for the company placed in the top ten lowest price change from the last 1 month. |
+| `one_year_leaders` | jsonb | Only available for the company placed in the top ten highest price change from the last 1 year. |
+| `one_year_laggards` | jsonb | Only available for the company placed in the top ten lowest price change from the last 1 year. |
+| `top_3m_volume_transactions` | jsonb | Only available for the company placed in the top 30 highest 3 months volume transactions. |
+| `top_3m_value_transactions` | jsonb | Only available for the company placed in the top 30 highest 3 months value transactions. |
+| `last_month_top_institution_transaction_bought` | jsonb | Only available for the company placed in the top 20 based on the institutional transaction bought. |
+| `last_month_top_institution_transaction_sold` | jsonb | Only available for the company placed in the top 20 based on the institutional transaction sold. |
+| `ytd_low` | jsonb | Only available for the company that achieved the new ytd low in the current date. |
+| `ytd_high` | jsonb | Only available for the company that achieved the new ytd high in the current date. |
+| `all_time_low` | jsonb | Only available for the company that achieved the new all time low in the current date. |
+| `all_time_high` | jsonb | Only available for the company that achieved the new all time high in the current date. |
+| `quarterly_low` | jsonb | Only available for the company that achieved the new quarterly low in the current date. |
+| `quarterly_high` | jsonb | Only available for the company that achieved the new quarterly high in the current date. |
+| `yearly_low` | jsonb | Only available for the company that achieved the new yearly low in the current date. |
+| `yearly_high` | jsonb | Only available for the company that achieved the new yearly high in the current date. |
 
 ### peers_data
 ----------------------
