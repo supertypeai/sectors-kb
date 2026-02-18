@@ -985,7 +985,7 @@ This view gather the important data of the newly listed companies that did listi
 | `description`   | text       | Brief description of the company’s business activities.            |
 | `market_cap`   | bigint     | Market capitalization of the company in local currency.            |
 
-### idx_sector_reports
+### idx_sector_report
 ----------------------
 This view summarize all the important data for each sub-sector which taken from [idx_sector_reports_calc](#idx_sector_reports_calc) and [idx_subsector_metadata](#idx_subsector_metadata)
 | Column Name       | Data Type                | Description |
@@ -1354,13 +1354,13 @@ This MV is used to provide workflow data for each active company in IDX and quer
 | `one_year_leaders` | jsonb | Only available for the company placed in the top ten highest price change from the last 1 year. |
 | `one_year_laggards` | jsonb | Only available for the company placed in the top ten lowest price change from the last 1 year. |
 | `top_3m_volume_transaction` | jsonb | Only available for the company placed in the top 30 highest 3 months volume transactions. |
-| `top_3m_value_transactions` | jsonb | Only available for the company placed in the top 30 highest 3 months value transactions. |
+| `top_3m_value_transaction` | jsonb | Only available for the company placed in the top 30 highest 3 months value transactions. |
 | `last_month_top_institution_transaction_bought` | jsonb | Only available for the company placed in the top 20 based on the institutional transaction bought. |
 | `last_month_top_institution_transaction_sold` | jsonb | Only available for the company placed in the top 20 based on the institutional transaction sold. |
 | `ytd_low` | jsonb | Only available for the company that achieved the new ytd low in the current date. |
 | `ytd_high` | jsonb | Only available for the company that achieved the new ytd high in the current date. |
-| `all_time_low` | jsonb | Only available for the company that achieved the new all time low in the current date. |
-| `all_time_high` | jsonb | Only available for the company that achieved the new all time high in the current date. |
+| `alltime_low` | jsonb | Only available for the company that achieved the new all time low in the current date. |
+| `alltime_high` | jsonb | Only available for the company that achieved the new all time high in the current date. |
 | `quarterly_low` | jsonb | Only available for the company that achieved the new quarterly low in the current date. |
 | `quarterly_high` | jsonb | Only available for the company that achieved the new quarterly high in the current date. |
 | `yearly_low` | jsonb | Only available for the company that achieved the new yearly low in the current date. |
