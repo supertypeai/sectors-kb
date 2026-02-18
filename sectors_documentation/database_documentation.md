@@ -985,7 +985,7 @@ This view calculate the total market cap per sub_industry based on the IDX-IC. T
 
 ### idx_aggregated_calc
 ----------------------
-This MV is used to provide metrics aggregation of all active companies in IDX. This MV get scheduled refresh everyday at 05:05 and 11:05 (GMT+7).
+This MV is used to provide metrics aggregation of all active companies in IDX. This MV get scheduled refresh everyday at 05:05 (GMT+7).
 
 | Column Name             | Data Type        | Description | How to Calculate  |
 | ----------------------- | ---------------- | -------------------------------------------------------- | --------------------------------------- |
@@ -1001,26 +1001,6 @@ This MV is used to provide metrics aggregation of all active companies in IDX. T
 | `mcap_change_30d`       | double precision | 30-day IDX market cap change. | Sum the market cap from `idx_daily_data` grouped by date, and calculate the changes between last date value with last date - 30 days |
 | `mcap_change_ytd`       | double precision | Year-to-date IDX market cap change.| Sum the market cap from `idx_daily_data` grouped by date, and calculate the changes between last date value with the earliest date in current year|
 | `mcap_data_1m`          | jsonb            | Array of JSON values containing daily total_market_cap data for the past month. Data comes from [`idx_daily_data`](#idx_daily_data). | Sum the market cap from `idx_daily_data` grouped by date, filter for the last 1 month. |
-
-### idx_interesting_facts_timely
-----------------------
-This MV is used to provide the time sensitive interesting facts from the top 50 companies based on the market capitalization value in IDX. This MV get scheduled refresh everyday at 17:00 (GMT +7).
-
-| Column Name             | Data Type        | Description | 
-| ----------------------- | ---------------- | -------------- |
-| `symbol` | text | Stock ticker symbol of the company. |
-| `company_name` | text | The name of the company. |
-| `interesting_facts` | jsonb | There timely interesting facts are based on this topics: `upcoming_dividend`, `valuation` (P/E and P/B value), `volume` (transaction volume), and `price` (current price compare to 90d-all-time, 52w-all-time, ytd-all-time, and all-time high/low price).|
-
-### idx_interesting_facts_untimely
-----------------------
-This MV is used to provide the time insensitive interesting facts from the top 50 companies based on the market capitalization value in IDX. This MV get scheduled refresh everyday at 07:00 (GMT +7).
-
-| Column Name             | Data Type        | Description | 
-| ----------------------- | ---------------- | -------------- |
-| `symbol` | text | Stock ticker symbol of the company. |
-| `company_name` | text | The name of the company. |
-| `interesting_facts` | jsonb | There untimely interesting facts are based on this topics: `shareholders`, `earnings`, `nipe` (net income per employee), `institution_transaction`, and `esg_score`.|
 
 ### idx_daily_mcap_ffill
 ----------------------
@@ -1049,7 +1029,7 @@ This MV is used to create the heatmap market capitalization change for each sub-
 
 ### idx_calc_metrics_annual
 ----------------------
-This MV is used to provide metrics aggregation of each active company's last 5 annual data which related to the annual audited financial data. This MV get scheduled refresh everyday at 05:00 and 11:00 (GMT+7).
+This MV is used to provide metrics aggregation of each active company's last 5 annual data which related to the annual audited financial data. This MV get scheduled refresh everyday at 05:00 (GMT+7).
 
 | Column Name              | Data Type        | Description | How to Calculate |
 | ------------------------ | ---------------- | -------------------------------- | ---------- |
@@ -1068,7 +1048,7 @@ This MV is used to provide metrics aggregation of each active company's last 5 a
 
 ### idx_calc_metrics_quarterly
 ----------------------
-This MV is used to provide metrics aggregation of each active company's latest quarterly data which related to the quarterly financial data. This MV get scheduled refresh everyday at 05:00 and 11:00 (GMT+7).
+This MV is used to provide metrics aggregation of each active company's latest quarterly data which related to the quarterly financial data. This MV get scheduled refresh everyday at 05:00 (GMT+7).
 
 | Column Name              | Data Type        | Description | How to Calculate |
 | ------------------------ | ---------------- | -------------------------------- | ---------- |
@@ -1100,7 +1080,7 @@ This MV is used to provide metrics aggregation of each active company's latest q
 
 ### idx_calc_metrics_daily
 ----------------------
-This MV is used to provide metrics aggregation of each active company's daily data that has a relation to price data. This MV get scheduled refresh everyday at 05:00 and 11:00 (GMT+7).
+This MV is used to provide metrics aggregation of each active company's daily data that has a relation to price data. This MV get scheduled refresh everyday at 05:00 (GMT+7).
 
 | Column Name              | Data Type        | Description | How to Calculate |
 | ------------------------ | ---------------- | -------------------------------- | ---------- |
@@ -1134,7 +1114,7 @@ This MV is used to provide metrics aggregation of each active company's daily da
 
 ### idx_company_report_calc
 ----------------------
-This MV is used to provide metrics aggregation of each active company's which supply the data for [`idx_company_report`](#idx_company_report). This MV get scheduled refresh everyday at 05:05 and 11:05 (GMT+7).
+This MV is used to provide metrics aggregation of each active company's which supply the data for [`idx_company_report`](#idx_company_report). This MV get scheduled refresh everyday at 05:05 (GMT+7).
 
 | Column Name              | Data Type        | Description | How to Calculate |
 | ------------------------ | ---------------- | -------------------------------- | ---------- |
@@ -1155,7 +1135,7 @@ This MV is used to provide metrics aggregation of each active company's which su
 
 ### idx_sector_reports_calc
 ----------------------
-This MV is used to provide metrics aggregation of each sub-sectors's which supply the data for [`idx_sector_reports`](#idx_sector_reports). This MV get scheduled refresh everyday at 05:05 and 11:05 (GMT+7).
+This MV is used to provide metrics aggregation of each sub-sectors's which supply the data for [`idx_sector_reports`](#idx_sector_reports). This MV get scheduled refresh everyday at 05:05 (GMT+7).
 
 | Column Name              | Data Type        | Description | How to Calculate |
 | ------------------------ | ---------------- | -------------------------------- | ---------- |
@@ -1180,7 +1160,7 @@ This MV is used to provide metrics aggregation of each sub-sectors's which suppl
 
 ### idx_company_report
 ----------------------
-This view summarize all the important data for each company which taken from the other Materialized Views, Views, and Tables. This MV get scheduled refresh everyday at 05:05 and 11:05 (GMT+7).
+This view summarize all the important data for each company which taken from the other Materialized Views, Views, and Tables. This MV get scheduled refresh everyday at 05:05 (GMT+7).
 
 | Column Name              | Data Type        | Description | How to Calculate |
 | ------------------------ | ---------------- | -------------------------------- | ---------- |
@@ -1257,20 +1237,20 @@ This materialized view serves as a centralized, denormalized master record for e
 | Column Name                       | Data Type        | Constraints | Description                                                                                                                                                                                                                                                                                                                                                                                    |
 | symbol                            | text             | Primary Key | Stock ticker symbol or company code.                                                                                                                                                                                                                                                                                                                                                           |
 | net_income_data                   | jsonb            |             | Historical net income data grouped by year, containing quarterly breakdowns, TTM, and annualized figures. Calculated from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly) by aggregating earnings by quarter and calculating annualized/rolling TTM values.                                                                            |
-| eps_data                          | jsonb            |             | Historical Earnings Per Share (EPS) data grouped by year, containing quarterly breakdowns, TTM, and annualized figures. Calculated using earnings from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly) divided by current shares from[idx_active_company_profile](#idx_active_company_profile).     |
+| eps_data                          | jsonb            |             | Historical Earnings Per Share (EPS) data grouped by year, containing quarterly breakdowns, TTM, and annualized figures. Calculated using earnings from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly) divided by current shares from [idx_active_company_profile](#idx_active_company_profile).     |
 | revenue_data                      | jsonb            |             | Historical revenue data grouped by year, containing quarterly breakdowns, TTM, and annualized figures. Calculated from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly) by aggregating revenue by quarter and calculating annualized/rolling TTM values.                                                                                |
 | market_cap                        | bigint           |             | The current total market value of the company's outstanding shares. Data directly taken from [idx_calc_metrics_daily](#idx_calc_metrics_daily).                                                                                                                                                                                                              |
 | current_shares_outstanding        | bigint           |             | The most recent count of shares currently held by all shareholders. Sum of share amounts from [idx_active_company_profile](#idx_active_company_profile) (shareholders array).                                                                                                                                                                                |
 | free_float                        | double precision |             | The percentage of shares available for trading by the public. Extracted from [idx_active_company_profile](#idx_active_company_profile) where shareholder name is 'Public'.                                                                                                                                                                                   |
-| current_pe_ttm                    | double precision |             | Current Price-to-Earnings ratio based on Trailing Twelve Months earnings. Data directly taken from [idx_calc_metrics_daily] (#idx_calc_metrics_daily).                                                                                                                                                                                                        |
+| current_pe_ttm                    | double precision |             | Current Price-to-Earnings ratio based on Trailing Twelve Months earnings. Data directly taken from [idx_calc_metrics_daily](#idx_calc_metrics_daily).                                                                                                                                                                                                        |
 | current_price_to_sales            | double precision |             | Current Price-to-Sales ratio. Calculated as market_cap ([idx_calc_metrics_daily](#idx_calc_metrics_daily)) divided by revenue_ttm ([idx_combine_financials_quarterly](#idx_combine_financials_quarterly)), or fallback tops_ttm from [idx_calc_metrics_daily](#idx_calc_metrics_daily). |
 | current_price_to_book             | double precision |             | Current Price-to-Book value ratio.pb_mrqdirectly taken from [idx_calc_metrics_daily](#idx_calc_metrics_daily).                                                                                                                                                                                                                                             |
-| current_price_to_cashflow         | double precision |             | Current Price-to-Cash Flow ratio.pcf_ttmdirectly taken from [idx_calc_metrics_daily](#idx_calc_metrics_daily).                                                                                                                                                                                                                                             |
+| current_price_to_cashflow         | double precision |             | Current Price-to-Cash Flow ratio.pcf_ttm directly taken from [idx_calc_metrics_daily](#idx_calc_metrics_daily).                                                                                                                                                                                                                                             |
 | ev_to_ebitda_ttm                  | double precision |             | Enterprise Value to EBITDA ratio based on Trailing Twelve Months data.enterprise_to_ebitda directly taken from [idx_calc_metrics_daily](#idx_calc_metrics_daily).                                                                                                                                                                                           |
 | current_ratio_mrq                 | double precision |             | Current assets divided by current liabilities (or Net Loan / Total Deposit for banks) from the Most Recent Quarter. Calculated from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly). Formula varies based on sub_sector_id (Bank vs Non-Bank).                                                                                         |
 | debt_to_equity_mrq                | double precision |             | Total debt divided by shareholder equity from the Most Recent Quarter. Calculated from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly) (total_debt/total_equity).                                                                                                                                                                    |
 | dividend_ttm                      | double precision |             | Total dividend per share paid over the trailing twelve months. Calculated from [idx_dividend](#idx_dividend) (filtered for stock splits via [idx_stock_split](#idx_stock_split)), or fallback to [idx_company_report_calc](#idx_company_report_calc).                                    |
-| payout_ratio                      | double precision |             | The proportion of earnings paid out as dividends to shareholders. Calculated as dividend_ttm divided by (net_income_ttm/current_shares_outstanding), or fallback to [idx_company_report_calc](#idx_company_report_calc).                                                                                                                                   |
+| payout_ratio                      | double precision |             | The proportion of earnings paid out as dividends to shareholders. Calculated as dividend_ttm divided by (net_income_ttm / current_shares_outstanding), or fallback to [idx_company_report_calc](#idx_company_report_calc).                                                                                                                                   |
 | dividend_yield                    | double precision |             | Annual dividend yield based on the last closing price. Calculated as dividend_ttm divided by close price from [idx_daily_data](#idx_daily_data).                                                                                                                                                                                                             |
 | last_ex_dividend_date             | date             |             | The most recent ex-dividend date. Data directly taken from [idx_company_report_calc](#idx_company_report_calc).                                                                                                                                                                                                                                              |
 | revenue_ttm                       | bigint           |             | Total revenue generated over the trailing twelve months. Sum of total_revenue for the last 4 quarters from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly).                                                                                                                                                                            |
@@ -1279,7 +1259,7 @@ This materialized view serves as a centralized, denormalized master record for e
 | cash_mrq                          | bigint           |             | Total cash and cash equivalents reported in the Most Recent Quarter. Taken from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly). Uses cash_only or total_cash_and_due_from_banks depending on sector.                                                                                                                                  |
 | total_assets_mrq                  | bigint           |             | Total assets reported in the Most Recent Quarter. Taken from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly).                                                                                                                                                                                                                          |
 | total_liabilities_mrq             | bigint           |             | Total liabilities reported in the Most Recent Quarter. Taken from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly).                                                                                                                                                                                                                     |
-| total_debt_mrq                    | bigint           |             | Total debt reported in the Most Recent Quarter. Taken from[idx_combine_financials_quarterly](#idx_combine_financials_quarterly).                                                                                                                                                                                                                            |
+| total_debt_mrq                    | bigint           |             | Total debt reported in the Most Recent Quarter. Taken from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly).                                                                                                                                                                                                                            |
 | total_equity_mrq                  | bigint           |             | Total shareholders' equity reported in the Most Recent Quarter. Taken from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly).                                                                                                                                                                                                            |
 | revenue_growth_qoq                | double precision |             | Quarter-on-Quarter revenue growth percentage.yoy_quarter_revenue_growth taken from [idx_calc_metrics_quarterly](#idx_calc_metrics_quarterly).                                                                                                                                                                                                               |
 | price_change_1d                   | double precision |             | Percentage change in stock price over the last 1 day.daily_close_change taken from [idx_calc_metrics_daily](#idx_calc_metrics_daily).                                                                                                                                                                                                                       |
@@ -1287,7 +1267,7 @@ This materialized view serves as a centralized, denormalized master record for e
 | price_change_1m                   | double precision |             | Percentage change in stock price over the last 1 month.price_change_30_days taken from [idx_calc_metrics_daily](#idx_calc_metrics_daily).                                                                                                                                                                                                                   |
 | price_change_1y                   | double precision |             | Percentage change in stock price over the last 1 year.price_change_365_days taken from [idx_calc_metrics_daily](#idx_calc_metrics_daily).                                                                                                                                                                                                                   |
 | historical_financials             | jsonb            |             | Array of objects containing detailed annual financial statement metrics for past years. Aggregated JSON constructed from [idx_combine_financials_annual](#idx_combine_financials_annual) (Bank and Non-Bank specific logic).                                                                                                                                 |
-| idx_filings                       | jsonb            |             | Array of objects detailing insider trading and significant shareholder transactions. Aggregated JSON constructed from[idx_filings](#idx_filings).                                                                                                                                                                                                           |
+| idx_filings                       | jsonb            |             | Array of objects detailing insider trading and significant shareholder transactions. Aggregated JSON constructed from [idx_filings](#idx_filings).                                                                                                                                                                                                           |
 | historical_financial_ratio        | jsonb            |             | Array of objects containing historical financial ratios (profitability, leverage, liquidity, efficiency) grouped by year. Calculated ratios derived from [idx_combine_financials_annual](#idx_combine_financials_annual) and [idx_combine_financials_quarterly](#idx_combine_financials_quarterly).                        |
 | historical_financials_quarterly   | jsonb            |             | Object keyed by quarter (e.g., "Q1-2024") containing detailed quarterly financial statement metrics. Aggregated JSON constructed from [idx_combine_financials_quarterly](#idx_combine_financials_quarterly) (Bank and Non-Bank specific logic).                                                                                                              |
 | rups_list                         | jsonb            |             | Array of objects detailing General Meeting of Shareholders (RUPS/AGM) schedules and locations. Aggregated JSON constructed from [idx_agm](#idx_agm).                                                                                                                                                                                                         |
@@ -1340,7 +1320,7 @@ This MV compiles peer information for each company to enable comparisons. Peers 
 
 ### sgx_company_report
 ----------------------
-This materialized view consolidates and summarizes key financial, market, and profile data for each active company listed on the Singapore Exchange (SGX). It prioritizes manually curated data from `sgx_manual_input` over automated data from `sgx_companies` to ensure the highest accuracy. The view calculates various performance metrics, aggregates historical financials, and provides a comprehensive report for each company. It is scheduled to refresh twice daily to reflect the latest market data.
+This materialized view consolidates and summarizes key financial, market, and profile data for each active company listed on the Singapore Exchange (SGX). It prioritizes manually curated data from `sgx_manual_input` over automated data from `sgx_companies` to ensure the highest accuracy. The view calculates various performance metrics, aggregates historical financials, and provides a comprehensive report for each company. This MV get scheduled refresh everyday at 05:00 (GMT+7).
 
 | column_name | data_type | Description |
 | :--- | :--- | :--- |
