@@ -578,8 +578,65 @@ This table details the price of some indices in IDX, KLSE, and SGX
 | `price`        | double precision  |    | The index price or value on the given date.                  |
 | `index_name`  | character varying |    | The full name of the index.                                  |
 
-### klse_companies (pending the data will be updated in the mean time)
+### klse_companies
+
 ----------------------
+
+This table stores raw data for companies listed on the Bursa Malaysia (KLSE), sourced from external providers. It includes fundamental data, valuation metrics, and historical series stored in JSON format.
+
+|                                   |                  |             |                                                                                                   |
+| --------------------------------- | ---------------- | ----------- | ------------------------------------------------------------------------------------------------- |
+| Column Name                       | Data Type        | Constraints | Description                                                                                       |
+| symbol                            | text             | Primary Key | The unique stock ticker symbol for the company on the KLSE.                                       |
+| name                              | text             |             | Full name of the company.                                                                         |
+| investing_symbol                  | text             |             | Unique symbol identifier used by the third-party data source (Investing.com).                     |
+| currency                          | text             |             | Currency in which the instrument is denominated (e.g., MYR).                                      |
+| market_cap                        | double precision |             | Total market capitalization of the company.                                                       |
+| volume                            | double precision |             | Most recent trading volume.                                                                       |
+| pe                                | double precision |             | Price-to-Earnings ratio.                                                                          |
+| revenue                           | double precision |             | Total revenue (raw value from source).                                                            |
+| eps                               | double precision |             | Earnings Per Share.                                                                               |
+| beta                              | double precision |             | Beta value measuring stock volatility relative to the market.                                     |
+| forward_dividend                  | double precision |             | Estimated annual dividend payout per share.                                                       |
+| forward_dividend_yield            | double precision |             | Estimated annual dividend yield percentage.                                                       |
+| dividend_ttm                      | double precision |             | Trailing twelve months dividend payout.                                                           |
+| daily_signal                      | text             |             | Technical analysis signal based on daily timeframe (e.g., Buy, Sell).                             |
+| weekly_signal                     | text             |             | Technical analysis signal based on weekly timeframe.                                              |
+| monthly_signal                    | text             |             | Technical analysis signal based on monthly timeframe.                                             |
+| change_1d                         | double precision |             | Raw 1-day price change percentage from source.                                                    |
+| change_7d                         | double precision |             | Raw 7-day price change percentage from source.                                                    |
+| change_1m                         | text             |             | Raw 1-month price change percentage from source.                                                  |
+| change_ytd                        | double precision |             | Year-to-date price change percentage.                                                             |
+| change_1y                         | double precision |             | 1-year price change percentage.                                                                   |
+| change_3y                         | double precision |             | 3-year price change percentage.                                                                   |
+| pe_ttm                            | double precision |             | Price-to-Earnings ratio based on trailing twelve months earnings.                                 |
+| ps_ttm                            | double precision |             | Price-to-Sales ratio based on trailing twelve months revenue.                                     |
+| pcf                               | double precision |             | Price-to-Cash Flow ratio.                                                                         |
+| pcf_ttm                           | double precision |             | Price-to-Cash Flow ratio based on trailing twelve months.                                         |
+| pb                                | double precision |             | Price-to-Book ratio.                                                                              |
+| five_year_eps_growth              | text             |             | Average EPS growth rate over the last 5 years.                                                    |
+| five_year_sales_growth            | double precision |             | Average sales growth rate over the last 5 years.                                                  |
+| five_year_capital_spending_growth | text             |             | Growth in capital spending over the last 5 years.                                                 |
+| asset_turnover                    | double precision |             | Asset turnover ratio.                                                                             |
+| inventory_turnover_ttm            | double precision |             | Inventory turnover ratio (TTM).                                                                   |
+| receivable_turnover               | double precision |             | Accounts receivable turnover ratio.                                                               |
+| gross_margin                      | double precision |             | Gross profit margin percentage.                                                                   |
+| operating_margin                  | double precision |             | Operating margin percentage.                                                                      |
+| net_profit_margin                 | double precision |             | Net profit margin percentage.                                                                     |
+| quick_ratio                       | double precision |             | Quick ratio (liquidity measure).                                                                  |
+| current_ratio                     | double precision |             | Current ratio (liquidity measure).                                                                |
+| debt_to_equity                    | double precision |             | Debt-to-Equity ratio.                                                                             |
+| dividend_yield_5y_avg             | double precision |             | Average dividend yield over the past 5 years.                                                     |
+| dividend_growth_rate              | text             |             | Growth rate of dividends.                                                                         |
+| payout_ratio                      | text             |             | Percentage of earnings paid out as dividends.                                                     |
+| sector                            | text             |             | Industry sector classification.                                                                   |
+| sub_sector                        | text             |             | More specific sub-sector classification.                                                          |
+| close                             | jsonb            |             | Historical closing prices stored as a JSON array of objects: [{"date": "...", "close": ...}].     |
+| employee_num                      | double precision |             | Number of employees.                                                                              |
+| earnings                          | double precision |             | Raw earnings value from source.                                                                   |
+| historical_revenue                | jsonb            |             | Historical revenue data stored as a JSON array of objects: [{"period": "...", "revenue": ...}].   |
+| historical_earnings               | jsonb            |             | Historical earnings data stored as a JSON array of objects: [{"period": "...", "earnings": ...}]. |
+| bursa_my_symbol                   | text             |             | Specific symbol format used by Bursa Malaysia (if different from ticker).                         |
 
 ### sgx_companies
 ----------------------
@@ -1363,6 +1420,52 @@ This materialized view consolidates and summarizes key financial, market, and pr
 | `one_year_eps_growth` | double precision | The projected percentage growth in earnings per share for the next year. |
 | `one_year_sales_growth` | double precision | The projected percentage growth in sales (revenue) for the next year. |
 | `historical_financials` | jsonb | A JSON array of historical annual financial data for the last 5 years. It combines and prioritizes manually verified data from `sgx_manual_input` with automated data. Each object in the array represents a fiscal year and includes earnings, revenue, and, where available, detailed metrics from the income statement, balance sheet, and cash flow statement, along with Sankey diagram data and source URLs. |
+
+### klse_company_report
+
+---
+
+This materialized view transforms and aggregates data from klse_companies to provide a consolidated report. It converts JSON arrays into easier-to-query JSON objects (dictionaries) and recalculates short-term price changes to ensure consistency with the stored historical price data.
+
+
+| Column Name            | Data Type        | Constraints | Description                                                                                                                                                         |
+| ---------------------- | ---------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name                   | text             |             | Full name of the company.                                                                                                                                           |
+| market_cap             | double precision |             | Total market capitalization.                                                                                                                                        |
+| volume                 | double precision |             | Trading volume.                                                                                                                                                     |
+| pe                     | double precision |             | Price-to-Earnings ratio.                                                                                                                                            |
+| eps                    | double precision |             | Earnings Per Share.                                                                                                                                                 |
+| beta                   | double precision |             | Beta volatility measure.                                                                                                                                            |
+| change_1d              | numeric          |             | Percentage change in price over the last 1 day. Calculated dynamically from the transformed close object: (Latest Close - Previous Close) / Previous Close.         |
+| change_7d              | numeric          |             | Percentage change in price over the last 7 days. Calculated dynamically from the transformed close object: (Latest Close - Close 7 days ago) / Close 7 days ago.    |
+| change_1m              | numeric          |             | Percentage change in price over the last 1 month. Calculated dynamically from the transformed close object: (Latest Close - Close 1 month ago) / Close 1 month ago. |
+| change_ytd             | double precision |             | Year-to-date price change percentage.                                                                                                                               |
+| change_1y              | double precision |             | 1-year price change percentage.                                                                                                                                     |
+| change_3y              | double precision |             | 3-year price change percentage.                                                                                                                                     |
+| ps                     | double precision |             | Price-to-Sales ratio (TTM).                                                                                                                                         |
+| pcf                    | double precision |             | Price-to-Cash Flow ratio.                                                                                                                                           |
+| pb                     | double precision |             | Price-to-Book ratio.                                                                                                                                                |
+| gross_margin           | double precision |             | Gross profit margin percentage.                                                                                                                                     |
+| operating_margin       | double precision |             | Operating margin percentage.                                                                                                                                        |
+| net_profit_margin      | double precision |             | Net profit margin percentage.                                                                                                                                       |
+| quick_ratio            | double precision |             | Quick ratio.                                                                                                                                                        |
+| current_ratio          | double precision |             | Current ratio.                                                                                                                                                      |
+| debt_to_equity         | double precision |             | Debt-to-Equity ratio.                                                                                                                                               |
+| dividend_yield_5y_avg  | double precision |             | Average dividend yield over the last 5 years.                                                                                                                       |
+| dividend_growth_rate   | text             |             | Dividend growth rate.                                                                                                                                               |
+| payout_ratio           | text             |             | Dividend payout ratio.                                                                                                                                              |
+| sector                 | text             |             | Industry sector.                                                                                                                                                    |
+| sub_sector             | text             |             | Industry sub-sector.                                                                                                                                                |
+| symbol                 | text             | Primary Key  | Stock ticker symbol.                                                                                                                                                |
+| close                  | jsonb            |             | Historical closing prices transformed into a JSON dictionary object format: {"YYYY-MM-DD": price, ...}.                                                             |
+| employee_num           | double precision |             | Number of employees.                                                                                                                                                |
+| earnings               | numeric          |             | Net income for the trailing twelve months (TTM). Extracted directly from the historical_earnings transformed object using the 'TTM' key.                            |
+| revenue                | numeric          |             | Total revenue for the trailing twelve months (TTM). Extracted directly from the historical_revenue transformed object using the 'TTM' key.                          |
+| forward_dividend       | double precision |             | Estimated annual forward dividend.                                                                                                                                  |
+| forward_dividend_yield | double precision |             | Estimated annual forward dividend yield.                                                                                                                            |
+| dividend_ttm           | double precision |             | Trailing twelve months dividend payout.                                                                                                                             |
+| historical_revenue     | jsonb            |             | Historical revenue data transformed into a JSON dictionary object format: {"period": revenue, "TTM": revenue, ...}.                                                 |
+| historical_earnings    | jsonb            |             | Historical earnings data transformed into a JSON dictionary object format: {"period": earnings, "TTM": earnings, ...}.                                              |
 
 ## Other Detail Column Explanation
 
