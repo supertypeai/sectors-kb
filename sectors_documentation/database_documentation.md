@@ -563,7 +563,7 @@ This table present the detail of warrants corporate action of listed companies i
 | `ex_per_start`         | date                     |                 | Start date of the exercise period when holders can convert or exercise their rights.  |
 | `ex_per_end`           | date                     |                 | End date of the exercise period when conversion or exercise closes.                   |
 | `maturity_date`         | date                     |                 | Maturity date when the security expires or is redeemed.                               |
-| `ex_date_tunai`        | date                     |                 | Ex-date for cash settlement related to the security (if applicable).                  |
+| `ex_date_cash`        | date                     |                 | Ex-date for cash settlement related to the security (if applicable).                  |
 | `trading_period_start` | date                     | Primary Key            | Start date of the trading period for the security (e.g., warrants). |
 | `trading_period_end`   | date                     |                 | End date of the trading period for the security (e.g., warrants).                     |
 | `updated_on`            | timestamp with time zone |  | Timestamp of the last update to this record.                                          |
@@ -1353,7 +1353,7 @@ This MV is used to provide workflow data for each active company in IDX and quer
 | `one_month_laggards` | jsonb | Only available for the company placed in the top ten lowest price change from the last 1 month. |
 | `one_year_leaders` | jsonb | Only available for the company placed in the top ten highest price change from the last 1 year. |
 | `one_year_laggards` | jsonb | Only available for the company placed in the top ten lowest price change from the last 1 year. |
-| `top_3m_volume_transactions` | jsonb | Only available for the company placed in the top 30 highest 3 months volume transactions. |
+| `top_3m_volume_transaction` | jsonb | Only available for the company placed in the top 30 highest 3 months volume transactions. |
 | `top_3m_value_transactions` | jsonb | Only available for the company placed in the top 30 highest 3 months value transactions. |
 | `last_month_top_institution_transaction_bought` | jsonb | Only available for the company placed in the top 20 based on the institutional transaction bought. |
 | `last_month_top_institution_transaction_sold` | jsonb | Only available for the company placed in the top 20 based on the institutional transaction sold. |
