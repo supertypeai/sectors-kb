@@ -691,6 +691,20 @@ This table stores raw data for companies listed on the Bursa Malaysia (KLSE), so
 | `one_year_sales_growth`              | double precision |    | Sales growth over the past year.                                 |
 | `is_active`                            | boolean          |    | Indicates whether the security is currently active (true/false). |
 
+### sgx_daily_data
+
+----------------------
+
+This table details the daily closing price for companies listed on the Singapore Exchange (SGX).
+
+|   |   |   |   |
+|---|---|---|---|
+|Column Name|Data Type|Constraints|Description|
+|symbol|text|Primary Key|The unique stock ticker symbol for the company on the SGX.|
+|date|date|Primary Key|The date when the data is recorded.|
+|close|numeric||The closing price of the stock on the given date.|
+
+
 ### sgx_manual_input
 ----------------------
 This table details of annual financial metrics from the manual curated financial report.
