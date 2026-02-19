@@ -521,42 +521,42 @@ This table present the detail of Rapat Umum Pemegang Saham (RUPS) or General Mee
 ### idx_stock_split
 ----------------------
 This table details the stock split corporate action of each symbol.
-| Column Name      | Data Type               | Constraint   | Description |
-|------------------|------------------------|-------------|-------------|
-| `symbol`         | text                   | Primary Key | Ticker symbol of the stock undergoing a split. |
-| `date`           | date                   | Primary Key | Effective date of the stock split date. |
-| `cum_date`       | date                   |             | The last trading date on which shares are still entitled to receive the stock split. |
-| `recording_date` | date                   |             | The date when the stock split data is officially recorded. |
-| `split_ratio`    | real                   |             | Ratio at which the stock is being split (e.g., 2.0 for a 2-for-1 split). |
-| `updated_on`     | timestamp with time zone |           | Timestamp of the last update |
-| `applied_on`     | timestamp with time zone |           | Applied changes of data dependent on the stock split |
+| Column Name      | Data Type                | Constraint   | Description                                                                          |
+|------------------|------------------------- |------------- |------------------------------------------------------------------------------------- |
+| `symbol`         | text                     | Primary Key  | Ticker symbol of the stock undergoing a split.                                       |
+| `date`           | date                     | Primary Key  | Effective date of the stock split date.                                              |
+| `cum_date`       | date                     |              | The last trading date on which shares are still entitled to receive the stock split. |
+| `recording_date` | date                     |              | The date when the stock split data is officially recorded.                           |
+| `split_ratio`    | real                     |              | Ratio at which the stock is being split (e.g., 2.0 for a 2-for-1 split).             |
+| `updated_on`     | timestamp with time zone |              | Timestamp of the last update                                                         |
+| `applied_on`     | timestamp with time zone |              | Applied changes of data dependent on the stock split                                 |
 
 ### idx_subsector_metadata
 ----------------------
 This table details the sub-sector data
-| Column Name               | Data Type | Constraint | Description                                                            |
-| -------------------------- | ---------- | ---------- | ---------------------------------------------------------------------- |
-| `sector`                     | text       |    | The main sector classification (e.g., Finance, Technology).          |
-| `sub_sector`                | text       |    | The more specific category within a sector.                            |
-| `slug`                       | text       |    | URL-friendly identifier for the sub-sector.                            |
-| `description`                | text       |    | Description of the sub-sector.                                         |
+| Column Name                | Data Type  | Constraint    | Description                                                            |
+| -------------------------- | ---------- | ------------- | ---------------------------------------------------------------------- |
+| `sector`                   | text       |               | The main sector classification (e.g., Finance, Technology).            |
+| `sub_sector`               | text       |               | The more specific category within a sector.                            |
+| `slug`                     | text       |               | URL-friendly identifier for the sub-sector.                            |
+| `description`              | text       |               | Description of the sub-sector.                                         |
 | `sub_sector_id`            | smallint   | Primary Key   | Unique identifier for the sub-sector.                                  |
-| `pe_index_description`     | text       |    | Description related to the Price-to-Earnings (P/E) index.     |
-| `growth_index_description` | text       |    | Description of the growth index for the sub-sector.           |
-| `health_index_description` | text       |    | Description of the financial health index for the sub-sector. |
+| `pe_index_description`     | text       |               | Description related to the Price-to-Earnings (P/E) index.              |
+| `growth_index_description` | text       |               | Description of the growth index for the sub-sector.                    |
+| `health_index_description` | text       |               | Description of the financial health index for the sub-sector.          |
 
 ### idx_upcoming_dividend
 ----------------------
 This table details dividend announcement that haven't past the ex-date
-| Column Name       | Data Type               | Constraint     | Description |
-|-------------------|------------------------|---------------|-------------|
-| `symbol`          | text                   | Primary Key   | Ticker symbol of the stock. |
-| `cum_date`        | date                   |               | The last trading date when the stock is traded with dividend rights. |
-| `ex_date`         | date                   |               | The ex-dividend date when the stock starts trading without the dividend. |
-| `recording_date`  | date                   |               | The date when shareholders are officially recorded to determine dividend eligibility. |
-| `payment_date`    | date                   | Primary Key   | The date when the dividend is paid to shareholders. |
-| `dividend_amount` | real                   |               | The amount of dividend paid per share. |
-| `updated_on`      | timestamp with time zone |             | Timestamp when the record was last updated. |
+| Column Name       | Data Type                | Constraint    | Description                                                              | 
+|-------------------|------------------------- |---------------|------------------------------------------------------------------------- |
+| `symbol`          | text                     | Primary Key   | Ticker symbol of the stock.                                              |
+| `cum_date`        | date                     |               | The last trading date when the stock is traded with dividend rights.     |
+| `ex_date`         | date                     |               | The ex-dividend date when the stock starts trading without the dividend. |
+| `recording_date`  | date                     |               | The date when shareholders are officially recorded to determine dividend eligibility. |
+| `payment_date`    | date                     | Primary Key   | The date when the dividend is paid to shareholders.                      |
+| `dividend_amount` | real                     |               | The amount of dividend paid per share.                                   |
+| `updated_on`      | timestamp with time zone |               | Timestamp when the record was last updated.                              |
 
 ### idx_warrant
 ----------------------
@@ -578,12 +578,12 @@ This table present the detail of warrants corporate action of listed companies i
 ### index_daily_data
 ----------------------
 This table details the price of some indices in IDX, KLSE, and SGX
-| Column Name | Data Type        | Constraint | Description                                                  |
-| ------------ | ----------------- | ---------- | ------------------------------------------------------------ |
-| `date`         | date              | Primary Key   | The date of the index price record.                          |
-| `index_code`  | character varying | Primary Key   | The unique code representing the index (e.g., sector index). |
-| `price`        | double precision  |    | The index price or value on the given date.                  |
-| `index_name`  | character varying |    | The full name of the index.                                  |
+| Column Name  | Data Type         | Constraint    | Description                                                  |
+| ------------ | ----------------- | ------------- | ------------------------------------------------------------ |
+| `date`       | date              | Primary Key   | The date of the index price record.                          |
+| `index_code` | character varying | Primary Key   | The unique code representing the index (e.g., sector index). |
+| `price`      | double precision  |               | The index price or value on the given date.                  |
+| `index_name` | character varying |               | The full name of the index.                                  |
 
 ### klse_companies
 
@@ -715,29 +715,29 @@ This table details the daily closing price for companies listed on the Singapore
 ### sgx_manual_input
 ----------------------
 This table details of annual financial metrics from the manual curated financial report.
-| Column Name            | Data Type               | Constraint | Description                                                                |
-| ----------------------- | ------------------------ | ---------- | -------------------------------------------------------------------------- |
-| `symbol`                  | text                     | Primary Key   | Ticker symbol of the stock.                                                |
-| `updated_on`             | timestamp with time zone |   | Timestamp when the record was last updated. |
-| `financial_year`         | smallint                 | Primary Key   | The fiscal year the data refers to.                                        |
-| `sankey_component`       | jsonb                    |    | JSON object containing data for visual Sankey diagrams.                    |
-| `income_stmt_metrics`   | jsonb                    |    | JSON object containing key income statement metrics.                       |
-| `source_url`             | text                     |    | URL linking to the data source or reference document.                      |
-| `balance_sheet_metrics` | jsonb                    |    | JSON object containing key balance sheet metrics.                          |
-| `cash_flow_metrics`     | jsonb                    |    | JSON object containing key cash flow metrics.                              |
-| `employee_breakdown`     | jsonb                    |    | JSON object showing employee distribution (e.g., by department or region). |
-| `industry_breakdown`     | jsonb                    |    | JSON object showing breakdown by industry segments.                        |
+| Column Name            | Data Type                | Constraint    | Description                                                                |
+| -----------------------| ------------------------ | ------------- | -------------------------------------------------------------------------- |
+| `symbol`               | text                     | Primary Key   | Ticker symbol of the stock.                                                |
+| `updated_on`           | timestamp with time zone |               | Timestamp when the record was last updated. |
+| `financial_year`       | smallint                 | Primary Key   | The fiscal year the data refers to.                                        |
+| `sankey_component`     | jsonb                    |               | JSON object containing data for visual Sankey diagrams.                    |
+| `income_stmt_metrics`  | jsonb                    |               | JSON object containing key income statement metrics.                       |
+| `source_url`           | text                     |               | URL linking to the data source or reference document.                      |
+| `balance_sheet_metrics`| jsonb                    |               | JSON object containing key balance sheet metrics.                          |
+| `cash_flow_metrics`    | jsonb                    |               | JSON object containing key cash flow metrics.                              |
+| `employee_breakdown`   | jsonb                    |               | JSON object showing employee distribution (e.g., by department or region). |
+| `industry_breakdown`   | jsonb                    |               | JSON object showing breakdown by industry segments.                        |
 
 ### sgx_short_sell
 ----------------------
 This table details the short transaction in SGX
-| Column Name | Data Type        | Constraint | Description                                          |
-| ------------ | ----------------- | ---------- | ---------------------------------------------------- |
-| `symbol`       | character varying |    | The stock symbol associated with the record.         |
-| `name`         | text              |    | The name of the company or security.                 |
-| `date`         | date              |  Primary Key  | The date when the data was recorded.                 |
-| `volume`       | integer           |    | The total number of shares traded on the given date. |
-| `value`        | real              |    | The total value of shares traded on the given date.  |
+| Column Name | Data Type         | Constraint  | Description                                          |
+| ----------- | ----------------- | ----------- | ---------------------------------------------------- |
+| `symbol`    | character varying |             | The stock symbol associated with the record.         |
+| `name`      | text              |             | The name of the company or security.                 |
+| `date`      | date              | Primary Key | The date when the data was recorded.                 |
+| `volume`    | integer           |             | The total number of shares traded on the given date. |
+| `value`     | real              |             | The total value of shares traded on the given date.  |
 
 ## View
 
@@ -745,33 +745,33 @@ This table details the short transaction in SGX
 ----------------------
 This view only filtering the data in [idx_company_profile](#idx_company_profile) table that still active or the listing_date column value is null. Also, not all the column is returned here, only several important column are returned her
 
-| Column Name       | Data Type                | Description |
-| ----------------- | ------------------------ | ----------- |
-| `company_name`     | text                     | The name of the company        |
-| `symbol`            | text                     | All symbol (4 characters code) in IDX        |
-| `address`           | text                     | The address where the main office (headquarters) of the companies located at        |
-| `email`             | text                     | The email address of the company        |
-| `phone`             | text                     | The phone number of the company        |
-| `fax`               | text                     | The fax number of the company        |
-| `NPWP`              | text                     | The Indonesian tax information number of the company        |
-| `website`           | text                     | The website of the company        |
-| `listing_date`     | date                     | The listing date of the company        |
-| `listing_board`    | text                     | The type of board where the company is located at (based on IDX board classification)        |
-| `industry`          | text                     | The industry where the company operate at based on the IDX-IC        |
-| `sub_industry`     | text                     | The sub-industry where the company operate at based on the IDX-IC        |
-| `register`          | text                     | The company that become the Share Registrar (Biro Administrasi Efek) of the company        |
-| `shareholders`      | jsonb                    | 	List of the major shareholders of the company where each shareholders have the info about their name, type shares amount, and shares percentage        |
-| `directors`         | jsonb                    | The list of the company directors, each data has information about (name, position, and affiliation (true or false))        |
-| `comissioners`      | jsonb                    | The list of the company commissioner, each data has information about (name, position, and independent (true or false))        |
-| `audit_committees` | jsonb                    | The list of the company audit committees, each data has information about (name and position)        |
-| `updated_on`       | timestamp with time zone | The time when the data is updated or pushed into the database        |
-| `nologo`            | boolean                  | The existence of the company's logo in the storage        |
-| `sub_sector_id`   | smallint                 | The sub-sector where the company operate at based on the IDX-IC        |
-| `wsj_format`       | smallint                 | null        |
-| `yf_currency`      | smallint                 | null        |
-| `current_source`   | smallint                 | null        |
-| `morningstar_code` | text                     | null        |
-| `indices`           | ARRAY                    | The index in IDX where the company belongs to |
+| Column Name       | Data Type                | Description                                                                                   |
+| ----------------- | ------------------------ | --------------------------------------------------------------------------------------------- |
+| `company_name`    | text                     | The name of the company                                                                       |
+| `symbol`          | text                     | All symbol (4 characters code) in IDX                                                         |
+| `address`         | text                     | The address where the main office (headquarters) of the companies located at                  |
+| `email`           | text                     | The email address of the company                                                              |
+| `phone`           | text                     | The phone number of the company                                                               |
+| `fax`             | text                     | The fax number of the company                                                                 |
+| `NPWP`            | text                     | The Indonesian tax information number of the company                                          | 
+| `website`         | text                     | The website of the company                                                                    |
+| `listing_date`    | date                     | The listing date of the company                                                               |
+| `listing_board`   | text                     | The type of board where the company is located at (based on IDX board classification)         |
+| `industry`        | text                     | The industry where the company operate at based on the IDX-IC                                 |
+| `sub_industry`    | text                     | The sub-industry where the company operate at based on the IDX-IC                             |
+| `register`        | text                     | The company that become the Share Registrar (Biro Administrasi Efek) of the company           |
+| `shareholders`    | jsonb                    | 	List of the major shareholders of the company where each shareholders have the info about their name, type shares amount, and shares percentage |
+| `directors`       | jsonb                    | The list of the company directors, each data has information about (name, position, and affiliation (true or false)) |
+| `comissioners`    | jsonb                    | The list of the company commissioner, each data has information about (name, position, and independent (true or false)) |
+| `audit_committees`| jsonb                    | The list of the company audit committees, each data has information about (name and position) |
+| `updated_on`      | timestamp with time zone | The time when the data is updated or pushed into the database                                 |
+| `nologo`          | boolean                  | The existence of the company's logo in the storage                                            |
+| `sub_sector_id`   | smallint                 | The sub-sector where the company operate at based on the IDX-IC                               |
+| `wsj_format`      | smallint                 | null                                                                                          |
+| `yf_currency`     | smallint                 | null                                                                                          |
+| `current_source`  | smallint                 | null                                                                                          |
+| `morningstar_code`| text                     | null                                                                                          |
+| `indices`         | ARRAY                    | The index in IDX where the company belongs to                                                 |
 
 ### idx_combine_financials_annual
 ----------------------
@@ -783,82 +783,85 @@ This view combine the annual financial report from 3 sources with the hierarchy 
 
 Please note in `idx_combine_financials_annual`, there are some metrics that can be only available to financial institution only and non-financial institution only. In that case, when the metrics is for financial institution only, the data will be null for non-financial institution and vice versa
 
-| Column Name       | Data Type                | Description |
-| ------------------------------------- | ---------- | -------------------------------------------------------------------------- |
-| `symbol`                                | text       | Stock ticker symbol or company code.                                       |
-| `date`                                  | date       | Financial reporting date for the data record.                              |
-| `revenue`                               | bigint     | Total revenue generated during the reporting period.                       |
-| `gross_profit`                         | bigint     | Revenue minus cost of revenue.                                             |
-| `cost_of_revenue`                     | bigint     | Total direct costs to produce goods or services sold.                      |
-| `operating_pnl`                        | bigint     | Operating profit or loss from core business operations.                    |
-| `tax`                                   | bigint     | Income tax expense for the period.                                         |
-| `earnings_before_tax`                 | bigint     | Profit before income tax is deducted (EBT).                                |
+| Column Name                          | Data Type  | Description                                                                |
+| ------------------------------------ | ---------- | -------------------------------------------------------------------------- |
+| `symbol`                             | text       | Stock ticker symbol or company code.                                       |
+| `date`                               | date       | Financial reporting date for the data record.                              |
+| `revenue`                            | bigint     | Total revenue generated during the reporting period.                       |
+| `gross_profit`                       | bigint     | Revenue minus cost of revenue.                                             |
+| `cost_of_revenue`                    | bigint     | Total direct costs to produce goods or services sold.                      |
+| `operating_pnl`                      | bigint     | Operating profit or loss from core business operations.                    |
+| `tax`                                | bigint     | Income tax expense for the period.                                         |
+| `earnings_before_tax`                | bigint     | Profit before income tax is deducted (EBT).                                |
 | `interest_expense_non_operating`     | bigint     | Interest expense not related to core operations.                           |
-| `ebit`                                  | bigint     | Earnings before interest and taxes.                                        |
-| `ebitda`                                | bigint     | Earnings before interest, taxes, depreciation, and amortization.           |
-| `earnings`                              | bigint     | Net income after all expenses and taxes.                                   |
-| `revenue_breakdown`                    | jsonb      | Detailed revenue components by category or segment.                        |
-| `int_income_breakdown`                | jsonb      | Breakdown of interest income sources.                                      |
-| `operating_expense_breakdown`         | jsonb      | Breakdown of operating expenses by category.                               |
-| `fixed_assets`                         | bigint     | Value of long-term tangible assets such as property, plant, and equipment. |
-| `total_assets`                         | bigint     | Total value of all assets owned by the company.                            |
-| `total_equity`                         | bigint     | Shareholders’ equity value.                                                |
-| `current_liabilities`                  | bigint     | Obligations due within one year.                                           |
-| `total_liabilities`                    | bigint     | Total obligations of the company.                                          |
-| `non_current_liabilities`             | bigint     | Obligations due after one year.                                            |
-| `current_assets`                       | bigint     | Assets expected to be converted into cash within one year.                 |
-| `total_debt`                           | bigint     | Combined short-term and long-term debt.                                    |
-| `operating_expense`                    | bigint     | Total operating expenses incurred.                                         |
-| `non_operating_income_or_loss`      | bigint     | Income or loss from non-core business activities.                          |
+| `ebit`                               | bigint     | Earnings before interest and taxes.                                        |
+| `ebitda`                             | bigint     | Earnings before interest, taxes, depreciation, and amortization.           |
+| `earnings`                           | bigint     | Net income after all expenses and taxes.                                   |
+| `revenue_breakdown`                  | jsonb      | Detailed revenue components by category or segment.                        |
+| `int_income_breakdown`               | jsonb      | Breakdown of interest income sources.                                      |
+| `operating_expense_breakdown`        | jsonb      | Breakdown of operating expenses by category.                               |
+| `fixed_assets`                       | bigint     | Value of long-term tangible assets such as property, plant, and equipment. |
+| `total_assets`                       | bigint     | Total value of all assets owned by the company.                            |
+| `total_equity`                       | bigint     | Shareholders’ equity value.                                                |
+| `current_liabilities`                | bigint     | Obligations due within one year.                                           |
+| `total_liabilities`                  | bigint     | Total obligations of the company.                                          |
+| `non_current_liabilities`            | bigint     | Obligations due after one year.                                            |
+| `current_assets`                     | bigint     | Assets expected to be converted into cash within one year.                 |
+| `total_debt`                         | bigint     | Combined short-term and long-term debt.                                    |
+| `operating_expense`                  | bigint     | Total operating expenses incurred.                                         |
+| `non_operating_income_or_loss`       | bigint     | Income or loss from non-core business activities.                          |
 | `net_financing_cash_flow`            | bigint     | Net cash flow from financing activities.                                   |
-| `end_cash_position`                   | bigint     | Cash and equivalents at the end of the period.                             |
-| `capital_expenditure`                  | bigint     | Funds spent on acquiring or maintaining fixed assets.                      |
-| `free_cash_flow`                      | bigint     | Cash available after capital expenditures.                                 |
-| `cash_and_equivalents`                | bigint     | Total cash and near-cash assets.                                           |
-| `cash_only`                            | bigint     | Physical cash holdings only.                                               |
-| `total_cash_and_due_from_banks`    | bigint     | Cash plus amounts due from other banks.                                    |
-| `interest_income`                      | bigint     | Total interest income earned.                                              |
-| `interest_expense`                     | bigint     | Total interest expenses incurred.                                          |
-| `net_interest_income`                 | bigint     | Interest income minus interest expenses.                                   |
-| `premium_income`                       | bigint     | Insurance premium revenue.                                                 |
-| `premium_expense`                      | bigint     | Insurance premium costs.                                                   |
-| `net_premium_income`                  | bigint     | Premium income minus premium expenses.                                     |
-| `non_interest_income`                 | bigint     | Income not derived from interest.                                          |
-| `provision`                             | bigint     | Loan loss provisions or similar reserves.                                  |
-| `diluted_shares_outstanding`          | bigint     | Number of diluted shares outstanding.                                      |
-| `minorities`                            | bigint     | Minority interest in consolidated subsidiaries.                            |
-| `net_increased_decreased`             | bigint     | Net change in cash or other metrics.                                       |
-| `gross_loan`                           | bigint     | Total loan portfolio before provisions.                                    |
-| `allowance_for_loans`                 | bigint     | Loan loss allowance.                                                       |
-| `net_loan`                             | bigint     | Loans net of provisions.                                                   |
+| `end_cash_position`                  | bigint     | Cash and equivalents at the end of the period.                             |
+| `capital_expenditure`                | bigint     | Funds spent on acquiring or maintaining fixed assets.                      |
+| `free_cash_flow`                     | bigint     | Cash available after capital expenditures.                                 |
+| `cash_and_equivalents`               | bigint     | Total cash and near-cash assets.                                           |
+| `cash_only`                          | bigint     | Physical cash holdings only.                                               |
+| `total_cash_and_due_from_banks`      | bigint     | Cash plus amounts due from other banks.                                    |
+| `interest_income`                    | bigint     | Total interest income earned.                                              |
+| `interest_expense`                   | bigint     | Total interest expenses incurred.                                          |
+| `net_interest_income`                | bigint     | Interest income minus interest expenses.                                   |
+| `premium_income`                     | bigint     | Insurance premium revenue.                                                 |
+| `premium_expense`                    | bigint     | Insurance premium costs.                                                   |
+| `net_premium_income`                 | bigint     | Premium income minus premium expenses.                                     |
+| `non_interest_income`                | bigint     | Income not derived from interest.                                          |
+| `provision`                          | bigint     | Loan loss provisions or similar reserves.                                  |
+| `diluted_shares_outstanding`         | bigint     | Number of diluted shares outstanding.                                      |
+| `minorities`                         | bigint     | Minority interest in consolidated subsidiaries.                            |
+| `net_increased_decreased`            | bigint     | Net change in cash or other metrics.                                       |
+| `gross_loan`                         | bigint     | Total loan portfolio before provisions.                                    |
+| `allowance_for_loans`                | bigint     | Loan loss allowance.                                                       |
+| `net_loan`                           | bigint     | Loans net of provisions.                                                   |
 | `non_loan_earning_assets`            | bigint     | Earning assets not related to loans.                                       |
-| `non_loan_non_earning_asset`        | bigint     | Non-earning assets not related to loans.                                   |
-| `non_loan_assets`                     | bigint     | All non-loan assets.                                                       |
-| `current_account`                      | bigint     | Balances in current accounts.                                              |
-| `savings_account`                      | bigint     | Balances in savings accounts.                                              |
-| `time_deposit`                         | bigint     | Balances in time deposits.                                                 |
-| `total_deposit`                        | bigint     | Total customer deposits.                                                   |
+| `non_loan_non_earning_asset`         | bigint     | Non-earning assets not related to loans.                                   |
+| `non_loan_assets`                    | bigint     | All non-loan assets.                                                       |
+| `current_account`                    | bigint     | Balances in current accounts.                                              |
+| `savings_account`                    | bigint     | Balances in savings accounts.                                              |
+| `time_deposit`                       | bigint     | Balances in time deposits.                                                 |
+| `total_deposit`                      | bigint     | Total customer deposits.                                                   |
 | `other_interest_bearing_liabilities` | bigint     | Other liabilities incurring interest.                                      |
 | `non_interest_bearing_liabilities`   | bigint     | Liabilities that do not incur interest.                                    |
-| `core_capital_tier1`                  | bigint     | Tier 1 regulatory capital.                                                 |
-| `supplementary_capital_tier2`         | bigint     | Tier 2 regulatory capital.                                                 |
-| `total_capital`                        | bigint     | Total regulatory capital.                                                  |
-| `credit_rwa`                           | bigint     | Credit risk-weighted assets.                                               |
-| `market_rwa`                           | bigint     | Market risk-weighted assets.                                               |
-| `operational_rwa`                      | bigint     | Operational risk-weighted assets.                                          |
+| `core_capital_tier1`                 | bigint     | Tier 1 regulatory capital.                                                 |
+| `supplementary_capital_tier2`        | bigint     | Tier 2 regulatory capital.                                                 |
+| `total_capital`                      | bigint     | Total regulatory capital.                                                  |
+| `credit_rwa`                         | bigint     | Credit risk-weighted assets.                                               |
+| `market_rwa`                         | bigint     | Market risk-weighted assets.                                               |
+| `operational_rwa`                    | bigint     | Operational risk-weighted assets.                                          |
 | `total_risk_weighted_asset`          | bigint     | Total risk-weighted assets.                                                |
-| `stockholders_equity`                  | bigint     | Total equity attributable to stockholders.                                 |
-| `total_high_quality_liquid_asset`   | bigint     | Total high-quality liquid assets for liquidity ratios.                     |
-| `cash_outflow`                         | bigint     | Total cash outflows for the period.                                        |
-| `cash_inflow`                          | bigint     | Total cash inflows for the period.                                         |
-| `net_cash_flow`                       | bigint     | Net change in cash flow.                                                   |
+| `stockholders_equity`                | bigint     | Total equity attributable to stockholders.                                 |
+| `total_high_quality_liquid_asset`    | bigint     | Total high-quality liquid assets for liquidity ratios.                     |
+| `cash_outflow`                       | bigint     | Total cash outflows for the period.                                        |
+| `cash_inflow`                        | bigint     | Total cash inflows for the period.                                         |
+| `net_cash_flow`                      | bigint     | Net change in cash flow.                                                   |
 | `realized_capital_goods_investment`  | bigint     | Actual investment in capital goods.                                        |
 | `net_operating_cash_flow`            | bigint     | Net cash flow from operating activities.                                   |
 | `net_investing_cash_flow`            | bigint     | Net cash flow from investing activities.                                   |
-| `industry_breakdown`                   | jsonb      | Revenue or metrics breakdown by industry segment.                          |
-| `inventories`                           | bigint     | Value of inventories held.                                                 |
-| `prepaid_assets`                       | bigint     | Value of prepaid expenses or assets.                                       |
-| `retained_earnings`                    | bigint     | Cumulative net income retained in the business.                            |
+| `industry_breakdown`                 | jsonb      | Revenue or metrics breakdown by industry segment.                          |
+| `inventories`                        | bigint     | Value of inventories held.                                                 |
+| `prepaid_assets`                     | bigint     | Value of prepaid expenses or assets.                                       |
+| `retained_earnings`                  | bigint     | Cumulative net income retained in the business.                            |
+| `short_term_debt`                    | bigint     | Number of debt that must be paid within one year                           |
+| `long_term_debt`                     | bigint     | Number of debt with a maturity of one year or longer.                      |
+| `net_debt`                           | bigint     | Number of total debt minus the cash and equivalent.                        |
 
 ### idx_combine_financials_quarterly
 ----------------------
@@ -869,62 +872,65 @@ This view combine the quarterly financial report from 2 sources with the hierarc
 
 Please note in `idx_combine_financials_quarterly`, there are some metrics that can be only available to financial institution only and non-financial institution only. In that case, when the metrics is for financial institution only, the data will be null for non-financial institution and vice versa
 
-| Column Name       | Data Type                | Description |
-| ------------------------------------- | ---------- | ---------------------------------------------------------------- |
-| `symbol`                                | text       | Stock ticker symbol or company code.                             |
-| `date`                                  | date       | Financial reporting date for the data record.                    |
-| `interest_income`                      | bigint     | Total interest income earned.                                    |
-| `interest_expense`                     | bigint     | Total interest expenses incurred.                                |
-| `net_interest_income`                 | bigint     | Interest income minus interest expenses.                         |
-| `premium_income`                       | bigint     | Insurance premium revenue.                                       |
-| `premium_expense`                      | bigint     | Insurance premium costs.                                         |
-| `net_premium_income`                  | bigint     | Premium income minus premium expenses.                           |
-| `non_interest_income`                 | bigint     | Income not derived from interest.                                |
-| `total_revenue`                        | bigint     | Combined income from all revenue sources.                        |
-| `operating_expense`                    | bigint     | Total operating expenses incurred.                               |
-| `provision`                             | bigint     | Loan loss provisions or similar reserves.                        |
-| `operating_pnl`                        | bigint     | Operating profit or loss from core business activities.          |
-| `non_operating_income_or_loss`      | bigint     | Income or loss from non-core business activities.                |
-| `earnings_before_tax`                 | bigint     | Profit before income tax is deducted (EBT).                      |
-| `tax`                                   | bigint     | Income tax expense for the period.                               |
-| `minorities`                            | bigint     | Minority interest in consolidated subsidiaries.                  |
-| `earnings`                              | bigint     | Net income after all expenses and taxes.                         |
-| `gross_income`                         | bigint     | Total income before expenses are deducted.                       |
-| `diluted_shares_outstanding`          | numeric    | Number of diluted shares outstanding.                            |
+| Column Name                          | Data Type  | Description                                                      |
+| -------------- --------------------- | ---------- | ---------------------------------------------------------------- |
+| `symbol`                             | text       | Stock ticker symbol or company code.                             |
+| `date`                               | date       | Financial reporting date for the data record.                    |
+| `interest_income`                    | bigint     | Total interest income earned.                                    |
+| `interest_expense`                   | bigint     | Total interest expenses incurred.                                |
+| `net_interest_income`                | bigint     | Interest income minus interest expenses.                         |
+| `premium_income`                     | bigint     | Insurance premium revenue.                                       |
+| `premium_expense`                    | bigint     | Insurance premium costs.                                         |
+| `net_premium_income`                 | bigint     | Premium income minus premium expenses.                           |
+| `non_interest_income`                | bigint     | Income not derived from interest.                                |
+| `total_revenue`                      | bigint     | Combined income from all revenue sources.                        |
+| `operating_expense`                  | bigint     | Total operating expenses incurred.                               |
+| `provision`                          | bigint     | Loan loss provisions or similar reserves.                        |
+| `operating_pnl`                      | bigint     | Operating profit or loss from core business activities.          |
+| `non_operating_income_or_loss`       | bigint     | Income or loss from non-core business activities.                |
+| `earnings_before_tax`                | bigint     | Profit before income tax is deducted (EBT).                      |
+| `tax`                                | bigint     | Income tax expense for the period.                               |
+| `minorities`                         | bigint     | Minority interest in consolidated subsidiaries.                  |
+| `earnings`                           | bigint     | Net income after all expenses and taxes.                         |
+| `gross_income`                       | bigint     | Total income before expenses are deducted.                       |
+| `diluted_shares_outstanding`         | numeric    | Number of diluted shares outstanding.                            |
 | `interest_expense_non_operating`     | bigint     | Interest expense not related to core operations.                 |
-| `ebit`                                  | bigint     | Earnings before interest and taxes.                              |
-| `ebitda`                                | bigint     | Earnings before interest, taxes, depreciation, and amortization. |
-| `cost_of_revenue`                     | bigint     | Total direct costs to produce goods or services sold.            |
-| `total_assets`                         | bigint     | Total value of all assets owned by the company.                  |
-| `gross_loan`                           | bigint     | Total loan portfolio before provisions.                          |
-| `allowance_for_loans`                 | bigint     | Loan loss allowance.                                             |
-| `net_loan`                             | bigint     | Loans net of provisions.                                         |
-| `total_earning_assets`                | bigint     | Assets that generate interest or other returns.                  |
-| `non_loan_asset`                      | bigint     | Assets not related to loans.                                     |
-| `current_account`                      | bigint     | Balances in current accounts.                                    |
-| `savings_account`                      | bigint     | Balances in savings accounts.                                    |
-| `time_deposit`                         | bigint     | Balances in time deposits.                                       |
-| `total_deposit`                        | bigint     | Total customer deposits.                                         |
+| `ebit`                               | bigint     | Earnings before interest and taxes.                              |
+| `ebitda`                             | bigint     | Earnings before interest, taxes, depreciation, and amortization. |
+| `cost_of_revenue`                    | bigint     | Total direct costs to produce goods or services sold.            |
+| `total_assets`                       | bigint     | Total value of all assets owned by the company.                  |
+| `gross_loan`                         | bigint     | Total loan portfolio before provisions.                          |
+| `allowance_for_loans`                | bigint     | Loan loss allowance.                                             |
+| `net_loan`                           | bigint     | Loans net of provisions.                                         |
+| `total_earning_assets`               | bigint     | Assets that generate interest or other returns.                  |
+| `non_loan_asset`                     | bigint     | Assets not related to loans.                                     |
+| `current_account`                    | bigint     | Balances in current accounts.                                    |
+| `savings_account`                    | bigint     | Balances in savings accounts.                                    |
+| `time_deposit`                       | bigint     | Balances in time deposits.                                       |
+| `total_deposit`                      | bigint     | Total customer deposits.                                         |
 | `other_interest_bearing_liabilities` | bigint     | Other liabilities incurring interest.                            |
 | `non_interest_bearing_liabilities`   | bigint     | Liabilities that do not incur interest.                          |
-| `cash_only`                            | bigint     | Physical cash holdings only.                                     |
-| `total_cash_and_due_from_banks`    | bigint     | Cash plus amounts due from other banks.                          |
-| `total_liabilities`                    | bigint     | Total obligations of the company.                                |
-| `total_equity`                         | bigint     | Shareholders’ equity value.                                      |
-| `total_debt`                           | bigint     | Combined short-term and long-term debt.                          |
-| `stockholders_equity`                  | bigint     | Total equity attributable to stockholders.                       |
+| `cash_only`                          | bigint     | Physical cash holdings only.                                     |
+| `total_cash_and_due_from_banks`      | bigint     | Cash plus amounts due from other banks                           |
+| `total_liabilities`                  | bigint     | Total obligations of the company.                                |
+| `total_equity`                       | bigint     | Shareholders’ equity value.                                      |
+| `total_debt`                         | bigint     | Combined short-term and long-term debt.                          |
+| `stockholders_equity`                | bigint     | Total equity attributable to stockholders.                       |
 | `total_non_current_assets`           | bigint     | Assets not expected to be converted to cash within one year.     |
-| `total_current_liabilities`           | bigint     | Obligations due within one year.                                 |
-| `cash_and_short_term_investments`   | bigint     | Cash and liquid investments with maturities under one year.      |
-| `non_loan_assets`                     | bigint     | All non-loan assets.                                             |
-| `total_current_asset`                 | bigint     | Assets expected to be converted to cash within one year.         |
+| `total_current_liabilities`          | bigint     | Obligations due within one year.                                 |
+| `cash_and_short_term_investments`    | bigint     | Cash and liquid investments with maturities under one year.      |
+| `non_loan_assets`                    | bigint     | All non-loan assets.                                             |
+| `total_current_asset`                | bigint     | Assets expected to be converted to cash within one year.         |
 | `total_non_current_liabilities`      | bigint     | Obligations due after one year.                                  |
 | `net_financing_cash_flow`            | bigint     | Net cash flow from financing activities.                         |
 | `net_operating_cash_flow`            | bigint     | Net cash flow from operating activities.                         |
 | `net_investing_cash_flow`            | bigint     | Net cash flow from investing activities.                         |
-| `net_cash_flow`                       | bigint     | Net change in cash flow.                                         |
-| `capital_expenditure`                  | bigint     | Funds spent on acquiring or maintaining fixed assets.            |
-| `free_cash_flow`                      | bigint     | Cash available after capital expenditures.                       |
+| `net_cash_flow`                      | bigint     | Net change in cash flow.                                         |
+| `capital_expenditure`                | bigint     | Funds spent on acquiring or maintaining fixed assets.            |
+| `free_cash_flow`                     | bigint     | Cash available after capital expenditures.                       |
+| `short_term_debt`                    | bigint     | Number of debt that must be paid within one year                 |
+| `long_term_debt`                     | bigint     | Number of debt with a maturity of one year or longer.            |
+| `net_debt`                           | bigint     | Number of total debt minus the cash and short term investment.   |
 
 ### idx_company_growth_forecast
 ----------------------
@@ -944,66 +950,66 @@ This view calculate the forecast growth or estimation value of revenue and eps b
 ----------------------
 This view take only the company that did the delisting from IDX to become private company in the last 12 months (1 year). The list of company is taken from [idx_company_profile](#idx_company_profile)
 
-| Column Name       | Data Type                | Description |
+| Column Name       | Data Type                | Description                                                                                   |
 | ----------------- | ------------------------ | --------------------------------------------------------------------------------------------- |
-| `company_name`     | text                     | Full legal name of the company.                                                               |
-| `symbol`            | text                     | Stock ticker symbol of the company.                                                           |
-| `address`           | text                     | Registered address of the company’s head office.                                              |
-| `email`             | text                     | Official company email address.                                                               |
-| `phone`             | text                     | Main contact phone number.                                                                    |
-| `fax`               | text                     | Company fax number.                                                            |
-| `NPWP`              | text                     | Indonesian taxpayer identification number (Nomor Pokok Wajib Pajak).                          |
-| `website`           | text                     | Official website URL.                                                                         |
-| `listing_date`     | date                     | Date the company was listed on the stock exchange.                                            |
-| `listing_board`    | text                     | Board or segment where the company’s shares are listed (e.g., Main Board, Development Board). |
-| `industry`          | text                     | Industry classification of the company.                                                       |
-| `sub_industry`     | text                     | More specific sub-industry classification.                                                    |
-| `register`          | text                     | Company registration number or relevant registry entry.                                       |
-| `shareholders`      | jsonb                    | List of major shareholders with details, stored as JSON.                                      |
-| `directors`         | jsonb                    | List of directors with details, stored as JSON.                                               |
-| `comissioners`      | jsonb                    | List of commissioners with details, stored as JSON.                                           |
-| `audit_committees` | jsonb                    | List of audit committee members, stored as JSON.                                              |
-| `delisting_date`   | date                     | Date the company was delisted                                                 |
-| `updated_on`       | timestamp with time zone | Timestamp of the latest data update.                                                          |
-| `nologo`            | boolean                  | Indicates whether the company has a logo in the storage                                 |
+| `company_name`    | text                     | Full legal name of the company.                                                               |
+| `symbol`          | text                     | Stock ticker symbol of the company.                                                           |
+| `address`         | text                     | Registered address of the company’s head office.                                              |
+| `email`           | text                     | Official company email address.                                                               |
+| `phone`           | text                     | Main contact phone number.                                                                    |
+| `fax`             | text                     | Company fax number.                                                                           |
+| `NPWP`            | text                     | Indonesian taxpayer identification number (Nomor Pokok Wajib Pajak).                          |
+| `website`         | text                     | Official website URL.                                                                         |
+| `listing_date`    | date                     | Date the company was listed on the stock exchange.                                            |
+| `listing_board`   | text                     | Board or segment where the company’s shares are listed (e.g., Main Board, Development Board). |
+| `industry`        | text                     | Industry classification of the company.                                                       |
+| `sub_industry`    | text                     | More specific sub-industry classification.                                                    |
+| `register`        | text                     | Company registration number or relevant registry entry.                                       |
+| `shareholders`    | jsonb                    | List of major shareholders with details, stored as JSON.                                      |
+| `directors`       | jsonb                    | List of directors with details, stored as JSON.                                               |
+| `comissioners`    | jsonb                    | List of commissioners with details, stored as JSON.                                           |
+| `audit_committees`| jsonb                    | List of audit committee members, stored as JSON.                                              |
+| `delisting_date`  | date                     | Date the company was delisted                                                                 |
+| `updated_on`      | timestamp with time zone | Timestamp of the latest data update.                                                          |
+| `nologo`          | boolean                  | Indicates whether the company has a logo in the storage                                       |
 | `sub_sector_id`   | smallint                 | Reference ID for the company’s sub-sector classification.                                     |
 
 ### idx_ipo_details_12m
 ----------------------
 This view take details of the listed companies that did the listing in the last 12 months (1 year). The data is taken from [idx_ipo_details](#idx_ipo_details)
 
-| Column Name       | Data Type                | Description |
-| ---------------------------- | --------------------------- | ---------------------------------------------------------------------- |
-| `symbol`                       | text                        | Stock ticker symbol of the company conducting the offering.            |
-| `shares_offered`              | bigint                      | Number of shares being offered in the IPO or share issuance.           |
-| `percent_total_shares`       | real                        | Percentage of total company shares represented by the offered shares.  |
+| Column Name                 | Data Type                   | Description                                                            |
+| --------------------------- | --------------------------- | ---------------------------------------------------------------------- |
+| `symbol`                    | text                        | Stock ticker symbol of the company conducting the offering.            |
+| `shares_offered`            | bigint                      | Number of shares being offered in the IPO or share issuance.           |
+| `percent_total_shares`      | real                        | Percentage of total company shares represented by the offered shares.  |
 | `book_building_start_date`  | date                        | Date when the book-building process begins.                            |
 | `book_building_end_date`    | date                        | Date when the book-building process ends.                              |
 | `book_building_lower_bound` | integer                     | Minimum price per share set during book-building.                      |
 | `book_building_upper_bound` | integer                     | Maximum price per share set during book-building.                      |
-| `offering_start_date`        | date                        | Date when the public offering period starts.                           |
-| `offering_end_date`          | date                        | Date when the public offering period ends.                             |
-| `offering_price`              | integer                     | Final price per share at which shares are offered.                     |
-| `distribution_date`           | date                        | Date when the offered shares are distributed to investors.             |
-| `prospectus_url`              | text                        | URL link to the official prospectus document.                          |
-| `additional_info_url`        | text                        | URL link to supplementary or related offering information.             |
-| `created_at`                  | timestamp with time zone    | Timestamp when the record was first created.                           |
-| `updated_at`                  | timestamp without time zone | Timestamp when the record was last updated.                            |
-| `company_name`                | text                        | Full legal name of the issuing company.                                |
-| `listing_date`                | date                        | Date the company’s shares are officially listed on the stock exchange. |
+| `offering_start_date`       | date                        | Date when the public offering period starts.                           |
+| `offering_end_date`         | date                        | Date when the public offering period ends.                             |
+| `offering_price`            | integer                     | Final price per share at which shares are offered.                     |
+| `distribution_date`         | date                        | Date when the offered shares are distributed to investors.             |
+| `prospectus_url`            | text                        | URL link to the official prospectus document.                          |
+| `additional_info_url`       | text                        | URL link to supplementary or related offering information.             |
+| `created_at`                | timestamp with time zone    | Timestamp when the record was first created.                           |
+| `updated_at`                | timestamp without time zone | Timestamp when the record was last updated.                            |
+| `company_name`              | text                        | Full legal name of the issuing company.                                |
+| `listing_date`              | date                        | Date the company’s shares are officially listed on the stock exchange. |
 
 ### idx_new_company
 ----------------------
 This view gather the important data of the newly listed companies that did listing in the last 6 months. The data is taken from [idx_active_company_profile](#idx_active_company_profile)
 
-| Column Name       | Data Type                | Description |
-| ------------- | ---------- | ------------------------------------------------------------------ |
-| `symbol`        | text       | Stock ticker symbol of the company.                                |
+| Column Name    | Data Type  | Description                                                        |
+| -------------- | ---------- | ------------------------------------------------------------------ |
+| `symbol`       | text       | Stock ticker symbol of the company.                                |
 | `company_name` | text       | Full legal name of the company.                                    |
 | `listing_date` | date       | Date when the company was officially listed on the stock exchange. |
-| `sector`        | text       | Industry sector in which the company operates.                     |
+| `sector`       | text       | Industry sector in which the company operates.                     |
 | `sub_sector`   | text       | More specific classification of the company within its sector.     |
-| `description`   | text       | Brief description of the company’s business activities.            |
+| `description`  | text       | Brief description of the company’s business activities.            |
 | `market_cap`   | bigint     | Market capitalization of the company in local currency.            |
 
 ### idx_sector_report
