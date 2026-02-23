@@ -742,6 +742,23 @@ This table details the short transaction in SGX
 | `volume`    | integer           |             | The total number of shares traded on the given date. |
 | `value`     | real              |             | The total value of shares traded on the given date.  |
 
+### sgx_buybacks
+----------------------
+This table stores share buyback transactions reported by companies listed on the Singapore Exchange (SGX), based on official SGX share buy-back disclosures.
+
+| Column Name                      | Data Type | Constraints              | Description |
+|----------------------------------|-----------|--------------------------|-------------|
+| `id`                             | bigserial | Primary Key              | Unique record identifier. |
+| `symbol`                         | text      |                          | Company stock symbol. |
+| `url`                            | text      |                          | SGX announcement source link. |
+| `purchase_date`                  | date      |                          | Date of the buyback transaction. |
+| `type`                           | text      |                          | Buyback method (On Market or Off Market). |
+| `price_per_share`                | jsonb     |                          | Price per share or price range (price_paid_per_share, or lowest / highest). |
+| `total_shares_purchased`         | integer   |                          | Total number of shares purchased in the reported transaction. |
+| `total_value`                    | numeric   |                          | Total consideration paid. |
+| `treasury_shares_after_purchase` | integer   |                          | Number of shares held as treasury shares after the reported purchase. |
+| `mandate`                        | jsonb     |                          | Buyback mandate details (period, limits, remaining, cumulative). |
+
 ## View
 
 ### idx_active_company_profile
