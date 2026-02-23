@@ -185,33 +185,36 @@ This table stores E020 environmental, social, and governance component data for 
 
 ### idx_filings
 ----------------------
+### idx_filings
+----------------------
 This table details the filings (insider trading) that made by each company in IDX (keterbukaan informasi)
 
-| Column Name | Data Type | Constraints | Description |
-|-------------|-----------|-------------|----------|
-| `id`                             | bigint                      | PRIMARY KEY | Unique identifier for each record.                        |
-| `created_at`                    | timestamp with time zone    |     | Timestamp when the record was created (auto-generated).   |
-| `title`                          | text                        |     | Title or headline related to the transaction or event.    |
-| `body`                           | text                        |     | Detailed description or content of the record.            |
-| `source`                         | text                        |     | Filing or Transaction Documents URL.    |
-| `timestamp`                      | timestamp without time zone |     | Date and time when the transaction/event occurred.        |
-| `sector` | text |  | The sector where the company operate at based on the IDX-IC |
-| `sub_sector` | text |  | The sub-sector where the company operate at based on the IDX-IC |
-| `tags`                           | ARRAY                       |     | List of keywords or labels for categorization.            |
-| `transaction_type`              | text                        |     | Type of transaction (e.g., buy, sell, transfer).          |
-| `holding_before`                | bigint                      |     | Number of shares held before the transaction.             |
-| `holding_after`                 | bigint                      |     | Number of shares held after the transaction.              |
-| `amount_transaction`            | bigint                      |     | Total number of shares involved in the transaction.       |
-| `holder_type`                   | text                        |     | Type of holder (e.g., insider, institution).              |
-| `holder_name`                   | text                        |     | Name of the person or entity holding the shares.          |
-| `price`                          | numeric                     |     | Share price at the time of the transaction.               |
-| `transaction_value`             | numeric                     |     | Total value of the transaction in monetary terms.         |
-| `price_transaction`             | jsonb                       |     | JSON object with detailed price breakdown (if available). |
-| `share_percentage_before`      | double precision            |     | Ownership percentage before the transaction.              |
-| `share_percentage_after`       | double precision            |     | Ownership percentage after the transaction.               |
-| `share_percentage_transaction` | double precision            |     | Ownership percentage change due to the transaction.       |
-| `UID`                            | text                        |     | Unique identifier string for reference.                   |
-| `symbol`                         | text                        |     | Stock symbol associated with the record.           |
+| Column Name                  | Data Type                  | Constraints | Description |
+|------------------------------|---------------------------|-------------|-------------|
+| `id`                         | bigint                    | PRIMARY KEY | Unique identifier for each record. |
+| `created_at`                 | timestamp with time zone  |             | Timestamp when the record was created (auto-generated). |
+| `title`                      | text                      |             | Title or headline related to the transaction or event. |
+| `body`                       | text                      |             | Detailed description or content of the record. |
+| `source`                     | text                      |             | Filing or Transaction Documents URL. |
+| `timestamp`                  | timestamp without time zone |          | Date and time when the transaction/event occurred. |
+| `sector`                     | text                      |             | The sector where the company operate at based on the IDX-IC |
+| `sub_sector`                 | text                      |             | The sub-sector where the company operate at based on the IDX-IC |
+| `tags`                       | ARRAY                     |             | List of keywords or labels for categorization. |
+| `transaction_type`           | text                      |             | Type of transaction (e.g., buy, sell, transfer). |
+| `holding_before`             | bigint                    |             | Number of shares held before the transaction. |
+| `holding_after`              | bigint                    |             | Number of shares held after the transaction. |
+| `amount_transaction`         | bigint                    |             | Total number of shares involved in the transaction. |
+| `holder_type`                | text                      |             | Type of holder (e.g., insider, institution). |
+| `holder_name`                | text                      |             | Name of the person or entity holding the shares. |
+| `price`                      | numeric                   |             | Share price at the time of the transaction. |
+| `transaction_value`          | numeric                   |             | Total value of the transaction in monetary terms. |
+| `price_transaction`          | jsonb                     |             | JSON object with detailed price breakdown (if available). |
+| `share_percentage_before`    | double precision          |             | Ownership percentage before the transaction. |
+| `share_percentage_after`     | double precision          |             | Ownership percentage after the transaction. |
+| `share_percentage_transaction` | double precision        |             | Ownership percentage change due to the transaction. |
+| `UID`                        | text                      |             | Unique identifier string for reference. |
+| `symbol`                     | text                      |             | Stock symbol associated with the record. |
+| `source_is_manual`              | boolean                   |          | Indicator whether the record was inserted manually or by the automated pipeline. |
 
 ### sgx_filings
 ----------------------
