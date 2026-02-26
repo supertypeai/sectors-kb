@@ -1,4 +1,4 @@
-********# Database Documentation
+# Database Documentation
 This document serves as the authoritative guide to the database architecture underpinning the [sectors.app](https://sectors.app) application. It provides a comprehensive and detailed schema, offering an in-depth look at how data is structured and managed within our **Supabase**-hosted database. Our goal is to ensure clarity and provide all the necessary information for understanding the tables, relationships, and data types that power [sectors.app](https://sectors.app)'s functionalities.
 
 ## Underlying Data
@@ -531,6 +531,7 @@ This table details the stock split corporate action of each symbol.
 | `cum_date`       | date                     |              | The last trading date on which shares are still entitled to receive the stock split. |
 | `recording_date` | date                     |              | The date when the stock split data is officially recorded.                           |
 | `split_ratio`    | real                     |              | Ratio at which the stock is being split (e.g., 2.0 for a 2-for-1 split).             |
+| `ratio`          | text                     |              | Ratio comparion (e.g., 1 : 2 for a 1-for-2 split).                                   |
 | `updated_on`     | timestamp with time zone |              | Timestamp of the last update                                                         |
 | `applied_on`     | timestamp with time zone |              | Applied changes of data dependent on the stock split                                 |
 
