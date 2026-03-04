@@ -714,6 +714,7 @@ This table details the daily closing price for companies listed on the Singapore
 |symbol|text|Primary Key|The unique stock ticker symbol for the company on the SGX.|
 |date|date|Primary Key|The date when the data is recorded.|
 |close|numeric||The closing price of the stock on the given date.|
+| volume      | bigint        |                 | The total number of shares traded during the daily session. |
 
 
 ### sgx_manual_input
