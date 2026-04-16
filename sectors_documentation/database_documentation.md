@@ -185,8 +185,6 @@ This table stores E020 environmental, social, and governance component data for 
 
 ### idx_filings
 ----------------------
-### idx_filings
-----------------------
 This table details the filings (insider trading) that made by each company in IDX (keterbukaan informasi)
 
 | Column Name                  | Data Type                  | Constraints | Description |
@@ -215,6 +213,8 @@ This table details the filings (insider trading) that made by each company in ID
 | `UID`                        | text                      |             | Unique identifier string for reference. |
 | `symbol`                     | text                      |             | Stock symbol associated with the record. |
 | `source_is_manual`              | boolean                   |          | Indicator whether the record was inserted manually or by the automated pipeline. |
+| `idx_investor_slug`             | text                       |         | Slug of the matched investor from `idx_investor` based on holder name using fuzzy matching. |
+| `idx_conglomerates_group_slug`  | ARRAY                      |         | List of slugs from `idx_conglomerates_group` associated with the stock symbol. |
 
 ### sgx_filings
 ----------------------
