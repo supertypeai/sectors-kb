@@ -242,18 +242,19 @@ This table stores insider trading filings and related disclosure records submitt
 | `symbol`                         | text                       |             | Stock symbol associated with the record. |
  
 ### idx_financial_sheets_annual
-----------------------
-This table details of annual financial metrics from the official financial report into 3 grouping, income statement, balance sheet, and cash flow.
 
-| Column Name | Data Type | Constraints | Description |
-|-------------|-----------|-------------|----------|
-| `symbol` | text | Primary Key | All active symbol in IDX based on `idx_company_profile` |
-| `date` | date | Primary Key | The financial metrics report date |
-| `income_stmt_metrics` | jsonb | | The income statement metrics of the company from the financial report |
-| `balance_sheet_metrics` | jsonb | | The balance sheets metrics of the company from the financial report |
-| `cash_flow_metric` | float4 | | The cash flow metrics of the company from the financial report |
-| `currency` | text | | The currency of the financial metrics (e.g., IDR, USD) |
-| `balance_sheet_metrics_usd` | jsonb | | The balance sheets metrics of the company from the financial report converted to USD (if the original currency is not USD) |
+This table details of annual financial metrics from the official financial report into 4 grouping, income statement, balance sheet, cash flow, and cogs breakdown.
+
+| Column Name                  | Data Type | Constraints  | Description                                                                 |
+|-----------------------------|----------|--------------|-----------------------------------------------------------------------------|
+| `symbol`                    | text     | Primary Key  | All active symbol in IDX based on `idx_company_profile`                    |
+| `date`                      | date     | Primary Key  | The financial metrics report date                                          |
+| `income_stmt_metrics`       | jsonb    |              | The income statement metrics of the company from the financial report      |
+| `balance_sheet_metrics`     | jsonb    |              | The balance sheets metrics of the company from the financial report        |
+| `cash_flow_metric`          | float4   |              | The cash flow metrics of the company from the financial report             |
+| `currency`                  | text     |              | The currency of the financial metrics (e.g., IDR, USD)                     |
+| `balance_sheet_metrics_usd` | jsonb    |              | The balance sheets metrics of the company from the financial report converted to USD (if the original currency is not USD) |
+| `cogs_breakdown`            | jsonb    |              | Breakdown of cost of goods sold (COGS), only for general, infrastructure, and property industries |
 
 ### idx_financial_sheets_quarterly
 ----------------------
